@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blogprj.blog.repository.mapper.Blog_Mapper">
+
+<!-- member -->
+
+	 <insert id="blogJoin" parameterType="com.blogprj.blog.model.Member_DTO" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">			   
+	    	SELECT member_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER 
+		(
+			no, id, pw, domain, nickname, birthday, regdate
+		)
+		VALUES 
+		(
+			#{no}, #{id}, #{pw}, #{domain}, #{nickname}, #{birthday}, sysdate
+		)
+	</insert>
+
+	<select id="blogLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultType="com.blogprj.blog.model.Member_DTO">
+    	SELECT *
+    	FROM MEMBER 
+    	WHERE id = #{id} AND pw = #{pw}
+    </select>
+    
+<!-- blog	 -->
+
+	<insert id="blogCreate" parameterType="com.blogprj.blog.model.Member_DTO">
+		INSERT INTO BLOG
+		(
+			no, memberno
+		)
+		VALUES 
+		(
+			blog_seq.nextval, #{memberno}
+		)
+	</insert>
+	
+	<select id="getBlogno" parameterType="int" resultType="int">
+    	SELECT no 
+    	FROM BLOG 
+    	WHERE memberno = #{memberno}
+    </select>
+    
+	
+<!-- post  -->
+
+     <insert id="writePost" parameterType="com.blogprj.blog.model.Post_DTO">
+		INSERT INTO POST 
+		(
+			no, regdate, title, content, blogno, memberno, postaccess, topicno
+		)
+		VALUES 
+		(
+			post_seq.nextval, sysdate, #{title}, #{content}, #{blogno}, #{memberno}, #{postaccess}, #{topicno}
+		)
+	</insert>
+	
+	 <select id="selectPostCount" parameterType="int" resultType="int">
+    	SELECT count(*) FROM POST
+    	WHERE blogno = #{blogno} 
+    </select>
+    
+    <select id="postList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
+	    SELECT *
+	  	FROM (
+	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno 
+	            from POST
+	            WHERE blogno = #{blogno}
+	         ) 
+	    WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
+	    ORDER BY regdate
+    </select>
+<!-- category     -->
+
+<!-- subcategory     -->
+	<select id="subCategoryList" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">
+    	SELECT * 
+    	FROM SUBCATEGORY 
+    	WHERE blogno = #{blogno}
+    </select>
+	
+	
+	
+    <select id="test" resultType="com.blogprj.blog.model.Test_DTO">
+    	SELECT * FROM TEST1
+    </select>
+ 
+</mapper>
