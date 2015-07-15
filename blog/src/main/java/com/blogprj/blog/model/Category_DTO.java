@@ -1,6 +1,6 @@
 package com.blogprj.blog.model;
 
-public class Catagory_DTO {
+public class Category_DTO {
 	private int category_no;
 	private String category_name;
 	private int blog_no;

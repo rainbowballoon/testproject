@@ -12,12 +12,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -29,55 +31,73 @@ import com.blogprj.blog.service.Blog_Service;
 public class Blog_Controller {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		
 		return "blog/index";
 	
 	}
 	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Locale locale, Model model) {
+	public String index(Model model, HttpSession session) {
 		
 		return "blog/index";
-	
 	}
 	
-	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
-	public String mbLogin(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/{blogno}", method = RequestMethod.GET)
+	public String home1(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+		System.out.println("/:"+blogno);
 		
-		return "blog/index.jsp?content=loginForm";
-	}
-	
-	@RequestMapping(value = "/blogLogout", method = RequestMethod.GET)
-	public String loginoutForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
-		session.invalidate();
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			if(blog_Service.getBlogno(memberno) == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+			}
+			
+		}
 		return "blog/index";
 	}
 	
-	
-	@RequestMapping(value = "/blogLogin", method = RequestMethod.POST)
-	public String blogLogin(Locale locale, Model model, HttpServletRequest request, HttpSession session,
-		@RequestParam("member_id") String member_id, 
-		@RequestParam("member_pw") String member_pw) {
+	@RequestMapping(value = "/{blogno}/index", method = RequestMethod.GET)
+	public String index1(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+		System.out.println("index1 blogno:"+blogno);
 		
-		@SuppressWarnings("resource")
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
-		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-		
-		Member_DTO dto = new Member_DTO();
-		
-		dto = blog_Service.blogLogin(member_id, member_pw);
-		
-		session.setAttribute("logined", dto);
-		
-		//return "blog/index.jsp?content=loginView";
-		return "redirect:/"+dto.getNo()+"/readPost";
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			System.out.println("index1 memberno:"+memberno);
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			if(blog_Service.getBlogno(memberno) == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+			}
+			
+		}
+		return "blog/index";
 	}
 	
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
 	public String joinForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
 		
 		return "blog/index.jsp?content=joinForm";
+	}
+	
+	@RequestMapping(value = "/{blogno}/joinForm", method = RequestMethod.GET)
+	public String joinForm1(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("blogManageForm:"+blogno);
+		
+		if(session.getAttribute("logined") == null){ // 로그인한 사용자인지 여부
+			session.invalidate();
+			return "redirect:/joinForm";
+		}else{
+			return "redirect:/index";
+		}
 	}
 	
 	@RequestMapping(value = "/blogJoin", method = RequestMethod.POST)
@@ -107,18 +127,61 @@ public class Blog_Controller {
 		return "blog/index.jsp?content=joinView";
 	}
 	
+	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
+	public String loginForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
+		
+		return "blog/index.jsp?content=loginForm";
+	}
+	
+	@RequestMapping(value = "/{blogno}/loginForm", method = RequestMethod.GET)
+	public String loginForm1(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("blogManageForm:"+blogno);
+		
+		if(session.getAttribute("logined") == null){ // 로그인한 사용자인지 여부
+			session.invalidate();
+			return "redirect:/loginForm";
+		}else{
+			return "redirect:/index";
+		}
+	}
+
+	@RequestMapping(value = "/blogLogin", method = RequestMethod.POST)
+	public String blogLogin(Locale locale, Model model, HttpServletRequest request, HttpSession session,
+		@RequestParam("member_id") String member_id, 
+		@RequestParam("member_pw") String member_pw) {
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		Member_DTO dto = new Member_DTO();
+		
+		dto = blog_Service.blogLogin(member_id, member_pw);
+		
+		session.setAttribute("logined", dto);
+		
+		return "blog/index.jsp?content=loginView";
+	}
+	
+	@RequestMapping(value = "/{blogno}/blogLogout", method = RequestMethod.GET)
+	public String loginoutForm(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+		session.invalidate();
+		return "redirect:/index";
+	}
+	
 	@RequestMapping(value = "/{blogno}/postWriteForm", method = RequestMethod.GET)
 	public String postWriteForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
-		System.out.println("blogno:"+blogno);
+		System.out.println("postWriteForm blogno:"+blogno);
 		
 		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
-			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
 			
-			@SuppressWarnings("resource")
-			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
-			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-			
-			if(blog_Service.getBlogno(memberno) == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+				
+				@SuppressWarnings("resource")
+				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+				Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+				
 				List<SubCategory_DTO> dtolist = new ArrayList<SubCategory_DTO>();
 				dtolist = blog_Service.subCategoryList(blogno);
 				
@@ -126,23 +189,29 @@ public class Blog_Controller {
 				model.addAttribute("subcategorylist", dtolist);
 				model.addAttribute("memberno", memberno);
 				
+				System.out.println("blogno==memberno");
 				return "blog/index.jsp?content=postWriteForm";
-			}else{ 
+			}else{ //본인 블로그가 아니면
+				System.out.println("blogno!=memberno");
+				System.out.println("blogno:"+blogno);
 				return "redirect:/"+blogno+"/readPost";
 			}
 			
 		}else{ //로그인하지 않은 사용자
+			System.out.println("logoff");
 			return "redirect:/"+blogno+"/readPost";
 		}
 	}
 	
-	@RequestMapping(value = "/writePost", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/writePost", method = RequestMethod.POST)
 	public String writePost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
 		@RequestParam("title") String title,
 		@RequestParam("content") String content,
 		//@RequestParam("blogno") int blogno,
 		@RequestParam("postaccess") int postacess,
 		@RequestParam("topicno") int topicno) {
+		
+		System.out.println("writePost blogno:"+blogno);
 		
 		if(session.getAttribute("logined") != null){
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
@@ -168,7 +237,7 @@ public class Blog_Controller {
 		return "redirect:/"+blogno+"/readPost";
 	}
 	
-	@RequestMapping(value = "/file_upload", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/file_upload", method = RequestMethod.POST)
 	public String file_upload(Locale locale, Model model, HttpServletRequest request, HttpSession session, File_DTO dto) {
 		 
 		MultipartFile upload = dto.getUpload();
@@ -213,8 +282,13 @@ public class Blog_Controller {
 		return "blog/uploadView";
 	}
 
+	
 	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
-	public String readPost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+	public String readPost(
+			@PathVariable("blogno") int blogno, 
+			@CookieValue(value="{guest}", required=false, defaultValue="0") int guest, 
+			Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("readPost blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -274,4 +348,61 @@ public class Blog_Controller {
 		//return "blog/testForm";
 	}
 	
+	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)
+	public String blogManageForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+		System.out.println("blogManageForm:"+blogno);
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+				return "blog/index.jsp?content=blogManageForm";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
+	
+	@RequestMapping(value = "/{blogno}/blogCategoryForm", method = RequestMethod.GET)
+	public String blogCategoryForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+		System.out.println("blogManageForm:"+blogno);
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+				return "redirect:/"+blogno+"/categoryList";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
+	
+	@RequestMapping(value = "/{blogno}/categoryList", method = RequestMethod.GET)
+	public String categoryList(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("categoryList blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+		
+		if(categoryList != null){
+			model.addAttribute("categoryList", categoryList);
+		}else{
+			System.out.println("자료가 없습니다");
+		}
+		return "blog/index2.jsp?content=categoryList";
+	}
 }

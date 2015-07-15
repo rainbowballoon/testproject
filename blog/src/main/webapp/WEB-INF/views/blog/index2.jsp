@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.3.5/dist/css/bootstrap.min.css"/>">
 	
     <!-- Custom CSS -->
-    <link href="css/blog-home.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath }/resources/css/blog-home.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

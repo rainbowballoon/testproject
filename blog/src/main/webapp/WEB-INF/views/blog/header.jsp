@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                  	<li>
-                        <a href="readPost">홈</a>
+                        <a href="index">홈</a>
                     </li>
                 <c:choose>
                 <c:when test="${logined == null }">
@@ -31,10 +31,10 @@
                 </c:when>
                 <c:otherwise>
                  	<li>
-                        <a href="${logined.no }/postWriteForm">포스트 작성</a>
+                        <a href="postWriteForm">포스트 작성</a>
                     </li>
                     <li>
-                        <a href="#">블로그 관리</a>
+                        <a href="blogManageForm">블로그 관리</a>
                     </li>
                     <li>
                         <a href="blogLogout">로그아웃</a>

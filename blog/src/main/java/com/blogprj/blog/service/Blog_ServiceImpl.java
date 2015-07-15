@@ -2,6 +2,7 @@ package com.blogprj.blog.service;
 
 import java.util.List;
 
+import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -90,6 +91,15 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 //category
+	@Override
+	public List<Category_DTO> categoryList(int blogno) {
+		try{
+			return blogmapper.categoryList(blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 //subcategory
 	@Override

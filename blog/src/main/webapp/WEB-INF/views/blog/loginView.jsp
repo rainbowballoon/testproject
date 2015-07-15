@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:choose>
 	<c:when test="${logined != null}">		
-		<script>location.href="readPost"</script>
+		<script>location.href="${logined.no}/readPost"</script>
 	</c:when>
 	<c:otherwise>
 		<script>

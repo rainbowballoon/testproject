@@ -2,6 +2,7 @@ package com.blogprj.blog.repository.mapper;
 
 import java.util.List;
 
+import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -17,6 +18,9 @@ public interface Blog_Mapper {
 	public void blogCreate(int memberno); //블로그 생성
 
 //category
+	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
+	
+//subcategory
 	public List<SubCategory_DTO> subCategoryList(int blogno); //서브카테고리 리스트 불러오기
 	
 	

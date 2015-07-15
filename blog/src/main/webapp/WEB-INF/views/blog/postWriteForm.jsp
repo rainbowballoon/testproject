@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<script src="lib/ckeditor/ckeditor.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/lib/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 
