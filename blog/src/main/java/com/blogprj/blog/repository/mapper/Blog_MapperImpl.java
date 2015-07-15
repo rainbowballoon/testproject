@@ -116,6 +116,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public void categoryWrite(Category_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.categoryWrite";
+			sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 //subcategory
 	@Override
 	public List<SubCategory_DTO> subCategoryList(int blogno) {

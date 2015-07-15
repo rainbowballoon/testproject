@@ -74,12 +74,24 @@
 	    WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
 	    ORDER BY regdate
     </select>
+    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 
     	FROM CATEGORY 
     	WHERE blogno = #{blogno}
     </select>
+    
+    <insert id="categoryWrite" parameterType="com.blogprj.blog.model.Category_DTO">
+    	INSERT INTO CATEGORY 
+		(
+			no, name, blogno
+		)
+		VALUES 
+		(
+			category_seq.nextval, #{name}, #{blogno}
+		)
+    </insert>
     
 <!-- subcategory     -->
 	<select id="subCategoryList" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">

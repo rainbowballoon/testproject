@@ -19,10 +19,11 @@ public interface Blog_Mapper {
 
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
+	public void categoryWrite(Category_DTO dto);
+	
 	
 //subcategory
 	public List<SubCategory_DTO> subCategoryList(int blogno); //서브카테고리 리스트 불러오기
-	
 	
 //post	
 	public void writePost(Post_DTO dto); //포스트 작성하기

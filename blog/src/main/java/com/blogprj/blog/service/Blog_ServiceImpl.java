@@ -101,6 +101,15 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void categoryWrite(Category_DTO dto) {
+		try{
+			blogmapper.categoryWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 //subcategory
 	@Override
 	public List<SubCategory_DTO> subCategoryList(int blogno) {

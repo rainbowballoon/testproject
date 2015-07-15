@@ -1,22 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!-- Page Content -->
-    <div class="col-md-8">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>하위메뉴 관리</title>
+</head>
+<body>
+<div id="page-content-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1>카테고리 등록</h1>
-             <form action="categoryWrite" method="post">
+                <h1>하위메뉴 등록</h1>
+             <form action="subMenuWrite" method="post">
+             <input type="hidden" name="menuno" value="${menuno }">
                <table class="table table-hover">
                		<tr>
-               			<td class="active">메뉴명</td>
+               			<td class="active">하위메뉴명</td>
                			<td><input type="text" name="name"></td>
                		</tr>
                </table>
              <input type="submit" value="등록완료" class="btn btn-primary">
-             <a href="menuList" class="btn btn-default">목록으로</a>
+             <a href="subMenuList?menuno=${menuno }" class="btn btn-default">목록으로</a>
              </form>
              
              <br><br>
@@ -25,3 +31,5 @@
         </div>
     </div>
 </div>
+</body>
+</html>

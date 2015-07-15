@@ -405,4 +405,42 @@ public class Blog_Controller {
 		}
 		return "blog/index2.jsp?content=categoryList";
 	}
+	
+	@RequestMapping(value = "/{blogno}/categoryWriteForm", method = RequestMethod.GET)
+	public String categoryWriteForm(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("menuWriteForm blogno:"+blogno);
+		
+		return "blog/index2.jsp?content=categoryWriteForm";
+	}
+	
+	@RequestMapping(value = "/{blogno}/categoryWrite", method = RequestMethod.POST)
+	public String categoryWrite(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
+			@RequestParam("name") String name){
+
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				Category_DTO dto = new Category_DTO();
+				
+				@SuppressWarnings("resource")
+				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+				Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+				
+				dto.setName(name);
+				dto.setBlogno(blogno);
+				
+				blog_Service.categoryWrite(dto);
+				
+				return "redirect:/"+blogno+"/categoryList";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
 }
