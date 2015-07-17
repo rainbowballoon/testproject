@@ -20,10 +20,15 @@ public interface Blog_Mapper {
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
 	public void categoryWrite(Category_DTO dto);
-	
+	public void categoryEdit(Category_DTO dto);
+	public void categoryDelete(int no);
+	public Category_DTO categoryDetail(int no);
 	
 //subcategory
-	public List<SubCategory_DTO> subCategoryList(int blogno); //서브카테고리 리스트 불러오기
+	public List<SubCategory_DTO> subCategoryListAll(int blogno);
+	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno); //서브카테고리 리스트 불러오기
+	public SubCategory_DTO subCategoryDetail(int no, int categoryno, int blogno);
+	public void subCategoryWrite(SubCategory_DTO dto);
 	
 //post	
 	public void writePost(Post_DTO dto); //포스트 작성하기

@@ -2,34 +2,26 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>메뉴 관리</title>
-</head>
-<body>
-<div id="page-content-wrapper">
+
+<!-- Page Content -->
+<div class="col-md-8">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1>메뉴 수정</h1>
-             <form action="menuEdit" method="post">
-             <input type="hidden" name="no" value="${menudto.no }">
-               <table class="table table-hover">
+                <h1>카테고리 수정</h1>
+             <form action="categoryEdit" method="post">
+             	<input type="hidden" name="no" value="${categorydto.no }">
+               	<table class="table table-hover">
                		<tr>
-               			<td class="active">메뉴명</td>
-               			<td><input type="text" name="name" value="${menudto.name }"></td>
+               			<td class="active">카테고리 이름</td>
+               			<td><input type="text" name="name" value="${categorydto.name }"></td>
                		</tr>
                	</table>
-             <input type="submit" value="수정완료" class="btn btn-primary">
-             <a href="optList" class="btn btn-default">목록으로</a>
+             <input type="submit" value="수정 완료" class="btn btn-primary">
+             <a href="categoryList" class="btn btn-default">카테고리 목록으로</a>
              </form>
              
-             <br><br>
-             <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">카테고리 숨기기</a>
-            </div>
-        </div>
-    </div>
+        	</div>
+    	</div>
+	</div>
 </div>
-</body>
-</html>

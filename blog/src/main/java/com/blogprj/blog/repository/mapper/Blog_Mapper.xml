@@ -93,15 +93,56 @@
 		)
     </insert>
     
+    <update id="categoryEdit" parameterType="com.blogprj.blog.model.Category_DTO">
+		UPDATE CATEGORY 
+		SET 
+		name=#{name}
+		WHERE no = #{no}
+	</update>
+	
+	<delete id="categoryDelete">
+		DELETE FROM CATEGORY WHERE no = #{no}
+	</delete>
+	
+	 <select id="categoryDetail" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
+    	SELECT 	
+    		NO, NAME, BLOGNO
+		FROM CATEGORY
+		WHERE NO = #{no}
+    </select>
+    
 <!-- subcategory     -->
-	<select id="subCategoryList" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">
+
+	<select id="subCategoryListAll" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">
     	SELECT * 
     	FROM SUBCATEGORY 
     	WHERE blogno = #{blogno}
     </select>
 	
+	<select id="subCategoryList" parameterType="hashmap" resultType="com.blogprj.blog.model.SubCategory_DTO">
+    	SELECT * 
+    	FROM SUBCATEGORY 
+    	WHERE blogno = #{blogno} AND categoryno = #{categoryno}
+    </select>
 	
+	<insert id="subCategoryWrite" parameterType="com.blogprj.blog.model.SubCategory_DTO">
+    	INSERT INTO SUBCATEGORY 
+		(
+			no, name, categoryno, blogno
+		)
+		VALUES 
+		(
+			subcategory_seq.nextval, #{name}, #{categoryno}, #{blogno}
+		)
+    </insert>
 	
+	<select id="subCategoryDetail" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">
+    	SELECT 	
+    		NO, NAME, CATEGORYNO, BLOGNO
+		FROM SUBCATEGORY
+		WHERE blogno = #{blogno} AND categoryno = #{categoryno}
+    </select>
+    
     <select id="test" resultType="com.blogprj.blog.model.Test_DTO">
     	SELECT * FROM TEST1
     </select>

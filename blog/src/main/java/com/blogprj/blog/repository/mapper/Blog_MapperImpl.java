@@ -126,16 +126,86 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public void categoryEdit(Category_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.categoryEdit";
+			sqlSession.update(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public Category_DTO categoryDetail(int no) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.categoryDetail";
+			return sqlSession.selectOne(statement, no);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void categoryDelete(int no) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.categoryDelete";
+			sqlSession.delete(statement, no);
+		}finally{
+			
+		}
+	}
+	
 //subcategory
 	@Override
-	public List<SubCategory_DTO> subCategoryList(int blogno) {
+	public List<SubCategory_DTO> subCategoryListAll(int blogno) {
 		try{
-			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryList";
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryListAll";
 			return sqlSession.selectList(statement, blogno);
 		}finally{
 			
 		}
 	}
+	
+	@Override
+	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno) {
+		System.out.println("blogno:"+blogno);
+		System.out.println("categoryno:"+categoryno);
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryList";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("blogno", blogno);
+			map.put("categoryno", categoryno);
+			return sqlSession.selectList(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public SubCategory_DTO subCategoryDetail(int no, int blogno, int categoryno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryDetail";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("no", no);
+			map.put("categoryno", categoryno);
+			map.put("blogno", blogno);
+			return sqlSession.selectOne(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void subCategoryWrite(SubCategory_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryWrite";
+			sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 	@Override
 	public List<Test_DTO> test() {
 		try{

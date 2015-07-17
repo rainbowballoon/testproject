@@ -110,17 +110,74 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
-//subcategory
 	@Override
-	public List<SubCategory_DTO> subCategoryList(int blogno) {
+	public void categoryEdit(Category_DTO dto) {
 		try{
-			return blogmapper.subCategoryList(blogno);
+			blogmapper.categoryEdit(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public Category_DTO categoryDetail(int no) {
+		try{
+			return blogmapper.categoryDetail(no);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
+	@Override
+	public void categoryDelete(int no) {
+		try{
+			blogmapper.categoryDelete(no);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+//subcategory
+	
+	@Override
+	public List<SubCategory_DTO> subCategoryListAll(int blogno) {
+		try{
+			return blogmapper.subCategoryListAll(blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno) {
+		try{
+			return blogmapper.subCategoryList(blogno, categoryno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public SubCategory_DTO subCategoryDetail(int no, int categoryno, int blogno) {
+		try{
+			return blogmapper.subCategoryDetail(no, categoryno, blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public void subCategoryWrite(SubCategory_DTO dto) {
+		try{
+			blogmapper.subCategoryWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public List<Test_DTO> test() {
@@ -131,4 +188,5 @@ public class Blog_ServiceImpl implements Blog_Service {
 			return null;
 		}
 	}
+	
 }
