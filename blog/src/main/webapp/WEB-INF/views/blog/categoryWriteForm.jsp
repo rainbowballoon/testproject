@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <h1>카테고리 등록</h1>
              
-             <form action="subCategoryWrite" method="post">
+             <form action="categoryWrite" method="post">
              <input type="hidden" name="categoryno" value="${categoryno }">	
                	<table class="table table-hover">
                		<tr>

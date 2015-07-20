@@ -180,6 +180,24 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
+	public void subCategoryEdit(SubCategory_DTO dto) {
+		try{
+			blogmapper.subCategoryEdit(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void subCategoryDelete(int no, int categoryno, int blogno) {
+		try{
+			blogmapper.subCategoryDelete(no, categoryno, blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
 	public List<Test_DTO> test() {
 		try{
 			return blogmapper.test();

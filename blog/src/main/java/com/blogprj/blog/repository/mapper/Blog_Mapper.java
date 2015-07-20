@@ -29,6 +29,8 @@ public interface Blog_Mapper {
 	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno); //서브카테고리 리스트 불러오기
 	public SubCategory_DTO subCategoryDetail(int no, int categoryno, int blogno);
 	public void subCategoryWrite(SubCategory_DTO dto);
+	public void subCategoryEdit(SubCategory_DTO dto);
+	public void subCategoryDelete(int no, int categoryno, int blogno);
 	
 //post	
 	public void writePost(Post_DTO dto); //포스트 작성하기

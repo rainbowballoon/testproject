@@ -10,15 +10,15 @@
 	                <h1>서브카테고리 수정</h1>
 	             <form action="subCategoryEdit" method="post">
 	             <input type="hidden" name="no" value="${subCategorydto.no }">
-	             <input type="hidden" name="menuno" value="${subCategorydto.categoryno }">
+	             <input type="hidden" name="categoryno" value="${subCategorydto.categoryno }">
 	               <table class="table table-hover">
 	               		<tr>
 	               			<td class="active">서브카테고리 이름</td>
-	               			<td><input type="text" name="name" value="${subCategorydto.name }"></td>
+	               			<td><input type="text" name="name" maxlength="20" value="${subCategorydto.name }"></td>
 	               		</tr>
 	               	</table>
 	             <input type="submit" value="수정완료" class="btn btn-primary">
-	             <a href="subMenuList?menuno=${subCategorydto.categoryno }" class="btn btn-default">목록으로</a>
+	             <a href="subCategoryList?categoryno=${subCategorydto.categoryno }" class="btn btn-default">목록으로</a>
 	             </form>
 	            </div>
 	        </div>

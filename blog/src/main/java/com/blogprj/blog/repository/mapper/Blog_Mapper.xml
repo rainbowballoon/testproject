@@ -136,13 +136,25 @@
 		)
     </insert>
 	
-	<select id="subCategoryDetail" parameterType="int" resultType="com.blogprj.blog.model.SubCategory_DTO">
+	<select id="subCategoryDetail" parameterType="hashmap" resultType="com.blogprj.blog.model.SubCategory_DTO">
     	SELECT 	
     		NO, NAME, CATEGORYNO, BLOGNO
 		FROM SUBCATEGORY
-		WHERE blogno = #{blogno} AND categoryno = #{categoryno}
+		WHERE no = #{no} AND blogno = #{blogno} AND categoryno = #{categoryno}
     </select>
     
+    <update id="subCategoryEdit" parameterType="com.blogprj.blog.model.SubCategory_DTO">
+		UPDATE SUBCATEGORY 
+		SET 
+		name=#{name}
+		WHERE no = #{no} AND blogno = #{blogno} AND categoryno = #{categoryno}
+	</update>
+	
+    <delete id="subCategoryDelete">
+		DELETE FROM SUBCATEGORY 
+		WHERE no = #{no} AND blogno = #{blogno} AND categoryno = #{categoryno}
+	</delete>
+	
     <select id="test" resultType="com.blogprj.blog.model.Test_DTO">
     	SELECT * FROM TEST1
     </select>

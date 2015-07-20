@@ -183,7 +183,7 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
-	public SubCategory_DTO subCategoryDetail(int no, int blogno, int categoryno) {
+	public SubCategory_DTO subCategoryDetail(int no, int categoryno, int blogno) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryDetail";
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -201,6 +201,30 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryWrite";
 			sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void subCategoryEdit(SubCategory_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryEdit";
+			sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void subCategoryDelete(int no, int categoryno, int blogno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryDelete";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("no", no);
+			map.put("categoryno", categoryno);
+			map.put("blogno", blogno);
+			sqlSession.selectOne(statement, map);
 		}finally{
 			
 		}

@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -29,6 +31,10 @@
 	<beans:bean id="multipartResolver"
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     </beans:bean>
+	
+	<task:executor id="testExecutor" pool-size="10"/>
+	<task:annotation-driven executor="testExecutor"/>
+	
 	
 <!-- 	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
 <!-- 		<beans:property name="alwaysUseFullPath" value="true" /> -->

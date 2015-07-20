@@ -13,7 +13,7 @@
 	               			<th>서브카테고리 이름</th>
 	               			<th>서브카테고리 수정/삭제</th>
 	               		</tr>
-	               	<c:forEach var="subCategorydto" items="${subCategoryList}" varStatus="status">
+	               	<c:forEach var="subCategorydto" items="${subCategoryList}">
 	               		<tr>
 	               			<td>${subCategorydto.name }</td>
 	               			<td><a class="btn btn-primary btn-xs" href="subCategoryEditForm?no=${subCategorydto.no }&categoryno=${subCategorydto.categoryno}">수정</a>

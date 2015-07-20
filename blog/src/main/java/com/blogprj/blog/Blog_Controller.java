@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -348,6 +350,7 @@ public class Blog_Controller {
 		//return "blog/testForm";
 	}
 	
+	@Async
 	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)
 	public String blogManageForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
 		System.out.println("blogManageForm:"+blogno);
@@ -367,8 +370,8 @@ public class Blog_Controller {
 			return "redirect:/index";
 		}
 	}
-	
-//category
+
+	//category
 	@RequestMapping(value = "/{blogno}/blogCategoryForm", method = RequestMethod.GET)
 	public String blogCategoryForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
 		System.out.println("blogManageForm:"+blogno);
@@ -579,7 +582,7 @@ public class Blog_Controller {
 //subCategory	
 	@RequestMapping(value = "/{blogno}/subCategoryList", method = RequestMethod.GET)
 	public String subCategoryList(
-			@PathVariable("blogno") int blogno, 
+			@PathVariable(value="blogno") int blogno, 
 			@RequestParam("categoryno") int categoryno,
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("categoryList blogno:"+blogno);
@@ -626,7 +629,7 @@ public class Blog_Controller {
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				model.addAttribute("categoryno", categoryno);
-				return "blog/index2.jsp?content=categoryWriteForm";
+				return "blog/index2.jsp?content=subCategoryWriteForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -698,6 +701,7 @@ public class Blog_Controller {
 				dto = blog_Service.subCategoryDetail(no, categoryno, blogno);
 				
 				if(dto != null){
+					model.addAttribute("categoryno", categoryno);
 					model.addAttribute("subCategorydto", dto);
 				}else{
 					System.out.println("자료가 없습니다");
@@ -717,7 +721,8 @@ public class Blog_Controller {
 	@RequestMapping(value = "/{blogno}/subCategoryEdit", method = RequestMethod.POST)
 	public String subCategoryEdit(
 			Model model, HttpServletRequest request, HttpSession session,
-			@PathVariable(value="blogno") int blogno,
+			@PathVariable(value="blogno") int blogno, 
+			@RequestParam("categoryno") int categoryno,
 			@RequestParam("no") int no,
 			@RequestParam("name") String name){
 		System.out.println("categoryEdit blogno:"+blogno);
@@ -727,7 +732,7 @@ public class Blog_Controller {
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				
-				Category_DTO dto = new Category_DTO();
+				SubCategory_DTO dto = new SubCategory_DTO();
 				
 				@SuppressWarnings("resource")
 				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -735,10 +740,13 @@ public class Blog_Controller {
 				
 				dto.setNo(no);
 				dto.setName(name);
+				dto.setCategoryno(categoryno);
+				dto.setBlogno(blogno);
 				
-				blog_Service.categoryEdit(dto);
+				blog_Service.subCategoryEdit(dto);
 				
-				return "redirect:/"+blogno+"/categoryList";
+				model.addAttribute("categoryno", categoryno);
+				return "redirect:/"+blogno+"/subCategoryList";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -752,8 +760,9 @@ public class Blog_Controller {
 	@RequestMapping(value = "/{blogno}/subCategoryDelete", method = RequestMethod.GET)
 	public String subCategoryDelete(
 			HttpServletRequest request, HttpSession session, Model model,
-			@PathVariable(value="blogno") int blogno,
-			@RequestParam("no") int no) {
+			@PathVariable(value="blogno") int blogno, 
+			@RequestParam("no") int no,
+			@RequestParam("categoryno") int categoryno) {
 		System.out.println("categoryDelete blogno:"+blogno);
 		
 		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
@@ -761,15 +770,14 @@ public class Blog_Controller {
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				
-				Category_DTO dto = new Category_DTO();
-				
 				@SuppressWarnings("resource")
 				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 				Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 				
-				blog_Service.categoryDelete(no);
+				blog_Service.subCategoryDelete(no, categoryno, blogno);
 				
-				return "redirect:/"+blogno+"/categoryList";
+				model.addAttribute("categoryno", categoryno);
+				return "redirect:/"+blogno+"/subCategoryList";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
