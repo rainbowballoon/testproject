@@ -32,8 +32,8 @@
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     </beans:bean>
 	
-	<task:executor id="testExecutor" pool-size="10"/>
-	<task:annotation-driven executor="testExecutor"/>
+<!-- 	<task:executor id="testExecutor" pool-size="10"/> -->
+<!-- 	<task:annotation-driven executor="testExecutor"/> -->
 	
 	
 <!-- 	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
