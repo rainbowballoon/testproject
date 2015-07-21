@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -350,7 +348,6 @@ public class Blog_Controller {
 		//return "blog/testForm";
 	}
 	
-	@Async
 	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)
 	public String blogManageForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
 		System.out.println("blogManageForm:"+blogno);
@@ -393,7 +390,9 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}/categoryList", method = RequestMethod.GET)
-	public String categoryList(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+	public String categoryList(
+			@PathVariable("blogno") int blogno, 
+			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("categoryList blogno:"+blogno);
 		
 		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
