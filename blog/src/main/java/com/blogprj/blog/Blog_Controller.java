@@ -55,7 +55,14 @@ public class Blog_Controller {
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 			
 			if(blog_Service.getBlogno(memberno) == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				//카테고리 부분
+				List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
 				
+				if(categoryList != null){
+					model.addAttribute("categoryList", categoryList);
+				}else{
+					System.out.println("자료가 없습니다");
+				}
 			}
 			
 		}
@@ -75,16 +82,29 @@ public class Blog_Controller {
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 			
 			if(blog_Service.getBlogno(memberno) == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				//카테고리 부분
+				List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
 				
+				if(categoryList != null){
+					model.addAttribute("categoryList", categoryList);
+				}else{
+					System.out.println("자료가 없습니다");
+				}
 			}
 			
 		}
 		return "blog/index";
 	}
 	
+//	private Blog_Service service;
+//
+//	public void setService(Blog_Service service) {
+//		this.service = service;
+//	}
+	
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
 	public String joinForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
-		
+//		service.serviceMethod();
 		return "blog/index.jsp?content=joinForm";
 	}
 	
@@ -189,6 +209,15 @@ public class Blog_Controller {
 				model.addAttribute("subcategorylist", dtolist);
 				model.addAttribute("memberno", memberno);
 				
+				//카테고리 부분
+				List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+				
+				if(categoryList != null){
+					model.addAttribute("categoryList", categoryList);
+				}else{
+					System.out.println("자료가 없습니다");
+				}
+				
 				System.out.println("blogno==memberno");
 				return "blog/index.jsp?content=postWriteForm";
 			}else{ //본인 블로그가 아니면
@@ -232,6 +261,15 @@ public class Blog_Controller {
 			System.out.println("memberno:"+memberno);
 			
 			blog_Service.writePost(dto);
+			
+			//카테고리 부분
+			List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+			
+			if(categoryList != null){
+				model.addAttribute("categoryList", categoryList);
+			}else{
+				System.out.println("자료가 없습니다");
+			}
 		}
 		
 		return "redirect:/"+blogno+"/readPost";
@@ -325,7 +363,16 @@ public class Blog_Controller {
 		}else{
 			System.out.println("자료가 없습니다");
 		}
-
+		
+		//카테고리 부분
+		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+		
+		if(categoryList != null){
+			model.addAttribute("categoryList", categoryList);
+		}else{
+			System.out.println("자료가 없습니다");
+		}
+		
 		//return "blog/post";
 		return "blog/index2.jsp?content=post";
 	}
@@ -356,6 +403,17 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+				//카테고리 부분
+				@SuppressWarnings("resource")
+				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+				Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+				List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+				if(categoryList != null){
+					model.addAttribute("categoryList", categoryList);
+				}else{
+					System.out.println("자료가 없습니다");
+				}
 				
 				return "blog/index.jsp?content=blogManageForm";
 			}else{
@@ -558,8 +616,6 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				
-				Category_DTO dto = new Category_DTO();
 				
 				@SuppressWarnings("resource")
 				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -786,4 +842,23 @@ public class Blog_Controller {
 			return "redirect:/index";
 		}
 	}
+	
+	@RequestMapping(value = "/testBefore", method = RequestMethod.GET)
+	public String test_Before(){
+		System.out.println("testBefore 어드바이스");
+		return "blog/testForm";
+	}
+	
+	@RequestMapping(value = "/testAfter", method = RequestMethod.GET)
+	public String test_After(){
+		System.out.println("testAfter 어드바이스");
+		return "blog/testForm";
+	}
+	
+	@RequestMapping(value = "/testAround", method = RequestMethod.GET)
+	public String test_Around(){
+		System.out.println("testAround 어드바이스");
+		return "blog/testForm";
+	}
+
 }

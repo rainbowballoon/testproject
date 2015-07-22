@@ -8,3 +8,6 @@
                <a href="61/readPost">61번사람 블로그</a>
 			   <a href="62/readPost">62번사람 블로그</a>
             </div>
+<!-- <hr> -->
+<!-- AOP 테스트중 -->
+<!-- <hr> -->

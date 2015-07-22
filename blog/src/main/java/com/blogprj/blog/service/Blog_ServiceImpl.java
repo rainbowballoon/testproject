@@ -207,4 +207,8 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void serviceMethod() {
+		System.out.println("service메소드 호출했음다");
+	}
 }

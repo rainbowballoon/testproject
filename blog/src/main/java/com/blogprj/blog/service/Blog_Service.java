@@ -38,4 +38,5 @@ public interface Blog_Service{
 	public int selectPostCount(int blogno);
 	
 	public List<Test_DTO> test();
+	public void serviceMethod();
 }
