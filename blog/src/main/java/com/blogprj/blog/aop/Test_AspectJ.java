@@ -13,31 +13,23 @@ import org.springframework.ui.Model;
 
 import com.blogprj.blog.model.Member_DTO;
 
-@Aspect
+//Advice : 에스팩트가 해야할 작업을 뜻함.
+
+//Aspect : Advice + Pointcut
+@Aspect 
 public class Test_AspectJ {
 	
-	//포인트컷: Join Point를 지정하여 충고가 언제 실행될지를 지정하는데 사용. pointcut 정의 메소드는 무조건 리턴타입이 void
-	@Pointcut("bean(Blog_Controller)")
+	//Pointcut : 어드바이스할 조인포인트 영역을 좁혀주는 역할
+	@Pointcut("execution(* com.blogprj.blog.Blog_Controller.*(..))")
 	public void authOperation(){}
 	
-//	execution: 메소드 실행 결합점(join points)과 일치시키는데 사용된다.
-//	within: 특정 타입에 속하는 결합점을 정의한다.
-//	this: 빈 참조가 주어진 타입의 인스턴스를 갖는 결합점을 정의한다.
-//	target: 대상 객체가 주어진 타입을 갖는 결합점을 정의한다.
-//	args: 인자가 주어진 타입의 인스턴스인 결합점을 정의한다.
-//	@target: 수행중인 객체의 클래스가 주어진 타입의 어노테이션을 갖는 결합점을 정의한다.
-//	@args: 전달된 인자의 런타입 타입이 주어진 타입의 어노테이션을 갖는 결합점을 정의한다.
-//	@within: 주어진 어노테이션을 갖는 타입 내 결합점을 정의한다.
-//	@annotation: 결합점의 대상 객체가 주어진 어노테이션을 갖는 결합점을 정의한다.
 	
-	//Advice(충고) : Aspect(관점)의 실제 구현체. 포인트컷 표현식과 일치하는 결합점에 삽입되어 동작할 수 있는 코드.
+	//Around(충고) : Advice가 Advice 대상 메소드를 감싸서 대상메소드 호출 전과 후의 기능을 제공함
 	@Around("authOperation()")
-	public Object aroundAnyAuthOperation(
-			ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object authOperationAspect(ProceedingJoinPoint joinPoint) throws Throwable {
 		System.out.println("=====aroundAnyAuthOperation 시작====");
 		
 		HttpServletRequest request = null;
-		HttpSession session = request.getSession();
 		
 		for(Object obj : joinPoint.getArgs()){
 			if(obj instanceof HttpServletRequest){
@@ -45,8 +37,7 @@ public class Test_AspectJ {
 			}
 		}
 		
-		String connUri = request.getRequestURI();
-		System.out.println(connUri);
+		HttpSession session = request.getSession();
 		
 		String logined = (String) session.getAttribute("logined"); //로그인 여부
 		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
@@ -54,14 +45,17 @@ public class Test_AspectJ {
 		System.out.println("로그인여부:"+logined+", memberno:"+memberno);
 		
 		if(logined != null){ //로그인 여부
+			System.out.println("로그인 유저");
 			Object result = joinPoint.proceed();
 			System.out.println("=====aroundAnyAuthOperation 끝====");
 			return result;
 		}else{
 			System.out.println("로그아웃 유저");
+			System.out.println("=====aroundAnyAuthOperation 끝====");
 			session.invalidate();
 			return "redirect:/index";
 		}
+		
 	}
 	
 //	@Pointcut("execution(* com.blogprj.blog.AspectTestController.*Before())")
