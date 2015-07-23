@@ -35,7 +35,6 @@
 	<context:component-scan base-package="com.blogprj.blog" />
 	
 	<!-- AOP -->
-	<aop:aspectj-autoproxy />
-	<beans:bean id="test" class="com.blogprj.blog.aop.Test_AspectJ" ></beans:bean>
-	
+<!-- 	<aop:aspectj-autoproxy /> -->
+<!-- 	<beans:bean id="test" class="com.blogprj.blog.aop.Test_AspectJ" ></beans:bean> -->
 </beans:beans>

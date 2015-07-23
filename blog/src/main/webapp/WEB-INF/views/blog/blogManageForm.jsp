@@ -17,7 +17,7 @@
                     </div>
                     <div class="panel-body">
                         <p>블로그 제목, 소개글, 프로필사진 설정</p>
-                        <a href="#" class="btn btn-default">프로필 정보 관리</a>
+                        <a href="profileForm" class="btn btn-default">프로필 정보 관리</a>
                     </div>
                 </div>
             </div>
