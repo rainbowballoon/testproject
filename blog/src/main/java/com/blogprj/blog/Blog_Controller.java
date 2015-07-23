@@ -1,6 +1,8 @@
 package com.blogprj.blog;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
@@ -915,8 +918,9 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				return "blog/index2.jsp?content=profileForm";
 				
+				
+				return "blog/index2.jsp?content=profileForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -927,6 +931,86 @@ public class Blog_Controller {
 		}
 	}	
 	
+	@RequestMapping(value = "/{blogno}/profileWrite", method = RequestMethod.POST)
+	public String profileWrite(
+			Model model, HttpServletRequest request, HttpSession session,
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("title") String title,
+			@RequestParam("nickname") String nickname,
+			@RequestParam("profile") String profile,
+			@RequestParam("proimg") MultipartFile mproimg){
+		System.out.println("profileWrite blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		//카테고리 부분
+		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+		System.out.println(categoryList);
+		if(categoryList != null){
+			model.addAttribute("categoryList", categoryList);
+		}else{
+			System.out.println("자료가 없습니다");
+		}
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				Blog_DTO dto = new Blog_DTO();
+				
+				//이미지 업로드
+				String proimg = mproimg.getOriginalFilename(); //이미지 파일이름
+				if (!proimg.isEmpty()) {
+					try{
+						byte[] bytes = proimg.getBytes();
+		                
+						String rootPath = request.getSession().getServletContext().getRealPath("/profileimage");
+						System.out.println("rootPath:"+rootPath);
+						
+		                File dir = new File(rootPath + File.separator);
+		                
+		                if (!dir.exists()) dir.mkdirs();
+		                
+		                File serverFile = new File(dir.getAbsolutePath() + File.separator + proimg);
+		                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		                stream.write(bytes);
+		                stream.close();
+		                
+		                System.out.println("서버파일위치=" + serverFile.getAbsolutePath());
+		                System.out.println("파일 업로드에 성공하셨습니다=" + proimg);
+		                dto.setProimg(proimg);
+					}catch(Exception e){
+						System.out.println("파일업로드에 실패했습니다 " + proimg + " => " + e.getMessage());
+						dto.setProimg("temp.png");
+					}
+				}else {
+		            System.out.println("파일업로드에 실패했습니다." + proimg + " 파일이 없습니다");
+		            
+		            if(dto.getProimg()==null || dto.getProimg().equals(null)){
+		            	System.out.println("dto.getProimg()가 널입니다");
+		            	dto.setProimg(dto.getProimg());
+		            }else{
+		            	System.out.println("dto.getProimg():"+dto.getProimg());
+		            	dto.setProimg(dto.getProimg());
+		            }
+		        }
+				
+				dto.setTitle(title);
+				dto.setProfile(profile);
+				dto.setMemberno(memberno);
+
+				return "redirect:/"+blogno+"/profileForm";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
 //	@RequestMapping(value = "/testBefore", method = RequestMethod.GET)
 //	public String test_Before(){
 //		System.out.println("testBefore 어드바이스");
