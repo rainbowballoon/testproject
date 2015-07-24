@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -79,6 +80,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 
+	@Override
+	public Blog_DTO blogProfileRead(int memberno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogProfileRead";
+			return sqlSession.selectOne(statement, memberno);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void blogProfileUpdate(Blog_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogProfileUpdate";
+			sqlSession.update(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 //post	
 	@Override
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno) {

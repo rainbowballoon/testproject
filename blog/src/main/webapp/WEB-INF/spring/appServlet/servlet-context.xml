@@ -18,7 +18,10 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/lib/**" location="/resources/lib/" />
+	<resources mapping="/themecss/**" location="/resources/themecss/" />
+	<resources mapping="/themefonts/**" location="/resources/themefonts/" />
 	<resources mapping="/upload/**" location="/upload/" />
+	<resources mapping="/profileimage/**" location="/profileimage/" />
 	<resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 
@@ -19,6 +19,25 @@
 	
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath }/resources/css/blog-home.css" rel="stylesheet">
+	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:choose>
+	<c:when test="${themedto == 0}">
+		<link href="${pageContext.request.contextPath }/resources/themecss/candy-box.css" rel="stylesheet">
+	</c:when>
+	<c:when test="${themedto == 1}">
+		<link href="${pageContext.request.contextPath }/resources/themecss/autumn-dawn.css" rel="stylesheet">
+	</c:when>
+	<c:when test="${themedto == 2}">
+		<link href="${pageContext.request.contextPath }/resources/themecss/pastel-stream.css" rel="stylesheet">
+	</c:when>
+	<c:otherwise>
+	
+	</c:otherwise>
+</c:choose>	
+	
+	
+	
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -45,7 +45,17 @@
     	WHERE memberno = #{memberno}
     </select>
     
-	
+    <select id="blogProfileRead" parameterType="int" resultType="com.blogprj.blog.model.Blog_DTO">
+    	SELECT * 
+    	FROM BLOG 
+    	WHERE memberno = #{memberno}
+    </select>
+    
+	<update id="blogProfileUpdate" parameterType="com.blogprj.blog.model.Blog_DTO">
+		UPDATE BLOG SET 
+		title = #{title}, proimg = #{proimg}, profile = #{profile}
+		WHERE memberno = #{memberno}
+	</update>
 <!-- post  -->
 
      <insert id="writePost" parameterType="com.blogprj.blog.model.Post_DTO">

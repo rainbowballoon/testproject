@@ -2,6 +2,7 @@ package com.blogprj.blog.service;
 
 import java.util.List;
 
+import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -16,7 +17,9 @@ public interface Blog_Service{
 
 //blog
 	public void blogCreate(int memberno); //블로그 생성
-
+	public Blog_DTO blogProfileRead(int memberno); //프로필 정보 가져오기
+	public void blogProfileUpdate(Blog_DTO dto);
+	
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
 	public void categoryWrite(Category_DTO dto);
