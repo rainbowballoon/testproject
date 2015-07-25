@@ -7,6 +7,7 @@ public class Blog_DTO {
 	private String profile;
 	private int memberno;
 	private int layoutno;
+	private int themeno;
 	
 	public int getNo() {
 		return no;
@@ -43,6 +44,12 @@ public class Blog_DTO {
 	}
 	public void setLayoutno(int layoutno) {
 		this.layoutno = layoutno;
+	}
+	public int getThemeno() {
+		return themeno;
+	}
+	public void setThemeno(int themeno) {
+		this.themeno = themeno;
 	}
 	
 }

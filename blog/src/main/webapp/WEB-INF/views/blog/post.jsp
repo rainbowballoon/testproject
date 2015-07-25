@@ -41,10 +41,10 @@
 <body>
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+<!--                 <h1 class="page-header"> -->
+<!--                     Page Heading -->
+<!--                     <small>Secondary Text</small> -->
+<!--                 </h1> -->
 			
 			<c:forEach items="${postList }" var="dto">
 				<!-- First Blog Post -->
@@ -64,8 +64,9 @@
 					  </div>
 					</div>
                 <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
+                <a class="btn btn-primary" href="#">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
 			</c:forEach>

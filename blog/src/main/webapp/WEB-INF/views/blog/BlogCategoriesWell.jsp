@@ -7,7 +7,7 @@
                     <h4><strong>블로그 카테고리</strong></h4>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <ul class="list-group">
                             
                             <c:forEach items="${categoryList }" var="categoryList">
@@ -27,15 +27,15 @@
 <!--                         </div> -->
                         <!-- /.col-lg-6 -->
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a></li>
-                                <li><a href="#">Category Name</a></li>
-                                <li><a href="#">Category Name</a></li>
-                                <li><a href="#">Category Name</a></li>
-                            </ul>
-                        </div>
-                    </div>
+<!--                     <div class="row"> -->
+<!--                         <div class="col-lg-12"> -->
+<!--                             <ul class="list-unstyled"> -->
+<!--                                 <li><a href="#">Category Name</a></li> -->
+<!--                                 <li><a href="#">Category Name</a></li> -->
+<!--                                 <li><a href="#">Category Name</a></li> -->
+<!--                                 <li><a href="#">Category Name</a></li> -->
+<!--                             </ul> -->
+<!--                         </div> -->
+<!--                     </div> -->
                     <!-- /.row -->
                 </div>

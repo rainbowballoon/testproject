@@ -2,6 +2,7 @@ package com.blogprj.blog.service;
 
 import java.util.List;
 
+import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -87,6 +88,44 @@ public class Blog_ServiceImpl implements Blog_Service {
 			blogmapper.blogCreate(memberno);
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public Blog_DTO blogProfileRead(int memberno) {
+		try{
+			return blogmapper.blogProfileRead(memberno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public void blogProfileUpdate(Blog_DTO dto) {
+		try{
+			blogmapper.blogProfileUpdate(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void blogThemeUpdate(Blog_DTO dto) {
+		try{
+			blogmapper.blogThemeUpdate(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public int blogThemeView(int memberno) {
+		try{
+			return blogmapper.blogThemeView(memberno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return 0;
 		}
 	}
 	

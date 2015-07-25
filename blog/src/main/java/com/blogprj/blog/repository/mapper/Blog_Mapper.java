@@ -2,6 +2,7 @@ package com.blogprj.blog.repository.mapper;
 
 import java.util.List;
 
+import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -13,10 +14,14 @@ public interface Blog_Mapper {
 	public Member_DTO blogLogin(String member_id, String member_pw); //회원로그인
 	public int blogJoin(Member_DTO dto); //회원가입
 	public int getBlogno(int memberno); //회원의 blogno 가져오기
-
+	
 //blog
 	public void blogCreate(int memberno); //블로그 생성
-
+	public Blog_DTO blogProfileRead(int memberno); 
+	public void blogProfileUpdate(Blog_DTO dto);
+	public void blogThemeUpdate(Blog_DTO dto); //테마바꾸기
+	public int blogThemeView(int memberno); //해당 테마 보이기
+	
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
 	public void categoryWrite(Category_DTO dto);
@@ -36,6 +41,8 @@ public interface Blog_Mapper {
 	public void writePost(Post_DTO dto); //포스트 작성하기
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
 	public int selectPostCount(int blogno);
+
+//theme
 	
 	public List<Test_DTO> test();
 }

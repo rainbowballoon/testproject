@@ -4,6 +4,8 @@
 	<!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
 
+	<%@ include file="profileWell.jsp" %>
+
 	<%@ include file="BlogSearchWell.jsp" %>
                 <!-- Blog Search Well -->
 <!--                 <div class="well"> -->

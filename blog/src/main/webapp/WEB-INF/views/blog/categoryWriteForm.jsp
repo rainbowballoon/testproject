@@ -13,7 +13,7 @@
              <input type="hidden" name="categoryno" value="${categoryno }">	
                	<table class="table table-hover">
                		<tr>
-               			<td class="active">메뉴명 ${categoryno }</td>
+               			<td class="active">카테고리 이름</td>
                			<td><input type="text" name="name"></td>
                		</tr>
                	</table>

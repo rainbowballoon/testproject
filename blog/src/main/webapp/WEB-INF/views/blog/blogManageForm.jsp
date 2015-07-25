@@ -11,7 +11,7 @@
                 <h1 class="page-header">블로그 관리 페이지</h1>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4><i class="glyphicon glyphicon-user"></i> 정보 설정 </h4>
                     </div>
@@ -22,19 +22,19 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4><i class="glyphicon glyphicon-wrench"></i> 디자인 설정</h4>
                     </div>
                     <div class="panel-body">
-                  	  	<p><a href="#" class="btn btn-default">블로그 스킨 설정</a></p>
+                  	  	<p><a href="themeListForm" class="btn btn-default">블로그 스킨 설정</a></p>
                         <p><a href="#" class="btn btn-default">블로그 레이아웃 설정</a></p>
                         <p><a href="#" class="btn btn-default">사용자 위젯 설정</a></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
+                <div class="panel panel-danger">
                     <div class="panel-heading">
                         <h4><i class="glyphicon glyphicon-menu-hamburger"></i> 카테고리 설정</h4>
                     </div>

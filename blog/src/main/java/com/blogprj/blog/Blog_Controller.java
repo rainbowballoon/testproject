@@ -89,7 +89,7 @@ public class Blog_Controller {
 			System.out.println("자료가 없습니다");
 		}
 		
-		return "blog/index";
+		return "redirect:/"+blogno+"/readPost";
 	}
 	
 //	private Blog_Service service;
@@ -173,8 +173,10 @@ public class Blog_Controller {
 		Member_DTO dto = new Member_DTO();
 		
 		dto = blog_Service.blogLogin(member_id, member_pw);
+		int themeno = blog_Service.blogThemeView(dto.getNo());
 		
 		session.setAttribute("logined", dto);
+		session.setAttribute("themeno", themeno);
 		
 		return "blog/index.jsp?content=loginView";
 	}
@@ -368,10 +370,10 @@ public class Blog_Controller {
 			System.out.println("자료가 없습니다");
 		}
 		
-		return "blog/index2.jsp?content=post";
+		return "blog/index.jsp?content=post";
 	}
 	
-	@RequestMapping(value = "/testForm/1", method = RequestMethod.GET)
+	@RequestMapping(value = "/testForm", method = RequestMethod.GET)
 	public String testForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
 		
 		@SuppressWarnings("resource")
@@ -385,6 +387,7 @@ public class Blog_Controller {
 		
 		System.out.println(dtolist);
 		
+		//return "blog/index.jsp?content=testForm";
 		return "blog/index2.jsp?content=testForm";
 		//return "blog/testForm";
 	}
@@ -466,7 +469,8 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				return "blog/index2.jsp?content=categoryList";
+				return "blog/index.jsp?content=categoryList";
+				//return "blog/index2.jsp?content=categoryList";
 				
 			}else{
 				session.invalidate();
@@ -500,7 +504,8 @@ public class Blog_Controller {
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				
-				return "blog/index2.jsp?content=categoryWriteForm";
+				return "blog/index.jsp?content=categoryWriteForm";
+				//return "blog/index2.jsp?content=categoryWriteForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -578,8 +583,8 @@ public class Blog_Controller {
 				}else{
 					System.out.println("자료가 없습니다");
 				}
-				return "blog/index2.jsp?content=categoryEditForm";
-				
+				return "blog/index.jsp?content=categoryEditForm";
+				//return "blog/index2.jsp?content=categoryEditForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -689,8 +694,8 @@ public class Blog_Controller {
 				}else{
 					System.out.println("자료가 없습니다");
 				}
-				return "blog/index2.jsp?content=subCategoryList";
-				
+				return "blog/index.jsp?content=subCategoryList";
+				//return "blog/index2.jsp?content=subCategoryList";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -726,7 +731,8 @@ public class Blog_Controller {
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				model.addAttribute("categoryno", categoryno);
-				return "blog/index2.jsp?content=subCategoryWriteForm";
+				return "blog/index.jsp?content=subCategoryWriteForm";
+				//return "blog/index2.jsp?content=subCategoryWriteForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -812,8 +818,8 @@ public class Blog_Controller {
 				}else{
 					System.out.println("자료가 없습니다");
 				}
-				return "blog/index2.jsp?content=subCategoryEditForm";
-				
+				return "blog/index.jsp?content=subCategoryEditForm";
+				//return "blog/index2.jsp?content=subCategoryEditForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -918,9 +924,14 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				System.out.println("blogProfileForm memberno:"+memberno);
+				Blog_DTO dto = new Blog_DTO();
 				
-				
-				return "blog/index2.jsp?content=profileForm";
+				dto = blog_Service.blogProfileRead(memberno);
+
+				model.addAttribute("profiledto", dto);
+				return "blog/index.jsp?content=profileForm";
+				//return "blog/index2.jsp?content=profileForm";
 			}else{
 				session.invalidate();
 				return "redirect:/index";
@@ -945,34 +956,26 @@ public class Blog_Controller {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
-		//카테고리 부분
-		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-		System.out.println(categoryList);
-		if(categoryList != null){
-			model.addAttribute("categoryList", categoryList);
-		}else{
-			System.out.println("자료가 없습니다");
-		}
-		
 		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
-			
+
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 				Blog_DTO dto = new Blog_DTO();
+				dto.setTitle(title);
+				dto.setProfile(profile);
+				dto.setMemberno(memberno);
 				
 				//이미지 업로드
 				String proimg = mproimg.getOriginalFilename(); //이미지 파일이름
-				if (!proimg.isEmpty()) {
+				if (!mproimg.isEmpty()) {
 					try{
-						byte[] bytes = proimg.getBytes();
+						byte[] bytes = mproimg.getBytes();
 		                
 						String rootPath = request.getSession().getServletContext().getRealPath("/profileimage");
 						System.out.println("rootPath:"+rootPath);
 						
-		                File dir = new File(rootPath + File.separator);
-		                
+						File dir = new File(rootPath + File.separator);
 		                if (!dir.exists()) dir.mkdirs();
-		                
 		                File serverFile = new File(dir.getAbsolutePath() + File.separator + proimg);
 		                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 		                stream.write(bytes);
@@ -987,20 +990,17 @@ public class Blog_Controller {
 					}
 				}else {
 		            System.out.println("파일업로드에 실패했습니다." + proimg + " 파일이 없습니다");
-		            
-		            if(dto.getProimg()==null || dto.getProimg().equals(null)){
-		            	System.out.println("dto.getProimg()가 널입니다");
-		            	dto.setProimg(dto.getProimg());
+		            Blog_DTO dtoimg = blog_Service.blogProfileRead(memberno);
+		            if(dtoimg.getProimg()==null || dtoimg.getProimg().equals(null)){
+		            	System.out.println("dtoimg.getProimg()가 널입니다");
+		            	dto.setProimg(dtoimg.getProimg());
 		            }else{
-		            	System.out.println("dto.getProimg():"+dto.getProimg());
-		            	dto.setProimg(dto.getProimg());
+		            	System.out.println("dtoimg.getProimg():"+dtoimg.getProimg());
+		            	dto.setProimg(dtoimg.getProimg());
 		            }
 		        }
-				
-				dto.setTitle(title);
-				dto.setProfile(profile);
-				dto.setMemberno(memberno);
 
+				blog_Service.blogProfileUpdate(dto);
 				return "redirect:/"+blogno+"/profileForm";
 			}else{
 				session.invalidate();
@@ -1011,6 +1011,79 @@ public class Blog_Controller {
 			return "redirect:/index";
 		}
 	}
+	
+//theme
+	@RequestMapping(value = "/{blogno}/themeListForm", method = RequestMethod.GET)
+	public String themeListForm(
+			@PathVariable("blogno") int blogno, 
+			Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("themeListForm blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		//카테고리 부분
+		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+		if(categoryList != null){
+			model.addAttribute("categoryList", categoryList);
+		}else{
+			System.out.println("자료가 없습니다");
+		}
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+				return "blog/index.jsp?content=themeListForm";
+				//return "blog/index2.jsp?content=themeListForm";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
+	
+	@RequestMapping(value = "/{blogno}/themePick", method = RequestMethod.GET)
+	public String themePick(
+			@PathVariable("blogno") int blogno,
+			@RequestParam("themeno") int themeno,
+			Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("themePick blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+			
+			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+				
+				System.out.println("themeno:"+themeno);
+				
+				Blog_DTO dto = new Blog_DTO();
+				dto.setMemberno(memberno);
+				dto.setThemeno(themeno);
+				
+				blog_Service.blogThemeUpdate(dto);
+				
+				session.setAttribute("themeno", themeno);
+				return "blog/index.jsp?content=themeListForm";
+			}else{
+				session.invalidate();
+				return "redirect:/index";
+			}
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
+	}
+		
 //	@RequestMapping(value = "/testBefore", method = RequestMethod.GET)
 //	public String test_Before(){
 //		System.out.println("testBefore 어드바이스");
