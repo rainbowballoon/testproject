@@ -8,6 +8,8 @@ public class Blog_DTO {
 	private int memberno;
 	private int layoutno;
 	private int themeno;
+	private Category_DTO cDTO;
+	private SubCategory_DTO scDTO;
 	
 	public int getNo() {
 		return no;
@@ -52,4 +54,16 @@ public class Blog_DTO {
 		this.themeno = themeno;
 	}
 	
+	public Category_DTO getcDTO() {
+		return cDTO;
+	}
+	public void setcDTO(Category_DTO cDTO) {
+		this.cDTO = cDTO;
+	}
+	public SubCategory_DTO getScDTO() {
+		return scDTO;
+	}
+	public void setScDTO(SubCategory_DTO scDTO) {
+		this.scDTO = scDTO;
+	}
 }

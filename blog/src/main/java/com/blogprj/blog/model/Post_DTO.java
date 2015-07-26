@@ -9,6 +9,7 @@ public class Post_DTO {
 	private int memberno;
 	private int postaccess;
 	private int topicno;
+	private int subcategoryno;
 	
 	public int getNo() {
 		return no;
@@ -59,5 +60,12 @@ public class Post_DTO {
 	public void setPostaccess(int postaccess) {
 		this.postaccess = postaccess;
 	}
+	public int getSubcategoryno() {
+		return subcategoryno;
+	}
+	public void setSubcategoryno(int subcategoryno) {
+		this.subcategoryno = subcategoryno;
+	}
+
 	
 }

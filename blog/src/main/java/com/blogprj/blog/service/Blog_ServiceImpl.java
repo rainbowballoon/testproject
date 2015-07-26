@@ -48,6 +48,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 			return -1;
 		}
 	}
+	
+	@Override
+	public Member_DTO blogInfo(int memberno) {
+		try{
+			return blogmapper.blogInfo(memberno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 //post
 	
@@ -72,9 +82,9 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public void writePost(Post_DTO dto) {
+	public void postWrite(Post_DTO dto) {
 		try{
-			blogmapper.writePost(dto);
+			blogmapper.postWrite(dto);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

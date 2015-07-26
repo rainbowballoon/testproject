@@ -22,22 +22,19 @@
 	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:choose>
-	<c:when test="${themeno == 1}">
+	<c:when test="${logined.bDTO.themeno == 1}">
 		<link href="${pageContext.request.contextPath }/resources/themecss/candy-box.css" rel="stylesheet">
 	</c:when>
-	<c:when test="${themeno == 2}">
+	<c:when test="${logined.bDTO.themeno == 2}">
 		<link href="${pageContext.request.contextPath }/resources/themecss/autumn-dawn.css" rel="stylesheet">
 	</c:when>
-	<c:when test="${themeno == 3}">
+	<c:when test="${logined.bDTO.themeno == 3}">
 		<link href="${pageContext.request.contextPath }/resources/themecss/pastel-stream.css" rel="stylesheet">
 	</c:when>
 	<c:otherwise>
 	
 	</c:otherwise>
 </c:choose>	
-	
-	
-	
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

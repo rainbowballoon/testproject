@@ -14,7 +14,8 @@ public interface Blog_Service{
 	public Member_DTO blogLogin(String member_id, String member_pw); //회원로그인
 	public int blogJoin(Member_DTO dto); //회원가입
 	public int getBlogno(int memberno); //회원의 blogno 가져오기
-
+	public Member_DTO blogInfo(int memberno); //회원의 memberno를 이용해 블로그 정보 가져오기
+	
 //blog
 	public void blogCreate(int memberno); //블로그 생성
 	public Blog_DTO blogProfileRead(int memberno); //프로필 정보 가져오기
@@ -38,7 +39,7 @@ public interface Blog_Service{
 	public void subCategoryDelete(int no, int categoryno, int blogno);
 	
 //post	
-	public void writePost(Post_DTO dto); //포스트 작성하기
+	public void postWrite(Post_DTO dto); //포스트 작성하기
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
 	public int selectPostCount(int blogno);
 

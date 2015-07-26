@@ -13,29 +13,10 @@
                             <c:forEach items="${categoryList }" var="categoryList">
                                 <a class="list-group-item" href="#">${categoryList.name }</a>
                             </c:forEach>
-                                
+							<c:out value="${logined.bDTO.cDTO }"></c:out>
+							<!-- 여기서 모르겠는부분: bDTO.cDTO하면 마지막 값만 검색됨. 리스트채로 얻으려면 어떻게..? -->
                             </ul>
                         </div>
-                        <!-- /.col-lg-6 -->
-<!--                         <div class="col-lg-6"> -->
-<!--                             <ul class="list-unstyled"> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                             </ul> -->
-<!--                         </div> -->
-                        <!-- /.col-lg-6 -->
                     </div>
-<!--                     <div class="row"> -->
-<!--                         <div class="col-lg-12"> -->
-<!--                             <ul class="list-unstyled"> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                                 <li><a href="#">Category Name</a></li> -->
-<!--                             </ul> -->
-<!--                         </div> -->
-<!--                     </div> -->
                     <!-- /.row -->
                 </div>

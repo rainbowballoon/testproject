@@ -60,10 +60,20 @@ public class Blog_MapperImpl implements Blog_Mapper {
 
 	
 	@Override
-	public void writePost(Post_DTO dto) {
+	public void postWrite(Post_DTO dto) {
 		try{
-			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.writePost";
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postWrite";
 			sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public Member_DTO blogInfo(int memberno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogInfo";
+			return sqlSession.selectOne(statement, memberno);
 		}finally{
 			
 		}

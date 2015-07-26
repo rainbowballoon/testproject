@@ -68,6 +68,10 @@ public class Blog_Controller {
 				}
 			}
 			
+			//블로그 정보 불러오기
+			Member_DTO mdto = blog_Service.blogInfo(blogno);
+			session.setAttribute("blogpoint", mdto);
+			
 		}
 		return "blog/index";
 	}
@@ -88,6 +92,10 @@ public class Blog_Controller {
 		}else{
 			System.out.println("자료가 없습니다");
 		}
+		
+		//블로그 정보 불러오기
+		Member_DTO mdto = blog_Service.blogInfo(blogno);
+		session.setAttribute("blogpoint", mdto);
 		
 		return "redirect:/"+blogno+"/readPost";
 	}
@@ -173,10 +181,8 @@ public class Blog_Controller {
 		Member_DTO dto = new Member_DTO();
 		
 		dto = blog_Service.blogLogin(member_id, member_pw);
-		int themeno = blog_Service.blogThemeView(dto.getNo());
-		
 		session.setAttribute("logined", dto);
-		session.setAttribute("themeno", themeno);
+		session.setAttribute("blogpoint", dto);
 		
 		return "blog/index.jsp?content=loginView";
 	}
@@ -186,7 +192,8 @@ public class Blog_Controller {
 		session.invalidate();
 		return "redirect:/index";
 	}
-	
+
+//post
 	@RequestMapping(value = "/{blogno}/postWriteForm", method = RequestMethod.GET)
 	public String postWriteForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
 		System.out.println("postWriteForm blogno:"+blogno);
@@ -234,10 +241,89 @@ public class Blog_Controller {
 	public String writePost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
 		@RequestParam("title") String title,
 		@RequestParam("content") String content,
-		//@RequestParam("blogno") int blogno,
 		@RequestParam("postaccess") int postacess,
-		@RequestParam("topicno") int topicno) {
+		@RequestParam("topicno") int topicno,
+		@RequestParam("subcategoryno") int subcategoryno) {
 		System.out.println("writePost blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		if(session.getAttribute("logined") != null){
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
+			
+			Post_DTO dto = new Post_DTO();
+			
+			dto.setTitle(title);
+			dto.setContent(content);
+			dto.setBlogno(blogno);
+			dto.setPostaccess(postacess);
+			dto.setTopicno(topicno);
+			dto.setMemberno(memberno);
+			dto.setSubcategoryno(subcategoryno);
+			
+			System.out.println("memberno:"+memberno);
+			
+			blog_Service.postWrite(dto);
+		}
+		
+		return "redirect:/"+blogno+"/readPost";
+	}
+	
+	@RequestMapping(value = "/{blogno}/postEditForm", method = RequestMethod.GET)
+	public String postEditForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+		System.out.println("postEditForm blogno:"+blogno);
+		
+		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			//카테고리 부분
+			List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+			System.out.println(categoryList);
+			if(categoryList != null){
+				model.addAttribute("categoryList", categoryList);
+			}else{
+				System.out.println("자료가 없습니다");
+			}
+			
+			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+				
+				//blog_Service.postDetail(int no, int blogno);
+				
+				List<SubCategory_DTO> dtolist = new ArrayList<SubCategory_DTO>();
+				dtolist = blog_Service.subCategoryListAll(blogno);
+				
+				model.addAttribute("blogno", blogno);
+				model.addAttribute("subcategorylist", dtolist);
+				model.addAttribute("memberno", memberno);
+				
+				System.out.println("blogno==memberno");
+				return "blog/index.jsp?content=postEditForm";
+			}else{ //본인 블로그가 아니면
+				System.out.println("blogno!=memberno");
+				System.out.println("blogno:"+blogno);
+				return "redirect:/"+blogno+"/readPost";
+			}
+			
+		}else{ //로그인하지 않은 사용자
+			System.out.println("logoff");
+			return "redirect:/"+blogno+"/readPost";
+		}
+	}
+	
+	@RequestMapping(value = "/{blogno}/EditPost", method = RequestMethod.POST)
+	public String EditPost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
+		@RequestParam("title") String title,
+		@RequestParam("content") String content,
+		@RequestParam("postaccess") int postacess,
+		@RequestParam("topicno") int topicno,
+		@RequestParam("subcategoryno") int subcategoryno) {
+		System.out.println("EditPost blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -263,10 +349,9 @@ public class Blog_Controller {
 			dto.setPostaccess(postacess);
 			dto.setTopicno(topicno);
 			dto.setMemberno(memberno);
+			dto.setSubcategoryno(subcategoryno);
 			
-			System.out.println("memberno:"+memberno);
-			
-			blog_Service.writePost(dto);
+			//blog_Service.postEdit(dto);
 		}
 		
 		return "redirect:/"+blogno+"/readPost";
@@ -321,7 +406,7 @@ public class Blog_Controller {
 	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
 	public String readPost(
 			@PathVariable("blogno") int blogno, 
-			@CookieValue(value="{guest}", required=false, defaultValue="0") int guest, 
+//			@CookieValue(value="{guest}", required=false, defaultValue="0") int guest, 
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("readPost blogno:"+blogno);
 		
@@ -337,6 +422,10 @@ public class Blog_Controller {
 		}else{
 			System.out.println("자료가 없습니다");
 		}
+		
+		//블로그 정보 불러오기
+		Member_DTO mdto = blog_Service.blogInfo(blogno);
+		session.setAttribute("blogpoint", mdto);
 		
 		//오라클용 페이지
 		int sPage=0;
@@ -1001,6 +1090,13 @@ public class Blog_Controller {
 		        }
 
 				blog_Service.blogProfileUpdate(dto);
+				
+				Member_DTO mdto = new Member_DTO();
+				String member_id= ((Member_DTO)session.getAttribute("logined")).getId();
+				String member_pw= ((Member_DTO)session.getAttribute("logined")).getPw();
+				mdto = blog_Service.blogLogin(member_id, member_pw);
+				session.setAttribute("logined", mdto);
+				
 				return "redirect:/"+blogno+"/profileForm";
 			}else{
 				session.invalidate();
@@ -1066,13 +1162,18 @@ public class Blog_Controller {
 				
 				System.out.println("themeno:"+themeno);
 				
-				Blog_DTO dto = new Blog_DTO();
-				dto.setMemberno(memberno);
-				dto.setThemeno(themeno);
+				Blog_DTO bdto = new Blog_DTO();
+				bdto.setMemberno(memberno);
+				bdto.setThemeno(themeno);
 				
-				blog_Service.blogThemeUpdate(dto);
+				blog_Service.blogThemeUpdate(bdto);
 				
-				session.setAttribute("themeno", themeno);
+				Member_DTO mdto = new Member_DTO();
+				String member_id= ((Member_DTO)session.getAttribute("logined")).getId();
+				String member_pw= ((Member_DTO)session.getAttribute("logined")).getPw();
+				mdto = blog_Service.blogLogin(member_id, member_pw);
+				
+				session.setAttribute("logined", mdto);
 				return "blog/index.jsp?content=themeListForm";
 			}else{
 				session.invalidate();

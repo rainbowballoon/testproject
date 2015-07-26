@@ -20,9 +20,8 @@
 					<input type="text" class="form-control" id="title" name="title" placeholder="제목 입력">
 				</div>
 				<div class="form-group">
-			  	<label for="menuno">등록 카테고리</label>
-				  <select class="form-control" name="topicno">
-				  		<option value="0">test</option>
+			  	<label for="subcategoryno">등록 카테고리</label>
+				  <select class="form-control" name="subcategoryno">
 				     <c:forEach var="subcategorylist" items="${subcategorylist }">
 				     	<option value="${subcategorylist.no }">${subcategorylist.name }</option>
 				     </c:forEach>
@@ -54,21 +53,35 @@
 		            </script>
 				</div>
 				<div class="form-group">
-			  	<label for="opt1">포스트 공개여부</label>
-				<div class="checkbox">
-				  	<label class="radio-inline">
-				      <input type="radio" name="postaccess" value="0" checked> 공개
-				    </label>
-				    <label class="radio-inline">
-				      <input type="radio" name="postaccess" value="1"> 비공개
-				    </label>
+			  		<label for="topicno">주제분류</label>
+					<div class="radio">
+					  	<label class="radio-inline">
+					      <input type="radio" name="topicno" value="1" checked> 주제1
+					    </label>
+					    <label class="radio-inline">
+					      <input type="radio" name="topicno" value="2" checked> 주제2
+					    </label>
+					    <label class="radio-inline">
+					      <input type="radio" name="topicno" value="3" checked> 주제3
+					    </label>
+					</div>
+					<div class="radio">
+						<label>
+					      <input type="radio" name="topicno" value="0"> 주제선택 안함
+					    </label>
+					</div>
 				</div>
+				<div class="form-group">
+				  	<label for="opt1">포스트 공개여부</label>
+					<div class="radio">
+					  	<label class="radio-inline">
+					      <input type="radio" name="postaccess" value="0" checked> 공개
+					    </label>
+					    <label class="radio-inline">
+					      <input type="radio" name="postaccess" value="1"> 비공개
+					    </label>
+					</div>
 			  </div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="uploadfile">파일 업로드</label> -->
-<!-- 					<input type="file" id="uploadfile" name="uploadfile"> -->
-<!-- 					<p class="help-block">파일 첨부하기</p> -->
-<!-- 				</div> -->
 				<button type="submit" class="btn btn-primary">등록하기</button>
 				<button type="reset" class="btn btn-default">취소하기</button>
 			</form>

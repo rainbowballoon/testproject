@@ -20,11 +20,59 @@
 		)
 	</insert>
 
-	<select id="blogLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultType="com.blogprj.blog.model.Member_DTO">
-    	SELECT *
-    	FROM MEMBER 
-    	WHERE id = #{id} AND pw = #{pw}
-    </select>
+	<select id="blogLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="blogLoginMap">
+ 		SELECT 
+ 			m.no, m.id, m.pw, m.nickname, m.birthday, m.domain, m.regdate,
+ 			b.no AS bno, 
+ 			b.title AS btitle, 
+ 			b.proimg AS bproimg, 
+ 			b.profile AS bprofile, 
+ 			b.memberno AS bmemberno, 
+ 			b.layoutno AS blayoutno, 
+ 			b.themeno AS bthemeno,
+ 			c.no AS cno,
+ 			c.name AS cname,
+ 			c.blogno AS cblogno,
+ 			sc.no AS scno,
+ 			sc.name AS scname,
+ 			sc.categoryno AS sccategoryno,
+ 			sc.blogno AS scblogno
+    	FROM MEMBER m
+    		LEFT JOIN BLOG b ON b.memberno = m.no
+    		LEFT JOIN CATEGORY c ON c.blogno = b.no
+    		LEFT JOIN SUBCATEGORY sc ON sc.blogno = b.no
+    	WHERE m.id = #{id} AND m.pw = #{pw}
+ 	</select>
+ 	
+ 	<resultMap type="com.blogprj.blog.model.Member_DTO" id="blogLoginMap">
+ 		<id property="no" column="no" />
+ 		<result column="id" property="id"/>
+ 		<result column="pw" property="pw"/>
+ 		<result column="nickname" property="nickname"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="domain" property="domain"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
+ 			<id column="bno" property="no"/>
+	 		<result column="btitle" property="title"/>
+	 		<result column="bproimg" property="proimg"/>
+	 		<result column="bprofile" property="profile"/>
+	 		<result column="blayoutno" property="layoutno"/>
+	 		<result column="bmemberno" property="memberno"/>
+	 		<result column="bthemeno" property="themeno"/>
+	 		<association property="cDTO" column="bno" javaType="com.blogprj.blog.model.Category_DTO">
+	 			<id column="cno" property="no"/>
+		 		<result column="cname" property="name"/>
+		 		<result column="cblogno" property="blogno"/>
+	 		</association>
+	 		<association property="scDTO" column="bno" javaType="com.blogprj.blog.model.SubCategory_DTO">
+	 			<id column="scno" property="no"/>
+		 		<result column="scname" property="name"/>
+		 		<result column="sccategoryno" property="categoryno"/>
+		 		<result column="scblogno" property="blogno"/>
+	 		</association>
+ 		</association>
+ 	</resultMap>
     
 <!-- blog	 -->
 
@@ -71,14 +119,14 @@
 	
 <!-- post  -->
 
-     <insert id="writePost" parameterType="com.blogprj.blog.model.Post_DTO">
+     <insert id="postWrite" parameterType="com.blogprj.blog.model.Post_DTO">
 		INSERT INTO POST 
 		(
-			no, regdate, title, content, blogno, memberno, postaccess, topicno
+			no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno
 		)
 		VALUES 
 		(
-			post_seq.nextval, sysdate, #{title}, #{content}, #{blogno}, #{memberno}, #{postaccess}, #{topicno}
+			post_seq.nextval, sysdate, #{title}, #{content}, #{blogno}, #{memberno}, #{postaccess}, #{topicno}, #{subcategoryno}
 		)
 	</insert>
 	
@@ -90,7 +138,7 @@
     <select id="postList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
 	    SELECT *
 	  	FROM (
-	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno 
+	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno
 	            from POST
 	            WHERE blogno = #{blogno}
 	         ) 
@@ -182,4 +230,36 @@
     	SELECT * FROM TEST1
     </select>
  
+ 	<select id="blogInfo" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="blogInfoMap">
+ 		SELECT 
+ 			m.no, m.id, m.nickname, m.birthday, m.domain, m.regdate,
+ 			b.no AS bno, 
+ 			b.title AS btitle, 
+ 			b.proimg AS bproimg, 
+ 			b.profile AS bprofile, 
+ 			b.memberno AS bmemberno, 
+ 			b.layoutno AS blayoutno, 
+ 			b.themeno AS bthemeno
+    	FROM MEMBER m
+    		LEFT JOIN BLOG b ON m.no = b.memberno
+    	WHERE m.no = #{memberno}
+ 	</select>
+ 	
+ 	<resultMap type="com.blogprj.blog.model.Member_DTO" id="blogInfoMap">
+ 		<id property="no" column="no" />
+ 		<result column="id" property="id"/>
+ 		<result column="nickname" property="nickname"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="domain" property="domain"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
+ 			<id column="bno" property="no"/>
+	 		<result column="btitle" property="title"/>
+	 		<result column="bproimg" property="proimg"/>
+	 		<result column="bprofile" property="profile"/>
+	 		<result column="blayoutno" property="layoutno"/>
+	 		<result column="bmemberno" property="memberno"/>
+	 		<result column="bthemeno" property="themeno"/>
+ 		</association>
+ 	</resultMap>
 </mapper>

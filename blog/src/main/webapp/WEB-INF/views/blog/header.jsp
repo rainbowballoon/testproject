@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index">사용자 블로그 이름 설정</a>
+                <a class="navbar-brand" href="index"><c:out value="${logined.bDTO.title }"></c:out></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -30,18 +30,30 @@
                     </li>
                 </c:when>
                 <c:otherwise>
-                 	<li>
-                        <a href="postWriteForm">포스트 작성</a>
-                    </li>
-                    <li>
-                        <a href="blogManageForm">블로그 관리</a>
-                    </li>
-                    <li>
-                        <a href="blogLogout">로그아웃</a>
-                    </li>
-                     <li>
-                        <a href="#">방명록</a>
-                    </li>
+                	<c:choose>
+                	<c:when test="${logined.no ==  blogpoint.no}">
+	                 	<li>
+	                        <a href="postWriteForm">포스트 작성</a>
+	                    </li>
+	                    <li>
+	                        <a href="blogManageForm">블로그 관리</a>
+	                    </li>
+	                    <li>
+	                        <a href="blogLogout">로그아웃</a>
+	                    </li>
+	                     <li>
+	                        <a href="#">방명록</a>
+	                    </li>
+                    </c:when>
+                    <c:otherwise>
+	                    <li>
+	                        <a href="blogLogout">로그아웃</a>
+	                    </li>
+	                     <li>
+	                        <a href="#">방명록</a>
+	                    </li>
+                    </c:otherwise>
+                    </c:choose>
                 </c:otherwise>
                 </c:choose>
                 </ul>

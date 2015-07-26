@@ -8,6 +8,7 @@ public class Member_DTO {
 	private String birthday;
 	private String domain;
 	private String regdate;
+	private Blog_DTO bDTO;
 	
 	public int getNo() {
 		return no;
@@ -51,5 +52,11 @@ public class Member_DTO {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	
+	public Blog_DTO getbDTO() {
+		return bDTO;
+	}
+	public void setbDTO(Blog_DTO bDTO) {
+		this.bDTO = bDTO;
+	}
+
 }
