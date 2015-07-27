@@ -65,7 +65,7 @@
 					</div>
                 <hr>
                 <p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
-                <a class="btn btn-primary" href="#">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>

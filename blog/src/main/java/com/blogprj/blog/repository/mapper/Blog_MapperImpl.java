@@ -57,17 +57,7 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			
 		}
 	}
-
 	
-	@Override
-	public void postWrite(Post_DTO dto) {
-		try{
-			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postWrite";
-			sqlSession.insert(statement, dto);
-		}finally{
-			
-		}
-	}
 	
 	@Override
 	public Member_DTO blogInfo(int memberno) {
@@ -131,6 +121,17 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 //post	
+	
+	@Override
+	public void postWrite(Post_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postWrite";
+			sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 	@Override
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno) {
 		try{
@@ -151,6 +152,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.selectPostCount";
 			return sqlSession.selectOne(statement, blogno);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public Post_DTO postDetail(Post_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postDetail";
+			return sqlSession.selectOne(statement, dto);
 		}finally{
 			
 		}

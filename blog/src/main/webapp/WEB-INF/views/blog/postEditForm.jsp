@@ -11,13 +11,13 @@
 <body>
 
 		<div class="col-md-8">
-           <h1 class="page-header">포스트 등록하기</h1>
+           <h1 class="page-header">포스트 수정하기</h1>
 
 			<form action="postWrite" method="post">
 			<input type="hidden" name="blogno" value="${blogno }">
 				<div class="form-group">
 					<label for="title">글제목</label>
-					<input type="text" class="form-control" id="title" name="title" placeholder="제목 입력">
+					<input type="text" class="form-control" id="title" name="title" placeholder="제목 입력" value="${pdto.title }">
 				</div>
 				<div class="form-group">
 			  	<label for="subcategoryno">등록 카테고리</label>
@@ -28,7 +28,7 @@
 				  </select>
 			  	</div>
 				<div class="form-group">
-					<textarea class="form-control" rows="10" name="content" placeholder="내용을 입력해주세요"></textarea>
+					<textarea class="form-control" rows="10" name="content" placeholder="내용을 입력해주세요">${pdto.content }</textarea>
 					 <script>
 		                CKEDITOR.replace('content', {
 		                	filebrowserUploadUrl: 'file_upload',
@@ -56,18 +56,18 @@
 			  		<label for="topicno">주제분류</label>
 					<div class="radio">
 					  	<label class="radio-inline">
-					      <input type="radio" name="topicno" value="1" checked> 주제1
+					      <input type="radio" name="topicno" value="1"> 주제1
 					    </label>
 					    <label class="radio-inline">
-					      <input type="radio" name="topicno" value="2" checked> 주제2
+					      <input type="radio" name="topicno" value="2"> 주제2
 					    </label>
 					    <label class="radio-inline">
-					      <input type="radio" name="topicno" value="3" checked> 주제3
+					      <input type="radio" name="topicno" value="3"> 주제3
 					    </label>
 					</div>
 					<div class="radio">
 						<label>
-					      <input type="radio" name="topicno" value="0"> 주제선택 안함
+					      <input type="radio" name="topicno" value="0" checked> 주제선택 안함
 					    </label>
 					</div>
 				</div>

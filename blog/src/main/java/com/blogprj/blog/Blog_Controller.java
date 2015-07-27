@@ -237,7 +237,7 @@ public class Blog_Controller {
 		}
 	}
 	
-	@RequestMapping(value = "/{blogno}/writePost", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/postWrite", method = RequestMethod.POST)
 	public String writePost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
 		@RequestParam("title") String title,
 		@RequestParam("content") String content,
@@ -272,7 +272,10 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}/postEditForm", method = RequestMethod.GET)
-	public String postEditForm(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+	public String postEditForm(
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("no") int no,
+			Model model, HttpSession session) {
 		System.out.println("postEditForm blogno:"+blogno);
 		
 		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
@@ -292,8 +295,11 @@ public class Blog_Controller {
 			}
 			
 			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+				Post_DTO pdto = new Post_DTO();
+				pdto.setNo(no);
+				pdto.setBlogno(blogno);
 				
-				//blog_Service.postDetail(int no, int blogno);
+				pdto = blog_Service.postDetail(pdto);
 				
 				List<SubCategory_DTO> dtolist = new ArrayList<SubCategory_DTO>();
 				dtolist = blog_Service.subCategoryListAll(blogno);
@@ -301,6 +307,8 @@ public class Blog_Controller {
 				model.addAttribute("blogno", blogno);
 				model.addAttribute("subcategorylist", dtolist);
 				model.addAttribute("memberno", memberno);
+				model.addAttribute("pdto", pdto);
+				System.out.println("pdto.title"+pdto);
 				
 				System.out.println("blogno==memberno");
 				return "blog/index.jsp?content=postEditForm";
@@ -358,7 +366,7 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}/file_upload", method = RequestMethod.POST)
-	public String file_upload(Locale locale, Model model, HttpServletRequest request, HttpSession session, File_DTO dto) {
+	public String file_upload(Model model, HttpServletRequest request, HttpSession session, File_DTO dto) {
 		 
 		MultipartFile upload = dto.getUpload();
 		String rootPath = "";
@@ -406,7 +414,6 @@ public class Blog_Controller {
 	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
 	public String readPost(
 			@PathVariable("blogno") int blogno, 
-//			@CookieValue(value="{guest}", required=false, defaultValue="0") int guest, 
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("readPost blogno:"+blogno);
 		
@@ -429,7 +436,7 @@ public class Blog_Controller {
 		
 		//오라클용 페이지
 		int sPage=0;
-		int ePage=2;
+		int ePage=20;
 		
 		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null)
 		{
@@ -438,8 +445,6 @@ public class Blog_Controller {
 		}
 		
 		System.out.println(sPage + "," + ePage);
-		
-		
 		
 		int totalCount = (int)Math.ceil((double)blog_Service.selectPostCount(blogno) / (double)ePage);
 		System.out.println("selectCount(cpno):"+blog_Service.selectPostCount(blogno));

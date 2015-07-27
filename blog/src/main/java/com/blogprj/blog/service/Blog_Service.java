@@ -42,7 +42,8 @@ public interface Blog_Service{
 	public void postWrite(Post_DTO dto); //포스트 작성하기
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
 	public int selectPostCount(int blogno);
-
+	public Post_DTO postDetail(Post_DTO dto);
+	
 //theme
 	
 	public List<Test_DTO> test();

@@ -146,6 +146,12 @@
 	    ORDER BY regdate DESC
     </select>
     
+    <select id="postDetail" parameterType="com.blogprj.blog.model.Post_DTO" resultType="com.blogprj.blog.model.Post_DTO">
+    	SELECT *
+    	FROM POST
+    	WHERE no = #{no} AND blogno = #{blogno} 
+    </select>
+    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 
