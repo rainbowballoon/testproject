@@ -152,6 +152,12 @@
     	WHERE no = #{no} AND blogno = #{blogno} 
     </select>
     
+    <update id="postEdit" >
+   		UPDATE POST SET 
+			title = #{title} , content = #{content}, blogno = #{blogno}, memberno = #{memberno}, 
+			postaccess = #{postaccess}, topicno = #{topicno}, subcategoryno=#{subcategoryno}
+		WHERE no = #{no} AND blogno = #{blogno} AND memberno = #{memberno}
+    </update>
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 

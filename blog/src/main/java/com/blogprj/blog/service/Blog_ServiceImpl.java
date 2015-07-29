@@ -100,6 +100,15 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void postEdit(Post_DTO dto) {
+		try{
+			blogmapper.postEdit(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 //blog
 	
 	@Override

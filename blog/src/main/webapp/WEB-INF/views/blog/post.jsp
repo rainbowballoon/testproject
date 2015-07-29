@@ -65,8 +65,12 @@
 					</div>
                 <hr>
                 <p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
-                <a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
-                <a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <c:choose>
+                	<c:when test="${logined.no ==  blogpoint.no}">
+                		<a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                		<a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
+                	</c:when>
+                </c:choose>
 
                 <hr>
 			</c:forEach>
@@ -74,10 +78,10 @@
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="previous">
-                        <a href="#">&larr; Older</a>
+                        <a href="#">&larr; 이전</a>
                     </li>
                     <li class="next">
-                        <a href="#">Newer &rarr;</a>
+                        <a href="#">다음 &rarr;</a>
                     </li>
                 </ul>
 

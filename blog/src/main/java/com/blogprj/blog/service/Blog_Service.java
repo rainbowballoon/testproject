@@ -43,6 +43,7 @@ public interface Blog_Service{
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
 	public int selectPostCount(int blogno);
 	public Post_DTO postDetail(Post_DTO dto);
+	public void postEdit(Post_DTO dto);
 	
 //theme
 	

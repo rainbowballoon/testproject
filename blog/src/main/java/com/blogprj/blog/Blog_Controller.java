@@ -324,8 +324,9 @@ public class Blog_Controller {
 		}
 	}
 	
-	@RequestMapping(value = "/{blogno}/EditPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/postEdit", method = RequestMethod.POST)
 	public String EditPost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
+		@RequestParam("no") int no,
 		@RequestParam("title") String title,
 		@RequestParam("content") String content,
 		@RequestParam("postaccess") int postacess,
@@ -351,6 +352,7 @@ public class Blog_Controller {
 			
 			Post_DTO dto = new Post_DTO();
 			
+			dto.setNo(no);
 			dto.setTitle(title);
 			dto.setContent(content);
 			dto.setBlogno(blogno);
@@ -359,7 +361,7 @@ public class Blog_Controller {
 			dto.setMemberno(memberno);
 			dto.setSubcategoryno(subcategoryno);
 			
-			//blog_Service.postEdit(dto);
+			blog_Service.postEdit(dto);
 		}
 		
 		return "redirect:/"+blogno+"/readPost";
@@ -436,7 +438,7 @@ public class Blog_Controller {
 		
 		//오라클용 페이지
 		int sPage=0;
-		int ePage=20;
+		int ePage=3;
 		
 		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null)
 		{

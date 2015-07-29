@@ -121,7 +121,6 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 //post	
-	
 	@Override
 	public void postWrite(Post_DTO dto) {
 		try{
@@ -162,6 +161,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postDetail";
 			return sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void postEdit(Post_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postEdit";
+			sqlSession.update(statement, dto);
 		}finally{
 			
 		}

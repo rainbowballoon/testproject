@@ -379,6 +379,13 @@ drop SEQUENCE POST_SEQ;
 --------------------------------------------------------
 
    CREATE SEQUENCE  "BLOG"."SUBCATEGORY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+   
+--------------------------------------------------------
+--  DDL for Sequence CATEGORY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "BLOG"."CATEGORY_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+
 --------------------------------------------------------
 --  DDL for Sequence POST_SEQ
 --------------------------------------------------------
