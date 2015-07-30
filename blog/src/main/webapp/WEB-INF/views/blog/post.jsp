@@ -45,7 +45,11 @@
 <!--                     Page Heading -->
 <!--                     <small>Secondary Text</small> -->
 <!--                 </h1> -->
-			
+            <ol class="breadcrumb">
+                <li><a href="index">Home</a>
+                </li>
+                <li class="active">Contact</li>
+       		</ol>			
 			<c:forEach items="${postList }" var="dto">
 				<!-- First Blog Post -->
                 <h2>
@@ -63,28 +67,79 @@
 						  </div>
 					  </div>
 					</div>
+				<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
+				
+                <form action="replyWrite" method="post">
+	                <table border="1" cellspacing="0">
+	                	<tr>
+	                		<td>이모티콘</td>
+	                		<td>
+								<textarea rows="3" cols="80" name="content" style="resize: none;" placeholder="내용을 입력해주세요"></textarea>
+							</td>
+	                		<td>
+	                			<button class="btn">COMMENT</button>
+	                		</td>
+	                	</tr>
+	                </table>
+				</form>
                 <hr>
-                <p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
                 <c:choose>
                 	<c:when test="${logined.no ==  blogpoint.no}">
                 		<a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
                 		<a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
                 	</c:when>
                 </c:choose>
-
                 <hr>
 			</c:forEach>
 
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="#">&larr; 이전</a>
-                    </li>
-                    <li class="next">
-                        <a href="#">다음 &rarr;</a>
-                    </li>
-                </ul>
 
+<%-- <c:out value="${requestScope['javax.servlet.forward.request_uri']}"></c:out> --%>
+	<!-- Pager -->
+	<div align="center">
+		<ul class="pagination">
+		<c:choose>
+			<c:when test="${curPage==1}">
+				<li class="previous disabled">
+			        <a href="#">&larr; 이전</a>
+			    </li>
+			</c:when>
+			<c:otherwise>
+				<li class="previous">
+			        <a href="#">&larr; 이전</a>
+			    </li>
+			</c:otherwise>
+		</c:choose>
+			<c:forEach var="pageNum" begin="1" end="${totalCount}">
+				<c:set var="sRecNum" value="${(pageNum-1) * perPage }" />
+				<c:choose>
+					<c:when test="${pageNum != curPage }">
+						<li>
+							<a href="${requestScope['javax.servlet.forward.request_uri']}?sPage=${sRecNum }&ePage=${perPage }">${pageNum}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="active">
+							<a href="${requestScope['javax.servlet.forward.request_uri']}">${pageNum}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>	
+			</c:forEach>    
+		    
+		    <c:choose>
+			<c:when test="${curPage==totalCount}">
+				<li class="next disabled">
+		        	<a href="#">다음 &rarr;</a>
+		    	</li>
+			</c:when>
+			<c:otherwise>
+				<li class="next">
+		        	<a href="#">다음 &rarr;</a>
+		   		</li>
+			</c:otherwise>
+			</c:choose>
+		    
+		</ul>
+	</div>
             </div>
  
 </body>

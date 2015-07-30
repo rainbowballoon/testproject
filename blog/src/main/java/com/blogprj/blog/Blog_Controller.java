@@ -4,8 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -325,7 +327,7 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}/postEdit", method = RequestMethod.POST)
-	public String EditPost(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
+	public String postEdit(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session,
 		@RequestParam("no") int no,
 		@RequestParam("title") String title,
 		@RequestParam("content") String content,
@@ -413,6 +415,39 @@ public class Blog_Controller {
 	}
 
 	
+	public Map<String, Integer> pagenationProcess(HttpServletRequest request, int postCount){
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		// sPage-ePage = perPage : 페이지에 보일 아이템 개수( (ePage-sPage)개마다 다음장으로 넘기겠다는 의미 )
+		int sPage=0; 
+		int ePage=2; 
+		
+		//sPage, ePage가 존재하면 request 객체가 갖고 있는 값들로 채우기
+		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null) {
+			sPage = Integer.parseInt(request.getParameter("sPage"));
+			ePage = Integer.parseInt(request.getParameter("ePage"));
+		}
+		System.out.println(sPage + "," + ePage);
+		
+		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
+		int totalCount = (int) (postCount/(double)ePage);
+		System.out.println("totalCount:"+totalCount);
+		
+		//totalCount가 0이하면 1로 맞추기
+		if(totalCount <=0) totalCount=1;
+		System.out.println("totalCount:"+totalCount);
+		
+		map.put("sPage", sPage);
+		map.put("ePage", ePage);
+		map.put("curPage", (sPage / ePage)+1); //curPage : 현재 페이지 
+		map.put("perPage", ePage); //perPage : 각 페이지에 보일 아이템 개수
+		map.put("totalCount", totalCount);
+		System.out.println("curPage:"+((sPage / ePage)+1)+", perPage:"+ePage);
+		
+		return map;
+	}
+	
 	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
 	public String readPost(
 			@PathVariable("blogno") int blogno, 
@@ -436,38 +471,84 @@ public class Blog_Controller {
 		Member_DTO mdto = blog_Service.blogInfo(blogno);
 		session.setAttribute("blogpoint", mdto);
 		
-		//오라클용 페이지
-		int sPage=0;
-		int ePage=3;
+		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
+		int postCount = blog_Service.selectPostCount(blogno);
 		
-		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null)
-		{
-			sPage = Integer.parseInt(request.getParameter("sPage"));
-			ePage = Integer.parseInt(request.getParameter("ePage"));
-		}
+		Map<String, Integer> map = new HashMap<String, Integer>();
 		
-		System.out.println(sPage + "," + ePage);
+		map = pagenationProcess(request, postCount);
 		
-		int totalCount = (int)Math.ceil((double)blog_Service.selectPostCount(blogno) / (double)ePage);
-		System.out.println("selectCount(cpno):"+blog_Service.selectPostCount(blogno));
-		
-		if(totalCount <=0) totalCount=1;
-		System.out.println("totalCount:"+totalCount);
-		
-		List<Post_DTO> postList = blog_Service.postList(sPage, ePage, blogno);
+		List<Post_DTO> postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
 		
 		if(postList != null){
 			model.addAttribute("postList", postList);
-			model.addAttribute("curPage", (sPage / ePage)+1);
-			model.addAttribute("perPage", ePage);
-			model.addAttribute("totalCount", totalCount);
-			System.out.println("자료개수/페이지수:"+ postList+"," + totalCount + "," +(sPage / ePage)+1);
+			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
+			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
+			model.addAttribute("totalCount", map.get("totalCount"));
+			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));
 		}else{
 			System.out.println("자료가 없습니다");
 		}
 		
 		return "blog/index.jsp?content=post";
 	}
+	
+//	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
+//	public String readPost(
+//			@PathVariable("blogno") int blogno, 
+//			Model model, HttpServletRequest request, HttpSession session) {
+//		System.out.println("readPost blogno:"+blogno);
+//		
+//		@SuppressWarnings("resource")
+//		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+//		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+//		
+//		//카테고리 부분
+//		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
+//		System.out.println(categoryList);
+//		if(categoryList != null){
+//			model.addAttribute("categoryList", categoryList);
+//		}else{
+//			System.out.println("자료가 없습니다");
+//		}
+//		
+//		//블로그 정보 불러오기
+//		Member_DTO mdto = blog_Service.blogInfo(blogno);
+//		session.setAttribute("blogpoint", mdto);
+//		
+//		// sPage-ePage = perPage : 페이지에 보일 아이템 개수( (ePage-sPage)개마다 다음장으로 넘기겠다는 의미 )
+//		int sPage=0; 
+//		int ePage=2; 
+//		
+//		//sPage, ePage가 존재하면 request 객체가 갖고 있는 값들로 채우기
+//		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null) {
+//			sPage = Integer.parseInt(request.getParameter("sPage"));
+//			ePage = Integer.parseInt(request.getParameter("ePage"));
+//		}
+//		System.out.println(sPage + "," + ePage);
+//		
+//		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
+//		int totalCount = (int)Math.ceil((double)blog_Service.selectPostCount(blogno) / (double)ePage);
+//		System.out.println("selectCount(cpno):"+blog_Service.selectPostCount(blogno));
+//		
+//		//totalCount가 0이하면 1로 맞추기
+//		if(totalCount <=0) totalCount=1;
+//		System.out.println("totalCount:"+totalCount);
+//		
+//		List<Post_DTO> postList = blog_Service.postList(sPage, ePage, blogno);
+//		
+//		if(postList != null){
+//			model.addAttribute("postList", postList);
+//			model.addAttribute("curPage", (sPage / ePage)+1); //curPage : 현재 페이지 
+//			model.addAttribute("perPage", ePage); //perPage : 각 페이지에 보일 아이템 개수
+//			model.addAttribute("totalCount", totalCount);
+//			System.out.println("curPage:"+((sPage / ePage)+1)+", perPage:"+ePage);
+//		}else{
+//			System.out.println("자료가 없습니다");
+//		}
+//		
+//		return "blog/index.jsp?content=post";
+//	}
 	
 	@RequestMapping(value = "/testForm", method = RequestMethod.GET)
 	public String testForm(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
@@ -487,6 +568,35 @@ public class Blog_Controller {
 		return "blog/index2.jsp?content=testForm";
 		//return "blog/testForm";
 	}
+	
+//	@RequestMapping(value = "/{blogno}/postDelete", method = RequestMethod.GET)
+//	public String postDelete(
+//			@PathVariable("blogno") int blogno, 
+//			@RequestParam("no") int no, 
+//			Model model, HttpSession session) {
+//		System.out.println("postDelete blogno:"+blogno);
+//		
+//		if(session.getAttribute("logined") != null){ // 로그인한 사용자인지 여부
+//			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
+//			
+//			@SuppressWarnings("resource")
+//			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+//			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+//			
+//			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+//				
+//				blog_Service.postDelete(no, blogno);
+//				
+//				model.addAttribute("blogno", blogno);
+//				model.addAttribute("memberno", memberno);
+//				return "redirect:/"+blogno+"/readPost";
+//			}else{ //본인 블로그가 아니면
+//				return "redirect:/"+blogno+"/readPost";
+//			}
+//		}else{ //로그인하지 않은 사용자
+//			return "redirect:/"+blogno+"/readPost";
+//		}
+//	}
 
 //블로그 관리
 	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)
