@@ -56,18 +56,18 @@
 			  		<label for="topicno">주제분류</label>
 					<div class="radio">
 					  	<label class="radio-inline">
-					      <input type="radio" name="topicno" value="1" checked> 주제1
+					      <input type="radio" name="topicno" value="1"> 주제1
 					    </label>
 					    <label class="radio-inline">
-					      <input type="radio" name="topicno" value="2" checked> 주제2
+					      <input type="radio" name="topicno" value="2"> 주제2
 					    </label>
 					    <label class="radio-inline">
-					      <input type="radio" name="topicno" value="3" checked> 주제3
+					      <input type="radio" name="topicno" value="3"> 주제3
 					    </label>
 					</div>
 					<div class="radio">
 						<label>
-					      <input type="radio" name="topicno" value="0"> 주제선택 안함
+					      <input type="radio" name="topicno" value="0" checked> 주제선택 안함
 					    </label>
 					</div>
 				</div>

@@ -70,17 +70,30 @@
 				<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
 				
                 <form action="replyWrite" method="post">
-	                <table border="1" cellspacing="0">
-	                	<tr>
-	                		<td>이모티콘</td>
-	                		<td>
-								<textarea rows="3" cols="80" name="content" style="resize: none;" placeholder="내용을 입력해주세요"></textarea>
-							</td>
-	                		<td>
-	                			<button class="btn">COMMENT</button>
-	                		</td>
-	                	</tr>
-	                </table>
+                <div class="row">
+	                <div class="col-lg-1">
+	                	<img src="${pageContext.request.contextPath }/profileimage/reply_50.png" class="img-thumbnail" width="50px">
+		            </div> 
+		            <div class="col-lg-11">  
+		                <div class="input-group">
+					      <input type="text" class="form-control" placeholder="덧글 내용을 입력해주세요">
+					      <span class="input-group-btn">
+					        <button class="btn btn-default" type="button">COMMENT</button>
+					      </span>
+					    </div><!-- /input-group -->
+					</div>
+				</div>
+<!-- 	                <table border="0"> -->
+<!-- 	                	<tr> -->
+<%-- 	                		<td><img src="${pageContext.request.contextPath }/profileimage/reply_50.png" class="img-thumbnail" width="50px"></td> --%>
+<!-- 	                		<td> -->
+<!-- 								<textarea rows="2" cols="78" name="content" style="resize: none;" placeholder="내용을 입력해주세요"></textarea> -->
+<!-- 							</td> -->
+<!-- 	                		<td> -->
+<!-- 	                			<button class="btn btn-lg">COMMENT</button> -->
+<!-- 	                		</td> -->
+<!-- 	                	</tr> -->
+<!-- 	                </table> -->
 				</form>
                 <hr>
                 <c:choose>
