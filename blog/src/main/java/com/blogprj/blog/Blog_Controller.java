@@ -456,10 +456,6 @@ public class Blog_Controller {
 			System.out.println("자료가 없습니다");
 		}
 		
-		//블로그 정보 불러오기
-		Member_DTO mdto = blog_Service.blogInfo(blogno);
-		session.setAttribute("blogpoint", mdto);
-		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
 		int postCount = blog_Service.selectPostCount(blogno);
 		

@@ -18,6 +18,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/lib/**" location="/resources/lib/" />
+	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/themecss/**" location="/resources/themecss/" />
 	<resources mapping="/themefonts/**" location="/resources/themefonts/" />
 	<resources mapping="/themeimg/**" location="/resources/themeimg/" />

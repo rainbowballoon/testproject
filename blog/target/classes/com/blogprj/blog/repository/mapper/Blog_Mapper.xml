@@ -118,7 +118,6 @@
 	</select>
 	
 <!-- post  -->
-
      <insert id="postWrite" parameterType="com.blogprj.blog.model.Post_DTO">
 		INSERT INTO POST 
 		(
