@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <body>
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
+	<!-- Blog Entries Column -->
+	<div class="col-md-8">
 <!--                 <h1 class="page-header"> -->
 <!--                     Page Heading -->
 <!--                     <small>Secondary Text</small> -->
@@ -29,6 +29,7 @@
 					  </div>
 					</div>
 				<hr>
+			<!-- 덧글 -->
 				<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
 				
 				<ul class="list-group">
@@ -36,36 +37,34 @@
 				</ul>
 				
                 <form action="postReplyWrite" method="post">
-                <div class="row">
-	                <div class="col-lg-1">
-	                	<img src="${pageContext.request.contextPath }/profileimage/reply_50.png" class="img-thumbnail" width="50px">
-		            </div> 
-		            <div class="col-lg-1">
-						${dto.memberno }
-		            </div> 
-		            
-		            <div class="col-lg-10">  
+               	<table style="width: 100%">
+               	<tr>
+               		<td style="width: 20%">
+						<span class="glyphicon glyphicon-user"></span> ${logined.nickname }
+		            </td>
+		            <td style="width: 80%">
 		                <div class="input-group">
-					      <input type="text" name="relply" class="form-control" placeholder="덧글 내용을 입력해주세요">
+					      <input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
 					      <span class="input-group-btn">
 					        <button class="btn btn-default" type="submit">덧글남기기</button>
 					      </span>
 					    </div><!-- /input-group -->
-					</div>
-				</div>
+					</td>
+				</tr>
+				</table>
 				</form>
                 <hr>
                 <div align="right">
 	                <c:choose>
 	                	<c:when test="${logined.no ==  blogpoint.no}">
 	                		<a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
-	                		<a class="btn btn-default" href="#">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
+	                		<a class="btn btn-default" href="postDelete?no=${dto.no }">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
 	                	</c:when>
 	                </c:choose>
                 </div>
                 <hr>
 			</c:forEach>
-
+		
 
 <%-- <c:out value="${requestScope['javax.servlet.forward.request_uri']}"></c:out> --%>
 	<!-- Pager -->
@@ -113,5 +112,7 @@
 			</c:choose>
 		    
 		</ul>
-	</div>
-            </div>
+	</div> <!-- page end -->
+	
+   	</div>
+</body>

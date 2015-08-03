@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
+import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -95,7 +96,7 @@ public class Blog_Controller {
 			System.out.println("자료가 없습니다");
 		}
 			
-		return "redirect:/"+blogno+"/readPost";
+		return "redirect:/"+blogno+"/postList";
 	}
 	
 //	private Blog_Service service;
@@ -228,7 +229,7 @@ public class Blog_Controller {
 			}else{ //본인 블로그가 아니면
 				System.out.println("blogno!=memberno");
 				System.out.println("blogno:"+blogno);
-				return "redirect:/"+blogno+"/readPost";
+				return "redirect:/"+blogno+"/postList";
 			}
 	}
 	
@@ -263,7 +264,7 @@ public class Blog_Controller {
 			blog_Service.postWrite(dto);
 		}
 		
-		return "redirect:/"+blogno+"/readPost";
+		return "redirect:/"+blogno+"/postList";
 	}
 	
 	@RequestMapping(value = "/{blogno}/postEditForm", method = RequestMethod.GET)
@@ -310,7 +311,7 @@ public class Blog_Controller {
 			}else{ //본인 블로그가 아니면
 				System.out.println("blogno!=memberno");
 				System.out.println("blogno:"+blogno);
-				return "redirect:/"+blogno+"/readPost";
+				return "redirect:/"+blogno+"/postList";
 			}
 			
 	}
@@ -355,7 +356,7 @@ public class Blog_Controller {
 			blog_Service.postEdit(dto);
 		}
 		
-		return "redirect:/"+blogno+"/readPost";
+		return "redirect:/"+blogno+"/postList";
 	}
 	
 	@RequestMapping(value = "/{blogno}/file_upload", method = RequestMethod.POST)
@@ -437,11 +438,11 @@ public class Blog_Controller {
 		return map;
 	}
 	
-	@RequestMapping(value = "/{blogno}/readPost", method = RequestMethod.GET)
-	public String readPost(
+	@RequestMapping(value = "/{blogno}/postList", method = RequestMethod.GET)
+	public String postList(
 			@PathVariable("blogno") int blogno, 
 			Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("readPost blogno:"+blogno);
+		System.out.println("postList blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -478,6 +479,46 @@ public class Blog_Controller {
 		return "blog/index.jsp?content=post";
 	}
 	
+	
+	@RequestMapping(value = "/{blogno}/postReplyWrite", method = RequestMethod.POST)
+	public String postReplyWrite(
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("no") int no,
+			@RequestParam("name") String name,
+			@RequestParam("postno") int postno,
+			@RequestParam("content") String content,
+			Model model, HttpServletRequest request, HttpSession session){
+		System.out.println("postReplyWrite blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		if(session.getAttribute("logined") != null){
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
+			
+			Post_DTO pdto = new Post_DTO();
+			pdto.setNo(no);
+			pdto.setBlogno(blogno);
+			pdto = blog_Service.postDetail(pdto);
+			
+			Comments_DTO cdto = new Comments_DTO();
+			cdto.setNo(pdto.getNo());
+			cdto.setName(name);
+			cdto.setPostno(postno);
+			cdto.setBlogno(blogno);
+			cdto.setContent(content);
+			cdto.setMemberno(memberno);
+			
+			
+			System.out.println("memberno:"+memberno);
+			
+			//blog_Service.postReplyWrite(cdto);
+		}
+		
+		return "redirect:/"+blogno+"/postList";
+	}
+	
 	@RequestMapping(value = "/testForm", method = RequestMethod.GET)
 	public String testForm(Model model, HttpServletRequest request, HttpSession session) {
 		
@@ -497,34 +538,30 @@ public class Blog_Controller {
 		//return "blog/testForm";
 	}
 	
-//	@RequestMapping(value = "/{blogno}/postDelete", method = RequestMethod.GET)
-//	public String postDelete(
-//			@PathVariable("blogno") int blogno, 
-//			@RequestParam("no") int no, 
-//			Model model, HttpSession session) {
-//		System.out.println("postDelete blogno:"+blogno);
-//		
-//		
-//			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
-//			
-//			@SuppressWarnings("resource")
-//			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
-//			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-//			
-//			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
-//				
-//				blog_Service.postDelete(no, blogno);
-//				
-//				model.addAttribute("blogno", blogno);
-//				model.addAttribute("memberno", memberno);
-//				return "redirect:/"+blogno+"/readPost";
-//			}else{ //본인 블로그가 아니면
-//				return "redirect:/"+blogno+"/readPost";
-//			}
-//		}else{ //로그인하지 않은 사용자
-//			return "redirect:/"+blogno+"/readPost";
-//		}
-//	}
+	@RequestMapping(value = "/{blogno}/postDelete", method = RequestMethod.GET)
+	public String postDelete(
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("no") int no, 
+			Model model, HttpSession session) {
+		System.out.println("postDelete blogno:"+blogno);
+			
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+	
+		Post_DTO pdto = new Post_DTO();
+		pdto.setNo(no);
+		pdto.setBlogno(blogno);
+		
+		blog_Service.postDelete(pdto);
+		
+		model.addAttribute("blogno", blogno);
+		model.addAttribute("memberno", memberno);
+		return "redirect:/"+blogno+"/postList";
+		
+	}
 
 //블로그 관리
 	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)

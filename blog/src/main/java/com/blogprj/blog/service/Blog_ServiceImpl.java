@@ -109,6 +109,15 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void postDelete(Post_DTO dto) {
+		try{
+			blogmapper.postDelete(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 //blog
 	
 	@Override

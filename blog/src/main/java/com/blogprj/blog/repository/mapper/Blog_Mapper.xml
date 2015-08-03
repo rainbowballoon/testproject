@@ -157,6 +157,12 @@
 			postaccess = #{postaccess}, topicno = #{topicno}, subcategoryno=#{subcategoryno}
 		WHERE no = #{no} AND blogno = #{blogno} AND memberno = #{memberno}
     </update>
+    
+    <delete id="postDelete">
+   		DELETE FROM POST 
+		WHERE no = #{no} AND blogno = #{blogno}
+    </delete>
+    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 

@@ -176,6 +176,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public void postDelete(Post_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postDelete";
+			sqlSession.delete(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 //category
 	@Override
 	public List<Category_DTO> categoryList(int blogno) {

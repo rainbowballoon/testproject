@@ -44,6 +44,7 @@ public interface Blog_Mapper {
 	public int selectPostCount(int blogno);
 	public Post_DTO postDetail(Post_DTO dto);
 	public void postEdit(Post_DTO dto);
+	public void postDelete(Post_DTO dto);
 
 //theme
 	

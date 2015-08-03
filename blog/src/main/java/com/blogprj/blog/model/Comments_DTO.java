@@ -1,41 +1,56 @@
 package com.blogprj.blog.model;
 
 public class Comments_DTO {
-	private int comments_no;
-	private String comments_name;
-	private String comments_content;
-	private int post_no;
-	private int member_no;
+	private int no;
+	private String name;
+	private String content;
+	private int postno;
+	private int memberno;
+	private int blogno;
+	private String regdate;
 	
-	public int getComments_no() {
-		return comments_no;
+	public int getNo() {
+		return no;
 	}
-	public void setComments_no(int comments_no) {
-		this.comments_no = comments_no;
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public String getComments_name() {
-		return comments_name;
+	public String getName() {
+		return name;
 	}
-	public void setComments_name(String comments_name) {
-		this.comments_name = comments_name;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getComments_content() {
-		return comments_content;
+	public String getContent() {
+		return content;
 	}
-	public void setComments_content(String comments_content) {
-		this.comments_content = comments_content;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public int getPost_no() {
-		return post_no;
+	public int getPostno() {
+		return postno;
 	}
-	public void setPost_no(int post_no) {
-		this.post_no = post_no;
+	public void setPostno(int postno) {
+		this.postno = postno;
 	}
-	public int getMember_no() {
-		return member_no;
+	public int getMemberno() {
+		return memberno;
 	}
-	public void setMember_no(int member_no) {
-		this.member_no = member_no;
+	public void setMemberno(int memberno) {
+		this.memberno = memberno;
 	}
+	public int getBlogno() {
+		return blogno;
+	}
+	public void setBlogno(int blogno) {
+		this.blogno = blogno;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+
 	
 }
