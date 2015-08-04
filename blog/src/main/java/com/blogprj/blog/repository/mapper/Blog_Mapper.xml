@@ -162,7 +162,26 @@
    		DELETE FROM POST 
 		WHERE no = #{no} AND blogno = #{blogno}
     </delete>
-    
+ 
+<!-- commnets -->
+	<insert id="commentsWrite" parameterType="com.blogprj.blog.model.Comments_DTO">
+		INSERT INTO COMMENTS
+		(
+			no, postno, memberno, regdate, content
+		)
+		VALUES 
+		(
+			 comments_seq.nextval, #{postno}, #{memberno}, sysdate, #{content}
+		)
+	</insert>
+	
+	<select id="commentsList" parameterType="com.blogprj.blog.model.Comments_DTO" resultType="com.blogprj.blog.model.Comments_DTO">
+    	SELECT * 
+    	FROM COMMENTS 
+    	WHERE postno = #{postno}
+    	ORDER BY regdate DESC
+    </select>
+	    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 

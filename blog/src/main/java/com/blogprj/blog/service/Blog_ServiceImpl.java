@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
+import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -115,6 +116,26 @@ public class Blog_ServiceImpl implements Blog_Service {
 			blogmapper.postDelete(dto);
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+	}
+	
+//comments
+	@Override
+	public void commentsWrite(Comments_DTO dto) {
+		try{
+			blogmapper.commentsWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public List<Comments_DTO> commentsList(int postno) {
+		try{
+			return blogmapper.commentsList(postno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

@@ -4,42 +4,47 @@
 <body>
 	<!-- Blog Entries Column -->
 	<div class="col-md-8">
-<!--                 <h1 class="page-header"> -->
-<!--                     Page Heading -->
-<!--                     <small>Secondary Text</small> -->
-<!--                 </h1> -->
-            <ol class="breadcrumb">
-                <li><a href="index">Home</a>
-                </li>
-                <li class="active">Contact</li>
-       		</ol>			
-			<c:forEach items="${postList }" var="dto">
-				<!-- First Blog Post -->
-                <h2>
-                    <a href="#">${dto.title }</a>
-                </h2>
-                <br>
-                <p align="right"><span class="glyphicon glyphicon-time"></span> 등록시간 [ ${dto.regdate } ]</p>
-                <hr>
-                	<div class="container-fluid">
-		              <div class="row">
-						  <div class="thumbnail">
-						    	 ${dto.content }
-						  </div>
-					  </div>
-					</div>
-				<hr>
-			<!-- 덧글 -->
-				<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
-				
-				<ul class="list-group">
-				  <li class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 아이디 <small>[등록날짜]</small> : 댓글</li>
-				</ul>
-				
-                <form action="postReplyWrite" method="post">
-               	<table style="width: 100%">
-               	<tr>
-               		<td style="width: 20%">
+		
+		<ol class="breadcrumb">
+		   <li><a href="index">Home</a></li>
+		   <li class="active">Contact</li>
+		</ol>
+       
+       <!-- postList 시작 -->			
+		<c:forEach items="${postList }" var="dto">
+			<!-- First Blog Post -->
+            <h2>
+                <a href="#">${dto.title }</a>
+            </h2>
+            <br>
+            <p align="right"><span class="glyphicon glyphicon-time"></span> 등록시간 [ ${dto.regdate } ]</p>
+            <hr>
+            <div class="container-fluid">
+              <div class="row">
+				  <div class="thumbnail">
+				    	 ${dto.content }
+				  </div>
+			  </div>
+			</div>
+			<hr>
+		
+		<!-- 덧글 -->
+			<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
+			
+			<c:forEach items="${commentsList }" var="clist">
+				<c:forEach items="${clist}" var = "cdto">
+					<c:out value = "${cdto.content }"></c:out>
+					<ul class="list-group">
+					  <li class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }</li>
+					</ul>
+				</c:forEach>
+			</c:forEach>
+			
+	         <form action="commentsWrite" method="post">
+               <input type="hidden" name="postno" value="${dto.no }">
+	              	<table style="width: 100%">
+	              	<tr>
+	              		<td style="width: 20%">
 						<span class="glyphicon glyphicon-user"></span> ${logined.nickname }
 		            </td>
 		            <td style="width: 80%">
@@ -52,18 +57,18 @@
 					</td>
 				</tr>
 				</table>
-				</form>
-                <hr>
-                <div align="right">
-	                <c:choose>
-	                	<c:when test="${logined.no ==  blogpoint.no}">
-	                		<a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
-	                		<a class="btn btn-default" href="postDelete?no=${dto.no }">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
-	                	</c:when>
-	                </c:choose>
-                </div>
-                <hr>
-			</c:forEach>
+			</form>
+	              <hr>
+	              <div align="right">
+	               <c:choose>
+	               	<c:when test="${logined.no ==  blogpoint.no}">
+	               		<a class="btn btn-primary" href="postEditForm?no=${dto.no }">수정 <span class="glyphicon glyphicon-chevron-right"></span></a>
+	               		<a class="btn btn-default" href="postDelete?no=${dto.no }">삭제 <span class="glyphicon glyphicon-chevron-right"></span></a>
+	               	</c:when>
+	               </c:choose>
+	              </div>
+	              <hr>
+		</c:forEach>
 		
 
 <%-- <c:out value="${requestScope['javax.servlet.forward.request_uri']}"></c:out> --%>

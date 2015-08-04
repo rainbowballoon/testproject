@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
+import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -181,6 +182,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postDelete";
 			sqlSession.delete(statement, dto);
+		}finally{
+			
+		}
+	}
+//comments
+	@Override
+	public void commentsWrite(Comments_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsWrite";
+			sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	} 
+	
+	@Override
+	public List<Comments_DTO> commentsList(int postno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsList";
+			return sqlSession.selectList(statement, postno);
 		}finally{
 			
 		}

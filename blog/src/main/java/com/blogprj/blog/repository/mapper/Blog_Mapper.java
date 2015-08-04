@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
+import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -46,6 +47,10 @@ public interface Blog_Mapper {
 	public void postEdit(Post_DTO dto);
 	public void postDelete(Post_DTO dto);
 
+//comments
+	public void commentsWrite(Comments_DTO dto);
+	public List<Comments_DTO> commentsList(int postno);
+	
 //theme
 	
 	public List<Test_DTO> test();

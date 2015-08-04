@@ -459,15 +459,27 @@ public class Blog_Controller {
 		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
 		int postCount = blog_Service.selectPostCount(blogno);
-		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
 		map = pagenationProcess(request, postCount);
 		
+		//포스트 리스트
 		List<Post_DTO> postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
+		
+		
+		List<List> commentsList = new ArrayList<List>();
+		//덧글 리스트
+		for(int i = 0; i < postList.size(); i++)
+		{
+			List<Comments_DTO> commentsList1 = new ArrayList<Comments_DTO>();
+			commentsList1 = blog_Service.commentsList(postList.get(i).getNo());
+			commentsList.add(commentsList1);
+		}
+			
+		
 		
 		if(postList != null){
 			model.addAttribute("postList", postList);
+			model.addAttribute("commentsList", commentsList);
 			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
 			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
 			model.addAttribute("totalCount", map.get("totalCount"));
@@ -480,15 +492,13 @@ public class Blog_Controller {
 	}
 	
 	
-	@RequestMapping(value = "/{blogno}/postReplyWrite", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/commentsWrite", method = RequestMethod.POST)
 	public String postReplyWrite(
 			@PathVariable("blogno") int blogno, 
-			@RequestParam("no") int no,
-			@RequestParam("name") String name,
 			@RequestParam("postno") int postno,
 			@RequestParam("content") String content,
 			Model model, HttpServletRequest request, HttpSession session){
-		System.out.println("postReplyWrite blogno:"+blogno);
+		System.out.println("commentsWrite blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -498,22 +508,20 @@ public class Blog_Controller {
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
 			
 			Post_DTO pdto = new Post_DTO();
-			pdto.setNo(no);
+			pdto.setNo(postno);
 			pdto.setBlogno(blogno);
 			pdto = blog_Service.postDetail(pdto);
 			
 			Comments_DTO cdto = new Comments_DTO();
 			cdto.setNo(pdto.getNo());
-			cdto.setName(name);
 			cdto.setPostno(postno);
-			cdto.setBlogno(blogno);
 			cdto.setContent(content);
 			cdto.setMemberno(memberno);
 			
 			
 			System.out.println("memberno:"+memberno);
 			
-			//blog_Service.postReplyWrite(cdto);
+			blog_Service.commentsWrite(cdto);
 		}
 		
 		return "redirect:/"+blogno+"/postList";
