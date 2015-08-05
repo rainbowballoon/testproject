@@ -75,7 +75,6 @@
  	</resultMap>
     
 <!-- blog	 -->
-
 	<insert id="blogCreate" parameterType="com.blogprj.blog.model.Member_DTO">
 		INSERT INTO BLOG
 		(
@@ -174,13 +173,27 @@
 			 comments_seq.nextval, #{postno}, #{memberno}, sysdate, #{content}
 		)
 	</insert>
-	
-	<select id="commentsList" parameterType="com.blogprj.blog.model.Comments_DTO" resultType="com.blogprj.blog.model.Comments_DTO">
-    	SELECT * 
-    	FROM COMMENTS 
-    	WHERE postno = #{postno}
-    	ORDER BY regdate DESC
-    </select>
+    
+    <select id="commentsList" parameterType="com.blogprj.blog.model.Comments_DTO" resultMap="postCommentsMap">
+ 		SELECT 
+ 			c.no, c.content, c.regdate, c.postno, c.memberno,
+ 			p.no AS pno
+    	FROM COMMENTS c
+    		LEFT JOIN POST p ON p.no = c.postno
+    	WHERE c.postno = #{postno}
+    	ORDER BY c.regdate DESC
+ 	</select>
+ 	
+ 	<resultMap type="com.blogprj.blog.model.Comments_DTO" id="postCommentsMap">
+ 		<id property="no" column="no" />
+ 		<result column="content" property="content"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<result column="postno" property="postno"/>
+ 		<result column="memberno" property="memberno"/>
+ 		<association property="pDTO" column="no" javaType="com.blogprj.blog.model.POST_DTO">
+ 			<id column="pno" property="no"/>
+ 		</association>
+ 	</resultMap>
 	    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">

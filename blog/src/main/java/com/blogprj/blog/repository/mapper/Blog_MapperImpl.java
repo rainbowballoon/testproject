@@ -198,10 +198,10 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	} 
 	
 	@Override
-	public List<Comments_DTO> commentsList(int postno) {
+	public List<Comments_DTO> commentsList(Comments_DTO dto) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsList";
-			return sqlSession.selectList(statement, postno);
+			return sqlSession.selectList(statement, dto);
 		}finally{
 			
 		}

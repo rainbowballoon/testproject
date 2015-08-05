@@ -465,21 +465,17 @@ public class Blog_Controller {
 		//포스트 리스트
 		List<Post_DTO> postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
 		
-		
-		List<List> commentsList = new ArrayList<List>();
 		//덧글 리스트
-		for(int i = 0; i < postList.size(); i++)
-		{
-			List<Comments_DTO> commentsList1 = new ArrayList<Comments_DTO>();
-			commentsList1 = blog_Service.commentsList(postList.get(i).getNo());
-			commentsList.add(commentsList1);
+		for(int i = 0 ; i < postList.size(); i++ ){
+			Comments_DTO cdto = new Comments_DTO();
+			cdto.setPostno(postList.get(i).getNo());
+			System.out.println("i:"+cdto.getNo());
+			//List<Comments_DTO> commentsList = blog_Service.commentsList(cdto);
 		}
-			
-		
 		
 		if(postList != null){
 			model.addAttribute("postList", postList);
-			model.addAttribute("commentsList", commentsList);
+			//model.addAttribute("commentsList", commentsList);
 			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
 			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
 			model.addAttribute("totalCount", map.get("totalCount"));

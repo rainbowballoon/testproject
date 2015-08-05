@@ -130,9 +130,9 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public List<Comments_DTO> commentsList(int postno) {
+	public List<Comments_DTO> commentsList(Comments_DTO dto) {
 		try{
-			return blogmapper.commentsList(postno);
+			return blogmapper.commentsList(dto);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
