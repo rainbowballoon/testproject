@@ -6,14 +6,7 @@ public class Comments_DTO {
 	private int postno;
 	private int memberno;
 	private String regdate;
-	private Post_DTO pdto;
 	
-	public Post_DTO getPdto() {
-		return pdto;
-	}
-	public void setPdto(Post_DTO pdto) {
-		this.pdto = pdto;
-	}
 	public int getNo() {
 		return no;
 	}

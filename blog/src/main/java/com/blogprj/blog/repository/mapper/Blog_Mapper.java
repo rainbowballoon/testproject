@@ -49,7 +49,7 @@ public interface Blog_Mapper {
 
 //comments
 	public void commentsWrite(Comments_DTO dto);
-	public List<Comments_DTO> commentsList(Comments_DTO dto);
+	public List<Comments_DTO> commentsList(int postno);
 	
 //theme
 	

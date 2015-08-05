@@ -31,11 +31,18 @@
 		<!-- 덧글 -->
 			<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
 			<ul class="list-group">
-<%-- 			<c:forEach items="${commentsList }" var="clist"> --%>
-<%-- 				<c:forEach items="${clist}" var = "cdto"> --%>
-<%-- 					  <li class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }</li> --%>
-<%-- 				</c:forEach> --%>
-<%-- 			</c:forEach> --%>
+			<c:forEach items="${commentsListAll }" var="clist">
+				<c:forEach items="${clist}" var = "cdto">
+					<c:choose>
+						<c:when test="${cdto.postno == dto.no }">
+							<li class="list-group-item">
+								<span class="glyphicon glyphicon-user" aria-hidden="true">
+								</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
+							</li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</c:forEach>
 			</ul>
 	         <form action="commentsWrite" method="post">
                <input type="hidden" name="postno" value="${dto.no }">
