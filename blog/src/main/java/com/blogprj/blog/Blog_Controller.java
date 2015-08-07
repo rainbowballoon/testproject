@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +57,9 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}", method = RequestMethod.GET)
-	public String home1(@PathVariable("blogno") int blogno, Model model, HttpSession session) {
+	public String home1(
+			@PathVariable("blogno") int blogno, 
+			Model model, HttpSession session, HttpServletRequest request) {
 		System.out.println("/:"+blogno);
 		
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
@@ -75,6 +78,10 @@ public class Blog_Controller {
 					System.out.println("자료가 없습니다");
 				}
 			}
+			
+			System.out.println("URL가져오기:"+request.getContextPath());
+			
+			
 			
 		return "blog/index";
 	}
@@ -187,7 +194,9 @@ public class Blog_Controller {
 	}
 	
 	@RequestMapping(value = "/{blogno}/blogLogout", method = RequestMethod.GET)
-	public String loginoutForm(@PathVariable("blogno") int blogno, Model model, HttpServletRequest request, HttpSession session) {
+	public String loginoutForm(
+			@PathVariable("blogno") int blogno, 
+			Model model, HttpServletRequest request, HttpSession session) {
 		session.invalidate();
 		return "redirect:/index";
 	}
@@ -205,15 +214,6 @@ public class Blog_Controller {
 			@SuppressWarnings("resource")
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-			
-			//카테고리 부분
-			List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-			System.out.println(categoryList);
-			if(categoryList != null){
-				model.addAttribute("categoryList", categoryList);
-			}else{
-				System.out.println("자료가 없습니다");
-			}
 			
 			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
 				
@@ -281,15 +281,6 @@ public class Blog_Controller {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 			
-			//카테고리 부분
-			List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-			System.out.println(categoryList);
-			if(categoryList != null){
-				model.addAttribute("categoryList", categoryList);
-			}else{
-				System.out.println("자료가 없습니다");
-			}
-			
 			if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
 				Post_DTO pdto = new Post_DTO();
 				pdto.setNo(no);
@@ -329,15 +320,6 @@ public class Blog_Controller {
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-		
-		//카테고리 부분
-		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-		System.out.println(categoryList);
-		if(categoryList != null){
-			model.addAttribute("categoryList", categoryList);
-		}else{
-			System.out.println("자료가 없습니다");
-		}
 		
 		if(session.getAttribute("logined") != null){
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
@@ -577,25 +559,15 @@ public class Blog_Controller {
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-		
-		//카테고리 부분
-		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-		System.out.println(categoryList);
-		if(categoryList != null){
-			model.addAttribute("categoryList", categoryList);
-		}else{
-			System.out.println("자료가 없습니다");
-		}
-		
-		
-			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
-			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				return "blog/index.jsp?content=blogManageForm";
-			}else{
-				session.invalidate();
-				return "redirect:/index";
-			}
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+		
+		if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
+			return "blog/index.jsp?content=blogManageForm";
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
 	}
 
 //category
@@ -605,11 +577,9 @@ public class Blog_Controller {
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("blogManageForm:"+blogno);
 		
-		
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 			
 			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				
 				return "redirect:/"+blogno+"/categoryList";
 			}else{
 				session.invalidate();

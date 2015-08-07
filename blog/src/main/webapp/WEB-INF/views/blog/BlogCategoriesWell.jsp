@@ -13,7 +13,8 @@
                             <c:forEach items="${categoryList }" var="categoryList">
                                 <a class="list-group-item" href="#">${categoryList.name }</a>
                             </c:forEach>
-							<c:out value="${logined.bDTO.cDTO }"></c:out>
+                            <c:out value="${categoryList }"></c:out>
+<%-- 							<c:out value="${logined.bDTO.cDTO }"></c:out> --%>
 							<!-- 여기서 모르겠는부분: bDTO.cDTO하면 마지막 값만 검색됨. 리스트채로 얻으려면 어떻게..? -->
                             </ul>
                         </div>
