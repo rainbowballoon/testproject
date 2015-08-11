@@ -236,6 +236,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public List<Category_DTO> categoryListWell(int blogno) {
+		try{
+			return blogmapper.categoryListWell(blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 //subcategory
 	
 	@Override

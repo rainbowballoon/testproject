@@ -30,6 +30,7 @@ public interface Blog_Service{
 	public void categoryEdit(Category_DTO dto);
 	public void categoryDelete(int no);
 	public Category_DTO categoryDetail(int no);
+	public List<Category_DTO> categoryListWell(int blogno);
 	
 //subcategory
 	public List<SubCategory_DTO> subCategoryListAll(int blogno);

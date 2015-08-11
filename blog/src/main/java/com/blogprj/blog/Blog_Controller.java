@@ -431,8 +431,10 @@ public class Blog_Controller {
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
 		//카테고리 부분
-		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-		System.out.println(categoryList);
+		List<Category_DTO> categoryList = new ArrayList<Category_DTO>();
+		categoryList = blog_Service.categoryListWell(blogno);
+		System.out.println("카테고리 확인 : "+categoryList.get(0).getScDTO().getName());
+		
 		if(categoryList != null){
 			model.addAttribute("categoryList", categoryList);
 		}else{

@@ -258,6 +258,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public List<Category_DTO> categoryListWell(int blogno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.categoryListWell";
+			return sqlSession.selectList(statement, blogno);
+		}finally{
+			
+		}
+	}
+	
 //subcategory
 	@Override
 	public List<SubCategory_DTO> subCategoryListAll(int blogno) {
