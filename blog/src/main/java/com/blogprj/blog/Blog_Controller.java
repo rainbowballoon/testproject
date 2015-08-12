@@ -423,8 +423,13 @@ public class Blog_Controller {
 	@RequestMapping(value = "/{blogno}/postList", method = RequestMethod.GET)
 	public String postList(
 			@PathVariable("blogno") int blogno, 
+			@RequestParam(value = "categoryno", required = false, defaultValue = "0") int categoryno,
+			@RequestParam(value = "subcategoryno", required = false, defaultValue = "0") int subcategoryno,
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("postList blogno:"+blogno);
+		
+		System.out.println("categoryno:"+categoryno);
+		System.out.println("subcategoryno:"+subcategoryno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -432,22 +437,38 @@ public class Blog_Controller {
 		
 		//카테고리 부분
 		List<Category_DTO> categoryList = new ArrayList<Category_DTO>();
-		categoryList = blog_Service.categoryListWell(blogno);
-		System.out.println("카테고리 확인 : "+categoryList.get(0).getScDTO().getName());
+		List<SubCategory_DTO> subCategoryList = new ArrayList<SubCategory_DTO>();
+		List<List> subCategoryListAll = new ArrayList<List>();
 		
-		if(categoryList != null){
-			model.addAttribute("categoryList", categoryList);
-		}else{
-			System.out.println("자료가 없습니다");
+		categoryList = blog_Service.categoryList(blogno); //카테고리, 서브카테고리
+		
+		for(int i = 0; i < categoryList.size(); i++){ 
+			//System.out.println("카테고리 확인 : "+categoryList.get(i).getName());
+			subCategoryList = blog_Service.subCategoryList(blogno, categoryList.get(i).getNo());
+			//System.out.println("서브카테고리 개수 : "+subCategoryList.size());
+			subCategoryListAll.add(subCategoryList);
 		}
 		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
-		int postCount = blog_Service.selectPostCount(blogno);
+		int postCount = 0;
+		if(subcategoryno != 0){
+			postCount = blog_Service.selectPostCategoryCount(blogno, subcategoryno);
+		}else{
+			postCount = blog_Service.selectPostCount(blogno);
+		}
+		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map = pagenationProcess(request, postCount);
 		
 		//포스트 리스트
-		List<Post_DTO> postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
+		List<Post_DTO> postList = new ArrayList<Post_DTO>();
+		if(subcategoryno != 0){
+			postList = blog_Service.postCategoryList(map.get("sPage"), map.get("ePage"), blogno, subcategoryno);
+			System.out.println("서브메뉴 적용된 postList 개수 : "+postList.size());
+		}else{
+			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
+			System.out.println("그냥 postList 개수 : "+postList.size());
+		}
 		
 		List<Comments_DTO> commentsList = new ArrayList<Comments_DTO>();
 		List<List> commentsListAll = new ArrayList<List>();
@@ -461,12 +482,12 @@ public class Blog_Controller {
 		if(postList != null){
 			model.addAttribute("postList", postList);
 			model.addAttribute("commentsListAll", commentsListAll);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("subCategoryListAll", subCategoryListAll);
 			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
 			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
 			model.addAttribute("totalCount", map.get("totalCount"));
 			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));
-		}else{
-			System.out.println("자료가 없습니다");
 		}
 		
 		return "blog/index.jsp?content=post";

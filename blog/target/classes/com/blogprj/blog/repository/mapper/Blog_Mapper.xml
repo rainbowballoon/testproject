@@ -128,9 +128,14 @@
 		)
 	</insert>
 	
-	 <select id="selectPostCount" parameterType="int" resultType="int">
+	<select id="selectPostCount" parameterType="int" resultType="int">
     	SELECT count(*) FROM POST
     	WHERE blogno = #{blogno} 
+    </select>
+    
+    <select id="selectPostCategoryCount" parameterType="hashmap" resultType="int">
+    	SELECT count(*) FROM POST
+    	WHERE blogno = #{blogno} AND subcategoryno = #{subcategoryno}
     </select>
     
     <select id="postList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
@@ -139,6 +144,17 @@
 	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno
 	            from POST
 	            WHERE blogno = #{blogno}
+	         ) 
+	    WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
+	    ORDER BY regdate DESC
+    </select>
+    
+     <select id="postCategoryList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
+	    SELECT *
+	  	FROM (
+	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno
+	            from POST
+	            WHERE blogno = #{blogno} AND subcategoryno = #{subcategoryno}
 	         ) 
 	    WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
 	    ORDER BY regdate DESC
@@ -186,6 +202,7 @@
     	SELECT * 
     	FROM CATEGORY 
     	WHERE blogno = #{blogno}
+    	ORDER BY no
     </select>
     
     <insert id="categoryWrite" parameterType="com.blogprj.blog.model.Category_DTO">
@@ -216,30 +233,6 @@
 		FROM CATEGORY
 		WHERE NO = #{no}
     </select>
-    
-    <select id="categoryListWell" parameterType="com.blogprj.blog.model.Category_DTO" resultMap="categoryListWellMap">
- 		SELECT 
- 			c.no, c.name, c.blogno,
- 			sc.no AS scno, 
- 			sc.name AS scname, 
- 			sc.categoryno AS sccategoryno, 
- 			sc.blogno AS scblogno
-    	FROM CATEGORY c
-    		LEFT JOIN SUBCATEGORY sc ON sc.categoryno = c.no
-    	WHERE c.blogno = #{blogno}
- 	</select>
- 	
- 	<resultMap type="com.blogprj.blog.model.Category_DTO" id="categoryListWellMap">
- 		<id property="no" column="no" />
- 		<result column="name" property="name"/>
- 		<result column="blogno" property="blogno"/>
- 		<association property="scDTO" column="no" javaType="com.blogprj.blog.model.SubCategory_DTO">
- 			<id column="scno" property="no"/>
-	 		<result column="scname" property="name"/>
-	 		<result column="sccategoryno" property="categoryno"/>
-	 		<result column="scblogno" property="blogno"/>
- 		</association>
- 	</resultMap>
  	
 <!-- subcategory     -->
 
@@ -285,10 +278,16 @@
 		WHERE no = #{no} AND blogno = #{blogno} AND categoryno = #{categoryno}
 	</delete>
 	
+ 	<select id="subCategoryCount" parameterType="com.blogprj.blog.model.SubCategory_DTO" resultType="int">
+    	SELECT count(*) FROM SUBCATEGORY
+    	WHERE blogno = #{blogno} AND categoryno = #{categoryno}
+    </select>
+	
     <select id="test" resultType="com.blogprj.blog.model.Test_DTO">
     	SELECT * FROM TEST1
     </select>
- 
+    
+<!-- bloginfo  -->
  	<select id="blogInfo" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="blogInfoMap">
  		SELECT 
  			m.no, m.id, m.nickname, m.birthday, m.domain, m.regdate,
@@ -321,4 +320,5 @@
 	 		<result column="bthemeno" property="themeno"/>
  		</association>
  	</resultMap>
+    
 </mapper>

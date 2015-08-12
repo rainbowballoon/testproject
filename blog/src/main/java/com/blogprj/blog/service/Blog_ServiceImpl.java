@@ -73,9 +73,30 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
+	public List<Post_DTO> postCategoryList(int sPage, int ePage, int blogno,
+			int subcategoryno) {
+		try{
+			return blogmapper.postCategoryList(sPage, ePage, blogno, subcategoryno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
 	public int selectPostCount(int blogno) {
 		try{
 			return blogmapper.selectPostCount(blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	@Override
+	public int selectPostCategoryCount(int blogno, int subcategoryno) {
+		try{
+			return blogmapper.selectPostCategoryCount(blogno, subcategoryno);
 		}catch(Exception e){
 			e.printStackTrace();
 			return -1;
@@ -312,6 +333,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	@Override
+	public int subCategoryCount(SubCategory_DTO dto) {
+		try{
+			return blogmapper.subCategoryCount(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	

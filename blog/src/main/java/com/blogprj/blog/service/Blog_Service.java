@@ -39,14 +39,17 @@ public interface Blog_Service{
 	public void subCategoryWrite(SubCategory_DTO dto);
 	public void subCategoryEdit(SubCategory_DTO dto);
 	public void subCategoryDelete(int no, int categoryno, int blogno);
+	public int subCategoryCount(SubCategory_DTO dto);
 	
 //post	
 	public void postWrite(Post_DTO dto); //포스트 작성하기
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
 	public int selectPostCount(int blogno);
+	public int selectPostCategoryCount(int blogno, int subcategoryno);
 	public Post_DTO postDetail(Post_DTO dto);
 	public void postEdit(Post_DTO dto);
 	public void postDelete(Post_DTO dto);
+	public List<Post_DTO> postCategoryList(int sPage, int ePage, int blogno, int subcategoryno);
 
 //comments
 	public void commentsWrite(Comments_DTO dto);

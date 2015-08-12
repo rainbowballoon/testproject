@@ -10,10 +10,24 @@
                         <div class="col-lg-12">
                             <ul class="list-group">
                             
-                            <c:forEach items="${categoryList }" var="categoryList">
-                                <a class="list-group-item" href="#">${categoryList.name }</a>
+                            <c:forEach items="${categoryList }" var="clist">
+                                <a class="list-group-item" href="#">
+                                	<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
+                                	<c:out value="${clist.name }"></c:out>
+                                </a>
+                                <c:forEach items="${subCategoryListAll }" var="sclistAll">
+                                <c:forEach items="${sclistAll }" var="sclist">
+                                	<c:choose>
+                                	<c:when test="${sclist.categoryno == clist.no }">
+                                		<a class="list-group-item" href="postList?subcategoryno=${sclist.no }">
+	                                	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span> 
+	                                	<c:out value="${sclist.name }"></c:out>
+	                               		</a>
+                                	</c:when>
+                                	</c:choose>
+	                            </c:forEach>
+                                </c:forEach>
                             </c:forEach>
-                            <c:out value="${categoryList }"></c:out>
                             </ul>
                         </div>
                     </div>

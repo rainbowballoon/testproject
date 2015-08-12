@@ -148,10 +148,39 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
+	public List<Post_DTO> postCategoryList(int sPage, int ePage, int blogno,
+			int subcategoryno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postCategoryList";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("sPage", sPage);
+			map.put("ePage", ePage);
+			map.put("blogno", blogno);
+			map.put("subcategoryno", subcategoryno);
+			return sqlSession.selectList(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
 	public int selectPostCount(int blogno) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.selectPostCount";
 			return sqlSession.selectOne(statement, blogno);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int selectPostCategoryCount(int blogno, int subcategoryno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.selectPostCategoryCount";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("blogno", blogno);
+			map.put("subcategoryno", subcategoryno);
+			return sqlSession.selectOne(statement, map);
 		}finally{
 			
 		}
@@ -281,8 +310,8 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	
 	@Override
 	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno) {
-		System.out.println("blogno:"+blogno);
-		System.out.println("categoryno:"+categoryno);
+//		System.out.println("blogno:"+blogno);
+//		System.out.println("categoryno:"+categoryno);
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryList";
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -337,6 +366,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			map.put("categoryno", categoryno);
 			map.put("blogno", blogno);
 			sqlSession.selectOne(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int subCategoryCount(SubCategory_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryCount";
+			return sqlSession.selectOne(statement, dto);
 		}finally{
 			
 		}
