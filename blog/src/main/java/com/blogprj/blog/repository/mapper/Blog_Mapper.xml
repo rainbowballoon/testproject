@@ -136,8 +136,8 @@
     <select id="selectPostCategoryCount" parameterType="hashmap" resultType="int">
     	SELECT count(*)
     	FROM POST p
-    	JOIN SUBCATEGORY sc ON sc.categoryno = p.subcategoryno
-    	WHERE p.blogno = #{blogno} AND p.subcategoryno = #{categoryno}
+    	JOIN SUBCATEGORY sc ON sc.no = p.subcategoryno
+    	WHERE p.blogno = #{blogno} AND sc.categoryno = #{categoryno}
     </select>
     
     <select id="selectPostSubCategoryCount" parameterType="hashmap" resultType="int">
@@ -162,8 +162,8 @@
 		    SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
 			sc.no AS scno, sc.name AS scname, sc.categoryno AS sccategoryno, sc.blogno AS scblogno	    
 		    FROM POST p
-		    JOIN SUBCATEGORY sc ON sc.categoryno = p.subcategoryno
-		    WHERE p.blogno = #{blogno} AND p.subcategoryno = #{categoryno}
+		    JOIN SUBCATEGORY sc ON sc.no = p.subcategoryno
+		    WHERE p.blogno = #{blogno} AND sc.categoryno = #{categoryno}
 		    )
 		WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
 	    ORDER BY regdate DESC

@@ -7,7 +7,19 @@
 		
 		<ol class="breadcrumb">
 		   <li><a href="index">Home</a></li>
-		   <li class="active">Contact</li>
+		   <c:choose>
+			   <c:when test="${categoryno != 0 && subcategoryno == 0 }">
+			   		<li class="active"><a href="postList?categoryno=${categoryno }">${categoryno }</a></li>
+			   </c:when>
+			   <c:otherwise>
+			   		<li><a href="postList?categoryno=${categoryno }">${categoryno }</a></li>
+			   </c:otherwise>
+		   </c:choose>
+		   <c:choose>
+			   <c:when test="${categoryno == 0 && subcategoryno != 0 }">
+			   		<li class="active"><a href="postList?subcategoryno=${subcategoryno }">${subcategoryno }</a></li>
+			   </c:when>
+		   </c:choose>
 		</ol>
        
        <!-- postList 시작 -->			

@@ -403,7 +403,7 @@ public class Blog_Controller {
 		System.out.println(sPage + "," + ePage);
 		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
-		int totalCount = (int) (postCount/(double)ePage);
+		int totalCount = (int) (postCount/(double)ePage) + 1;
 		System.out.println("totalCount before:"+totalCount);
 		
 		//totalCount가 0이하면 1로 맞추기
