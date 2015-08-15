@@ -148,20 +148,36 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
-	public List<Post_DTO> postCategoryList(int sPage, int ePage, int blogno,
-			int subcategoryno) {
+	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postCategoryList";
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("sPage", sPage);
 			map.put("ePage", ePage);
 			map.put("blogno", blogno);
+			map.put("categoryno", categoryno);
+			return sqlSession.selectList(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno, int subcategoryno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postSubCategoryList";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("sPage", sPage);
+			map.put("ePage", ePage);
+			map.put("blogno", blogno);
+			map.put("categoryno", categoryno);
 			map.put("subcategoryno", subcategoryno);
 			return sqlSession.selectList(statement, map);
 		}finally{
 			
 		}
 	}
+	
 	
 	@Override
 	public int selectPostCount(int blogno) {
@@ -174,9 +190,23 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
-	public int selectPostCategoryCount(int blogno, int subcategoryno) {
+	public int selectPostCount(int blogno, int categoryno) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.selectPostCategoryCount";
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("blogno", blogno);
+			map.put("categoryno", categoryno);
+			System.out.println("selectPostCategoryCount:"+categoryno);
+			return sqlSession.selectOne(statement, map);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int selectPostCount(int blogno, int categoryno, int subcategoryno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.selectPostSubCategoryCount";
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("blogno", blogno);
 			map.put("subcategoryno", subcategoryno);

@@ -43,13 +43,15 @@ public interface Blog_Mapper {
 	
 //post	
 	public void postWrite(Post_DTO dto); //포스트 작성하기
-	public List<Post_DTO> postList(int sPage, int ePage, int blogno);
-	public int selectPostCount(int blogno);
-	public int selectPostCategoryCount(int blogno, int subcategoryno);
+	public List<Post_DTO> postList(int sPage, int ePage, int blogno); // 카테고리 분류 없음
+	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno); //카테고리 분류
+	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno, int subcategoryno); //서브 카테고리 분류
+	public int selectPostCount(int blogno); // 카테고리 분류 없을때 포스트 개수
+	public int selectPostCount(int blogno, int categoryno); //카테고리 분류 포스트 개수
+	public int selectPostCount(int blogno, int categoryno, int subcategoryno); //서브 카테고리 분류 포스트 개수
 	public Post_DTO postDetail(Post_DTO dto);
 	public void postEdit(Post_DTO dto);
 	public void postDelete(Post_DTO dto);
-	public List<Post_DTO> postCategoryList(int sPage, int ePage, int blogno, int subcategoryno);
 
 //comments
 	public void commentsWrite(Comments_DTO dto);

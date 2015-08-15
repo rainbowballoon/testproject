@@ -134,6 +134,13 @@
     </select>
     
     <select id="selectPostCategoryCount" parameterType="hashmap" resultType="int">
+    	SELECT count(*)
+    	FROM POST p
+    	JOIN SUBCATEGORY sc ON sc.categoryno = p.subcategoryno
+    	WHERE p.blogno = #{blogno} AND p.subcategoryno = #{categoryno}
+    </select>
+    
+    <select id="selectPostSubCategoryCount" parameterType="hashmap" resultType="int">
     	SELECT count(*) FROM POST
     	WHERE blogno = #{blogno} AND subcategoryno = #{subcategoryno}
     </select>
@@ -149,7 +156,38 @@
 	    ORDER BY regdate DESC
     </select>
     
-     <select id="postCategoryList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
+    <select id="postCategoryList" parameterType="hashmap" resultMap="postCategoryListMap">
+    	SELECT *
+    	FROM (
+		    SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
+			sc.no AS scno, sc.name AS scname, sc.categoryno AS sccategoryno, sc.blogno AS scblogno	    
+		    FROM POST p
+		    JOIN SUBCATEGORY sc ON sc.categoryno = p.subcategoryno
+		    WHERE p.blogno = #{blogno} AND p.subcategoryno = #{categoryno}
+		    )
+		WHERE <![CDATA[rnum >= #{sPage}+1]]> AND <![CDATA[ rnum <= #{ePage}+#{sPage} ]]>
+	    ORDER BY regdate DESC
+    </select>
+    
+    <resultMap type="com.blogprj.blog.model.Post_DTO" id="postCategoryListMap">
+    	<id property="no" column="no"/>
+    	<result property="regdate" column="regdate"/>
+    	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="blogno" column="blogno"/>
+    	<result property="memberno" column="memberno"/>
+    	<result property="postaccess" column="postaccess"/>
+    	<result property="topicno" column="topicno"/>
+    	<result property="subcategoryno" column="subcategoryno"/>
+    	<association property="scDTO" column="subcategoryno" javaType="com.blogprj.blog.model.SubCategory_DTO">
+    		<id property="no" column="scno"/>
+	    	<result property="name" column="scname"/>
+	    	<result property="categoryno" column="sccategoryno"/>
+	    	<result property="blogno" column="scblogno"/>
+    	</association>
+    </resultMap>
+    
+     <select id="postSubCategoryList" parameterType="hashmap" resultType="com.blogprj.blog.model.Post_DTO">
 	    SELECT *
 	  	FROM (
 	            select rownum as rnum, no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno

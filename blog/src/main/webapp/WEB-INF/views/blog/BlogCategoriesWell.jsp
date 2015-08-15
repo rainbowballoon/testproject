@@ -11,7 +11,7 @@
                             <ul class="list-group">
                             
                             <c:forEach items="${categoryList }" var="clist">
-                                <a class="list-group-item" href="#">
+                                <a class="list-group-item" href="postList?categoryno=${clist.no }">
                                 	<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 
                                 	<c:out value="${clist.name }"></c:out>
                                 </a>

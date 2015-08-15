@@ -95,10 +95,10 @@
 				<c:set var="sRecNum" value="${(pageNum-1) * perPage }" />
 				<c:choose>
 					<c:when test="${pageNum != curPage }">
-						<li>
-							<a href="${requestScope['javax.servlet.forward.request_uri']}?sPage=${sRecNum }&ePage=${perPage }">${pageNum}</a>
-						</li>
-					</c:when>
+							<li><a
+								href="${requestScope['javax.servlet.forward.request_uri']}?sPage=${sRecNum }&ePage=${perPage }&categoryno=${categoryno }&subcategoryno=${subcategoryno }">${pageNum}</a>
+							</li>
+						</c:when>
 					<c:otherwise>
 						<li class="active">
 							<a href="${requestScope['javax.servlet.forward.request_uri']}">${pageNum}</a>

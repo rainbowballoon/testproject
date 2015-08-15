@@ -404,11 +404,11 @@ public class Blog_Controller {
 		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
 		int totalCount = (int) (postCount/(double)ePage);
-		System.out.println("totalCount:"+totalCount);
+		System.out.println("totalCount before:"+totalCount);
 		
 		//totalCount가 0이하면 1로 맞추기
 		if(totalCount <=0) totalCount=1;
-		System.out.println("totalCount:"+totalCount);
+		System.out.println("totalCount after:"+totalCount);
 		
 		map.put("sPage", sPage);
 		map.put("ePage", ePage);
@@ -428,8 +428,7 @@ public class Blog_Controller {
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("postList blogno:"+blogno);
 		
-		System.out.println("categoryno:"+categoryno);
-		System.out.println("subcategoryno:"+subcategoryno);
+		System.out.println("PostList의 categoryno:"+categoryno+", subcategoryno:"+subcategoryno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -451,10 +450,15 @@ public class Blog_Controller {
 		
 		// totalCount는 (모든 포스트 개수)/(ePage)로 총 몇 페이지로 구성될 것인지 정함. 
 		int postCount = 0;
-		if(subcategoryno != 0){
-			postCount = blog_Service.selectPostCategoryCount(blogno, subcategoryno);
+		if(categoryno != 0 && subcategoryno == 0){
+			postCount = blog_Service.selectPostCount(blogno, categoryno);
+			System.out.println("카테고리 메뉴 적용된 postCount:"+postCount+", categoryno:"+categoryno);
+		}else if(categoryno == 0 && subcategoryno != 0){
+			postCount = blog_Service.selectPostCount(blogno, categoryno, subcategoryno);
+			System.out.println("서브 카테고리 메뉴 적용된 postCount:"+postCount+", subcategoryno:"+subcategoryno);
 		}else{
 			postCount = blog_Service.selectPostCount(blogno);
+			System.out.println("그냥 postCount:"+postCount);
 		}
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -462,9 +466,12 @@ public class Blog_Controller {
 		
 		//포스트 리스트
 		List<Post_DTO> postList = new ArrayList<Post_DTO>();
-		if(subcategoryno != 0){
-			postList = blog_Service.postCategoryList(map.get("sPage"), map.get("ePage"), blogno, subcategoryno);
-			System.out.println("서브메뉴 적용된 postList 개수 : "+postList.size());
+		if(categoryno != 0 && subcategoryno == 0){
+			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno);
+			System.out.println("카테고리 메뉴 적용된 postList 개수 : "+postList.size());
+		}else if(categoryno == 0 && subcategoryno != 0){
+			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno, subcategoryno);
+			System.out.println("카테고리 서브 메뉴 적용된 postList 개수 : "+postList.size());
 		}else{
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
 			System.out.println("그냥 postList 개수 : "+postList.size());
@@ -487,6 +494,8 @@ public class Blog_Controller {
 			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
 			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
 			model.addAttribute("totalCount", map.get("totalCount"));
+			model.addAttribute("categoryno", categoryno);
+			model.addAttribute("subcategoryno", subcategoryno);
 			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));
 		}
 		
