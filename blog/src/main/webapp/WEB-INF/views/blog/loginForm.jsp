@@ -33,7 +33,7 @@
 			    </div>
 			  </div><!-- /.box-body -->
 			 <div class="box-footer">
-			   <button type="reset" class="btn btn-default col-sm-3">취소</button>
+			   <a class="btn btn-default col-sm-3" href="getStateToken">네이버 아이디로 로그인</a>
 			   <button type="submit" class="btn btn-info pull-right col-sm-3">로그인</button>
 			 </div><!-- /.box-footer -->
 			</form>
