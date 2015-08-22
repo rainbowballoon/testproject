@@ -23,6 +23,8 @@ public interface Blog_Mapper {
 	public void blogProfileUpdate(Blog_DTO dto);
 	public void blogThemeUpdate(Blog_DTO dto); //테마바꾸기
 	public int blogThemeView(int memberno); //해당 테마 보이기
+	public void blogLayoutUpdate(Blog_DTO dto); //레이아웃 바꾸기
+	public int blogLayoutView(int memberno); //해당 레이아웃 보이기
 	
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기

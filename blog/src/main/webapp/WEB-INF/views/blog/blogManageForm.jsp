@@ -28,7 +28,7 @@
                     </div>
                     <div class="panel-body">
                   	  	<p><a href="themeListForm" class="btn btn-default">블로그 스킨 설정</a></p>
-                        <p><a href="#" class="btn btn-default">블로그 레이아웃 설정</a></p>
+                        <p><a href="layoutListForm" class="btn btn-default">블로그 레이아웃 설정</a></p>
                         <p><a href="#" class="btn btn-default">사용자 위젯 설정</a></p>
                     </div>
                 </div>

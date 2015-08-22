@@ -138,6 +138,14 @@
 		<jsp:include page="${param.content }" />
 		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
 	</c:when>
+	<c:when test="${param.content eq 'layoutListForm.jsp' }">
+		<jsp:include page="${param.content }" />
+		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+	</c:when>
+	<c:when test="${param.content eq 'themeListForm.jsp' }">
+		<jsp:include page="${param.content }" />
+		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+	</c:when>
 	<c:otherwise>
 		<jsp:include page="${param.content }" />
 	</c:otherwise>

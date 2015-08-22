@@ -25,7 +25,7 @@ import com.blogprj.blog.service.Blog_Service;
 public class Test_AspectJ {
 	
 	//Pointcut : 어드바이스할 조인포인트 영역을 좁혀주는 역할
-	@Pointcut("execution(* com.blogprj.blog.Blog_Controller.*Form(..))")
+	@Pointcut("execution(* com.blogprj.blog.controller.*.*Form(..))")
 	public void authOperation(){}
 	
 	//Around(충고) : Advice가 Advice 대상 메소드를 감싸서 대상메소드 호출 전과 후의 기능을 제공함
@@ -45,31 +45,6 @@ public class Test_AspectJ {
 		try{
 			System.out.println("3: try문");
 			HttpSession session = request.getSession();
-			
-//			String blogURI = request.getRequestURI();  //프로젝트경로부터 파일까지의 경로값을 얻어옴 (/blog/81/...)
-//			String[] URIarr = blogURI.split("/"); // blog, 81, ...
-//			String strblogno = URIarr[1];
-//			
-//			System.out.println("blogURI:"+blogURI+", blogno:"+strblogno);
-//			if(!strblogno.equals("blog")){
-//				
-//				@SuppressWarnings("resource")
-//				ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
-//				Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-//				
-//				int blogno = Integer.parseInt(strblogno);
-//				//카테고리 부분
-//				List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-//				
-//				if(categoryList != null){
-//					System.out.println("proceed1");
-//					request.setAttribute("categoryList", categoryList);
-//					Object result = joinPoint.proceed();
-//					return result;
-//				}else{
-//					System.out.println("자료가 없습니다");
-//				}
-//			}
 			
 			if( session == null ){
 				return "redirect:/loginForm";

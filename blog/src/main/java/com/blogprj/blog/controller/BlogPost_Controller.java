@@ -1,4 +1,4 @@
-package com.blogprj.blog;
+package com.blogprj.blog.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -325,13 +325,13 @@ public class BlogPost_Controller {
 		if(postList != null){
 			model.addAttribute("postList", postList);
 			model.addAttribute("commentsListAll", commentsListAll);
-			model.addAttribute("categoryList", categoryList);
-			model.addAttribute("subCategoryListAll", subCategoryListAll);
 			model.addAttribute("curPage", (map.get("sPage") / map.get("ePage"))+1); //curPage : 현재 페이지 
 			model.addAttribute("perPage", map.get("ePage")); //perPage : 각 페이지에 보일 아이템 개수
 			model.addAttribute("totalCount", map.get("totalCount"));
 			model.addAttribute("categoryno", categoryno);
 			model.addAttribute("subcategoryno", subcategoryno);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("subCategoryListAll", subCategoryListAll);
 			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));
 		}
 		

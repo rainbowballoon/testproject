@@ -1,4 +1,4 @@
-package com.blogprj.blog;
+package com.blogprj.blog.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -40,6 +40,8 @@ public class BlogTheme_Controller {
 	@RequestMapping(value = "/{blogno}/themeListForm", method = RequestMethod.GET)
 	public String themeListForm(
 			@PathVariable("blogno") int blogno, 
+			@RequestParam(value = "categoryno", required = false, defaultValue = "0") int categoryno,
+			@RequestParam(value = "subcategoryno", required = false, defaultValue = "0") int subcategoryno,
 			Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("themeListForm blogno:"+blogno);
 		
@@ -48,24 +50,32 @@ public class BlogTheme_Controller {
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
 		//카테고리 부분
-		List<Category_DTO> categoryList = blog_Service.categoryList(blogno);
-		if(categoryList != null){
-			model.addAttribute("categoryList", categoryList);
-		}else{
-			System.out.println("자료가 없습니다");
+		List<Category_DTO> categoryList = new ArrayList<Category_DTO>();
+		List<SubCategory_DTO> subCategoryList = new ArrayList<SubCategory_DTO>();
+		List<List> subCategoryListAll = new ArrayList<List>();
+		
+		categoryList = blog_Service.categoryList(blogno); //카테고리, 서브카테고리
+		
+		for(int i = 0; i < categoryList.size(); i++){ 
+			subCategoryList = blog_Service.subCategoryList(blogno, categoryList.get(i).getNo());
+			subCategoryListAll.add(subCategoryList);
 		}
 		
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 		
-			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+		if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 			
-			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				
-				return "blog/index.jsp?content=themeListForm";
-				//return "blog/index2.jsp?content=themeListForm";
-			}else{
-				session.invalidate();
-				return "redirect:/index";
-			}
+			model.addAttribute("categoryno", categoryno);
+			model.addAttribute("subcategoryno", subcategoryno);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("subCategoryListAll", subCategoryListAll);
+			
+			return "blog/index.jsp?content=themeListForm";
+			
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
 	
 	}
 	
@@ -80,30 +90,29 @@ public class BlogTheme_Controller {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 		
-			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+		if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
 			
-			if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-				
-				System.out.println("themeno:"+themeno);
-				
-				Blog_DTO bdto = new Blog_DTO();
-				bdto.setMemberno(memberno);
-				bdto.setThemeno(themeno);
-				
-				blog_Service.blogThemeUpdate(bdto);
-				
-				Member_DTO mdto = new Member_DTO();
-				String member_id= ((Member_DTO)session.getAttribute("logined")).getId();
-				String member_pw= ((Member_DTO)session.getAttribute("logined")).getPw();
-				mdto = blog_Service.blogLogin(member_id, member_pw);
-				
-				session.setAttribute("logined", mdto);
-				return "blog/index.jsp?content=themeListForm";
-			}else{
-				session.invalidate();
-				return "redirect:/index";
-			}
+			System.out.println("themeno:"+themeno);
+			
+			Blog_DTO bdto = new Blog_DTO();
+			bdto.setMemberno(memberno);
+			bdto.setThemeno(themeno);
+			
+			blog_Service.blogThemeUpdate(bdto);
+			
+			Member_DTO mdto = new Member_DTO();
+			String member_id= ((Member_DTO)session.getAttribute("logined")).getId();
+			String member_pw= ((Member_DTO)session.getAttribute("logined")).getPw();
+			mdto = blog_Service.blogLogin(member_id, member_pw);
+			session.setAttribute("logined", mdto);
+			
+			return "blog/index.jsp?content=themeListForm";
+		}else{
+			session.invalidate();
+			return "redirect:/index";
+		}
 	
 	}
 

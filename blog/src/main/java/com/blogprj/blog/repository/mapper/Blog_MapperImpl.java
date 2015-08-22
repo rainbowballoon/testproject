@@ -121,6 +121,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public void blogLayoutUpdate(Blog_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogLayoutUpdate";
+			sqlSession.update(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int blogLayoutView(int memberno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogLayoutView";
+			return sqlSession.selectOne(statement, memberno);
+		}finally{
+			
+		}
+	}
+	
 //post	
 	@Override
 	public void postWrite(Post_DTO dto) {

@@ -228,6 +228,25 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void blogLayoutUpdate(Blog_DTO dto) {
+		try{
+			blogmapper.blogLayoutUpdate(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public int blogLayoutView(int memberno) {
+		try{
+			return blogmapper.blogLayoutView(memberno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 //category
 	@Override
 	public List<Category_DTO> categoryList(int blogno) {

@@ -1,4 +1,4 @@
-package com.blogprj.blog;
+package com.blogprj.blog.controller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -35,25 +35,40 @@ import com.blogprj.blog.model.Test_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
-public class BlogManage_Controller {
+public class BlogComments_Controller {
 
-//블로그 관리
-	@RequestMapping(value = "/{blogno}/blogManageForm", method = RequestMethod.GET)
-	public String blogManageForm(@PathVariable("blogno") int blogno, 
-			Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("blogManageForm:"+blogno);
+	@RequestMapping(value = "/{blogno}/commentsWrite", method = RequestMethod.POST)
+	public String postReplyWrite(
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("postno") int postno,
+			@RequestParam("content") String content,
+			Model model, HttpServletRequest request, HttpSession session){
+		System.out.println("commentsWrite blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-			
-		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 		
-		if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-			return "blog/index.jsp?content=blogManageForm";
-		}else{
-			session.invalidate();
-			return "redirect:/index";
+		if(session.getAttribute("logined") != null){
+			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
+			
+			Post_DTO pdto = new Post_DTO();
+			pdto.setNo(postno);
+			pdto.setBlogno(blogno);
+			pdto = blog_Service.postDetail(pdto);
+			
+			Comments_DTO cdto = new Comments_DTO();
+			cdto.setNo(pdto.getNo());
+			cdto.setPostno(postno);
+			cdto.setContent(content);
+			cdto.setMemberno(memberno);
+			
+			
+			System.out.println("memberno:"+memberno);
+			
+			blog_Service.commentsWrite(cdto);
 		}
+		
+		return "redirect:/"+blogno+"/postList";
 	}
 }

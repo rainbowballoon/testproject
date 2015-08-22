@@ -21,8 +21,10 @@ public interface Blog_Service{
 	public void blogCreate(int memberno); //블로그 생성
 	public Blog_DTO blogProfileRead(int memberno); //프로필 정보 가져오기
 	public void blogProfileUpdate(Blog_DTO dto);
-	public void blogThemeUpdate(Blog_DTO dto); //테마바꾸기
+	public void blogThemeUpdate(Blog_DTO dto); //테마 바꾸기
 	public int blogThemeView(int memberno); //해당 테마 보이기
+	public void blogLayoutUpdate(Blog_DTO dto); //레이아웃 바꾸기
+	public int blogLayoutView(int memberno); //해당 레이아웃 보이기
 	
 //category
 	public List<Category_DTO> categoryList(int blogno); //카테고리 리스트 불러오기
@@ -56,8 +58,6 @@ public interface Blog_Service{
 //comments
 	public void commentsWrite(Comments_DTO dto);
 	public List<Comments_DTO> commentsList(int postno);
-	
-//theme
 	
 	public List<Test_DTO> test();
 	public void serviceMethod();

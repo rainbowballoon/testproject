@@ -116,6 +116,18 @@
     	WHERE memberno = #{memberno}
 	</select>
 	
+	<update id="blogLayoutUpdate" parameterType="com.blogprj.blog.model.Blog_DTO">
+		UPDATE BLOG SET 
+		layoutno = #{layoutno}
+		WHERE memberno = #{memberno}
+	</update>
+	
+	<select id="blogLayoutView" parameterType="int" resultType="int">
+		SELECT layoutno 
+    	FROM BLOG 
+    	WHERE layoutno = #{layoutno}
+	</select>
+	
 <!-- post  -->
      <insert id="postWrite" parameterType="com.blogprj.blog.model.Post_DTO">
 		INSERT INTO POST 
