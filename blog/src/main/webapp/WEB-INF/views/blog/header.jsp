@@ -44,7 +44,7 @@
 	                        <a href="blogLogout">로그아웃</a>
 	                    </li>
 	                     <li>
-	                        <a href="#">방명록</a>
+	                        <a href="boardList">방명록</a>
 	                    </li>
                     </c:when>
                     <c:otherwise>
@@ -52,7 +52,7 @@
 	                        <a href="blogLogout">로그아웃</a>
 	                    </li>
 	                     <li>
-	                        <a href="#">방명록</a>
+	                        <a href="boardList">방명록</a>
 	                    </li>
                     </c:otherwise>
                     </c:choose>

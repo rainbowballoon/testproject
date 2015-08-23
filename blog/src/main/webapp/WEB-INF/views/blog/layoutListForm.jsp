@@ -13,72 +13,36 @@
             </div>
         </div>
        
-       <!-- default 스킨 -->
+       <!-- left side layout -->
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <a href="#">
-                    <img src="${pageContext.request.contextPath }/resources/themeimg/default.png" 
-                	class="img-responsive img-hover img-thumbnail" width="700px">
+                    <img src="${pageContext.request.contextPath }/resources/layoutimg/leftside.png" 
+                	class="img-responsive img-hover img-thumbnail" width="200">
                 </a>
             </div>
-            <div class="col-md-5">
-                <h3>기본 스킨</h3>
+            <div class="col-md-7">
+                <h3>왼쪽 사이드 레이아웃 (기본)</h3>
                 <p>설명</p>
-                <a class="btn btn-primary" href="themePick?themeno=0"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
+                <a class="btn btn-primary" href="layoutPick?layoutno=0"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
             </div>
         </div>
         <!-- /.row -->
         
         <hr>
         
-        <!-- Candy Box 스킨 -->
+        <!-- right side layout -->
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <a href="#">
-                    <img src="${pageContext.request.contextPath }/resources/themeimg/candy-box.png" 
-                	class="img-responsive img-hover img-thumbnail" width="700px">
+                    <img src="${pageContext.request.contextPath }/resources/layoutimg/rightside.png" 
+                	class="img-responsive img-hover img-thumbnail" width="200">
                 </a>
             </div>
-            <div class="col-md-5">
-                <h3>Candy Box 스킨</h3>
-                <p>설명</p>
-                <a class="btn btn-primary" href="themePick?themeno=1"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
-            </div>
-        </div>
-        <!-- /.row -->
-	    
-	    <hr>
-
-        <!-- Autumn Dawn 스킨 -->
-        <div class="row">
             <div class="col-md-7">
-                <a href="#">
-                	<img src="${pageContext.request.contextPath }/resources/themeimg/autumn-dawn.png" 
-                	class="img-responsive img-hover img-thumbnail" width="700px">
-                </a>
-            </div>
-            <div class="col-md-5">
-                <h3>Autumn Dawn 스킨</h3>
+                <h3>오른쪽  사이드바 레이아웃</h3>
                 <p>설명</p>
-                <a class="btn btn-primary" href="themePick?themeno=2"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <hr>
-        
-        <!-- Pastel Stream 스킨 -->
-        <div class="row">
-            <div class="col-md-7">
-                <a href="#">
-                    <img src="${pageContext.request.contextPath }/resources/themeimg/pastel-stream.png" 
-                	class="img-responsive img-hover img-thumbnail" width="700px">
-                </a>
-            </div>
-            <div class="col-md-5">
-                <h3>Pastel Stream 스킨</h3>
-                <p>설명</p>
-                <a class="btn btn-primary" href="themePick?themeno=3"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
+                <a class="btn btn-primary" href="layoutPick?layoutno=1"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> 선택하기</a>
             </div>
         </div>
         <!-- /.row -->

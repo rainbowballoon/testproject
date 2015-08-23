@@ -3,6 +3,7 @@ package com.blogprj.blog.service;
 import java.util.List;
 
 import com.blogprj.blog.model.Blog_DTO;
+import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
@@ -381,6 +382,56 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}catch(Exception e){
 			e.printStackTrace();
 			return -1;
+		}
+	}
+
+//board
+	@Override
+	public List<Board_DTO> boardList(int blogno) {
+		try{
+			return blogmapper.boardList(blogno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public Board_DTO boardInfo(Board_DTO dto) {
+		try{
+			return blogmapper.boardInfo(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public int boardWrite(Board_DTO dto) {
+		try{
+			return blogmapper.boardWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	@Override
+	public int boardEdit(Board_DTO dto) {
+		try{
+			return blogmapper.boardWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	@Override
+	public void boardDelete(Board_DTO dto) {
+		try{
+			blogmapper.boardDelete(dto);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	

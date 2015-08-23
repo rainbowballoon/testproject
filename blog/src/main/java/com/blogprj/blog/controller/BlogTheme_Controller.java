@@ -108,7 +108,7 @@ public class BlogTheme_Controller {
 			mdto = blog_Service.blogLogin(member_id, member_pw);
 			session.setAttribute("logined", mdto);
 			
-			return "blog/index.jsp?content=themeListForm";
+			return "redirect:/"+blogno+"/themeListForm";
 		}else{
 			session.invalidate();
 			return "redirect:/index";

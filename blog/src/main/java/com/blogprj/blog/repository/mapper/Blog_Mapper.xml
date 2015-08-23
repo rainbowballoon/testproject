@@ -370,5 +370,11 @@
 	 		<result column="bthemeno" property="themeno"/>
  		</association>
  	</resultMap>
-    
+
+<!-- board -->    
+	<select id="boardList" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
+	    SELECT *
+	  	FROM board 
+	    ORDER BY regdate DESC
+    </select>
 </mapper>

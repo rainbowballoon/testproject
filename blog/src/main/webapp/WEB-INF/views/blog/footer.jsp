@@ -6,7 +6,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; 201312033 이예진 - 블로그 제작 (2015)</p>
+                    <p align="center">Copyright &copy; 201312033 이예진 - 블로그 제작 (2015)</p>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

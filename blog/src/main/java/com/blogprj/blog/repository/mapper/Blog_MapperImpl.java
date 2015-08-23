@@ -7,6 +7,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.blogprj.blog.model.Blog_DTO;
+import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
@@ -420,12 +421,63 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			
 		}
 	}
-	
+
 	@Override
 	public int subCategoryCount(SubCategory_DTO dto) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryCount";
 			return sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+//board	
+	@Override
+	public List<Board_DTO> boardList(int blogno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardList";
+			return sqlSession.selectList(statement, blogno);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public Board_DTO boardInfo(Board_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardInfo";
+			return sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int boardWrite(Board_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardWrite";
+			return sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int boardEdit(Board_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardEdit";
+			return sqlSession.update(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public void boardDelete(Board_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardDelete";
+			sqlSession.delete(statement, dto);
 		}finally{
 			
 		}

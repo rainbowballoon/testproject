@@ -3,6 +3,7 @@ package com.blogprj.blog.service;
 import java.util.List;
 
 import com.blogprj.blog.model.Blog_DTO;
+import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
 import com.blogprj.blog.model.Comments_DTO;
 import com.blogprj.blog.model.Member_DTO;
@@ -61,4 +62,11 @@ public interface Blog_Service{
 	
 	public List<Test_DTO> test();
 	public void serviceMethod();
+
+// board
+	public List<Board_DTO> boardList(int blogno); //방명록 리스트 불러오기
+	public Board_DTO boardInfo(Board_DTO dto); // 방명록 선택 글 조회
+	public int boardWrite(Board_DTO dto); // 방명록 작성
+	public int boardEdit(Board_DTO dto); //방명록 선택 글 수정
+	public void boardDelete(Board_DTO dto); // 방명록 글 삭제
 }

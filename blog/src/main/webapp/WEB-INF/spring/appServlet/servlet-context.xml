@@ -24,6 +24,7 @@
 	<resources mapping="/themeimg/**" location="/resources/themeimg/" />
 	<resources mapping="/upload/**" location="/upload/" />
 	<resources mapping="/profileimage/**" location="/profileimage/" />
+	<resources mapping="/layoutimage/**" location="/layoutimage/" />
 	<resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

@@ -107,7 +107,7 @@ public class BlogLayout_Controller {
 			mdto = blog_Service.blogLogin(member_id, member_pw);
 			session.setAttribute("logined", mdto);
 			
-			return "blog/index.jsp?content=layoutListForm";
+			return "redirect:/"+blogno+"/layoutListForm";
 		}else{
 			session.invalidate();
 			return "redirect:/index";

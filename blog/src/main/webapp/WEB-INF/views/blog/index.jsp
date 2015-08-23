@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>사용자 타이틀 설정</title>
+    <title>${logined.bDTO.title }</title>
 
     <!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.3.5/dist/css/bootstrap.min.css"/>">
@@ -135,16 +135,40 @@
 		<jsp:include page="testForm.jsp" />
 	</c:when>
 	<c:when test="${param.content eq 'post.jsp' }">
-		<jsp:include page="${param.content }" />
-		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		<c:choose>
+		<c:when test="${logined.bDTO.layoutno == 0 }">
+			<jsp:include page="${param.content }" />
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		</c:when>
+		<c:when test="${logined.bDTO.layoutno == 1 }">
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+			<jsp:include page="${param.content }" />
+		</c:when>
+		</c:choose>
 	</c:when>
 	<c:when test="${param.content eq 'layoutListForm.jsp' }">
-		<jsp:include page="${param.content }" />
-		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		<c:choose>
+		<c:when test="${logined.bDTO.layoutno == 0 }">
+			<jsp:include page="${param.content }" />
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		</c:when>
+		<c:when test="${logined.bDTO.layoutno == 1 }">
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+			<jsp:include page="${param.content }" />
+		</c:when>
+		</c:choose>
 	</c:when>
 	<c:when test="${param.content eq 'themeListForm.jsp' }">
-		<jsp:include page="${param.content }" />
-		<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		<c:choose>
+		<c:when test="${logined.bDTO.layoutno == 0 }">
+			<jsp:include page="${param.content }" />
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+		</c:when>
+		<c:when test="${logined.bDTO.layoutno == 1 }">
+			<jsp:include page="BlogSidebarWidgetsColumn.jsp" />
+			<jsp:include page="${param.content }" />
+		</c:when>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<jsp:include page="${param.content }" />
