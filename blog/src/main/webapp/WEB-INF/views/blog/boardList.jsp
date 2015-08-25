@@ -9,7 +9,7 @@
     var act = {
         goWriteForm : function(){ 
             var f = document.getElementById("form");
-            f.action = '/article/form.ok';
+            f.action = '/blog/boardWriteForm';
             f.submit();
         },
         search : function(){ 
@@ -89,7 +89,8 @@
 					<a href="javascript:act.search();"  class="btn btn-default"><span>검 색</span></a>
 			  	</td>
 			  	<td align="right">
-					<a href="javascript:act.goWriteForm();"  class="btn btn-default"><span>글 등 록</span></a>
+<!-- 					<a href="javascript:act.goWriteForm();"  class="btn btn-default"><span>글 등 록</span></a> -->
+					<a href="boardWriteForm"  class="btn btn-default"><span>글 등 록</span></a>
 				</td>
 			</tr>
 		</table>

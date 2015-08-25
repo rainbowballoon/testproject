@@ -1,16 +1,32 @@
 package com.blogprj.blog.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Board_DTO {
+	
 	private int no;
 	private int memberno;
 	private int groupid;
 	private int relevel;
 	private int redepth;
+	
+	@NotEmpty
 	private String title;
+	
+	@NotEmpty
 	private String content;
-	private char useyn;
+	
+	private String useyn;
+
 	private String regdate;
+	
 	private String editdate;
+	
 	private int blogno;
 	
 	public int getNo() {
@@ -55,10 +71,10 @@ public class Board_DTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public char getUseyn() {
+	public String getUseyn() {
 		return useyn;
 	}
-	public void setUseyn(char useyn) {
+	public void setUseyn(String useyn) {
 		this.useyn = useyn;
 	}
 	public String getRegdate() {

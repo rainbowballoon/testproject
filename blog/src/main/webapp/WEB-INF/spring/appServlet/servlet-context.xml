@@ -43,4 +43,12 @@
 	<!-- AOP -->
 	<aop:aspectj-autoproxy />
 	<beans:bean id="test" class="com.blogprj.blog.aop.Test_AspectJ"></beans:bean>
+	
+	<!-- validator -->
+	<beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+	
+<!-- 	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> -->
+<!--         <beans:property name="basename" value="message/messages" /> -->
+<!--     </beans:bean> -->
+    
 </beans:beans>
