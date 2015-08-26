@@ -10,6 +10,7 @@ drop table LOGO;
 drop table SUBCATEGORY;
 drop table TOPIC;
 drop table BLOG;
+drop table BOARD;
 
 drop SEQUENCE BLOG_SEQ;
 drop SEQUENCE MEMBER_SEQ;
@@ -20,10 +21,57 @@ drop SEQUENCE LOGO_SEQ;
 drop SEQUENCE SUBCATEGORY_SEQ;
 drop SEQUENCE TOPIC_SEQ;
 drop SEQUENCE POST_SEQ;
+drop SEQUENCE BOARD_SEQ;
 
 --------------------------------------------------------
 --  파일이 생성됨 - 일요일-7월-26-2015   
 --------------------------------------------------------
+
+--------------------------------------------------------
+--  DDL for Table BOARD
+--------------------------------------------------------
+
+  CREATE TABLE "BLOG"."BOARD" 
+   (	"NO" NUMBER(*,0), 
+	"MEMBERNO" NUMBER(*,0), 
+	"GROUPID" NUMBER(*,0), 
+	"RELEVEL" NUMBER(*,0), 
+	"REDEPTH" NUMBER(*,0), 
+	"TITLE" VARCHAR2(255 BYTE), 
+	"CONTENT" VARCHAR2(512 BYTE), 
+	"USEYN" CHAR(1 BYTE), 
+	"REGDATE" DATE, 
+	"EDITDATE" DATE, 
+	"BLOGNO" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+
+   COMMENT ON COLUMN "BLOG"."BOARD"."REGDATE" IS '등록날짜';
+   COMMENT ON COLUMN "BLOG"."BOARD"."EDITDATE" IS '수정날짜';
+--------------------------------------------------------
+--  DDL for Index BOARD_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "BLOG"."BOARD_PK" ON "BLOG"."BOARD" ("NO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table BOARD
+--------------------------------------------------------
+
+  ALTER TABLE "BLOG"."BOARD" ADD CONSTRAINT "BOARD_PK" PRIMARY KEY ("NO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "BLOG"."BOARD" MODIFY ("NO" NOT NULL ENABLE);
+
+
 --------------------------------------------------------
 --  DDL for Table CATEGORY
 --------------------------------------------------------
@@ -384,6 +432,14 @@ drop SEQUENCE POST_SEQ;
 --------------------------------------------------------
 --  파일이 생성됨 - 일요일-7월-26-2015   
 --------------------------------------------------------
+
+--------------------------------------------------------
+--  DDL for Sequence BOARD_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "BLOG"."BOARD_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+   
 --------------------------------------------------------
 --  DDL for Sequence TOPIC_SEQ
 --------------------------------------------------------

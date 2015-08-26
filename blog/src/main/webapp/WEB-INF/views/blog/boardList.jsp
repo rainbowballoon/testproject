@@ -90,7 +90,7 @@
 			  	</td>
 			  	<td align="right">
 <!-- 					<a href="javascript:act.goWriteForm();"  class="btn btn-default"><span>글 등 록</span></a> -->
-					<a href="boardWriteForm"  class="btn btn-default"><span>글 등 록</span></a>
+					<a href="boardWriteForm"  class="btn btn-primary"><span>글 등 록</span></a>
 				</td>
 			</tr>
 		</table>

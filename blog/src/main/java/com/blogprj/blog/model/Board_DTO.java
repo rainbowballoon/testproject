@@ -15,10 +15,10 @@ public class Board_DTO {
 	private int relevel;
 	private int redepth;
 	
-	@NotEmpty
+	@NotEmpty(message="제목을 입력하세요!")
 	private String title;
 	
-	@NotEmpty
+	@NotEmpty(message="내용을 입력하세요!")
 	private String content;
 	
 	private String useyn;
