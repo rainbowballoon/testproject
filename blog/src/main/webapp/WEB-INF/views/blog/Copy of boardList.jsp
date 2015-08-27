@@ -27,35 +27,40 @@
 	<form name="form" action="/article/list.ok" id="form" method="post" OnSubmit="act.search();">
 	<input type="hidden" id="no" name="no" value="${no}" />
 		<!-- 			<tr ><td class="tableL" height="1" colspan="6" width="650"  ></td></tr> -->
-		<table class="table table-hover ">
+		<table class="table table-hover">
 			<thead>
 				<tr class="active">
 					<th width="100">번호</th>
 					<th width="300">제목</th>
-					<th width="150">작성자</th>
-					<th width="100">작성일</th>
+					<th width="100">작성자</th>
+					<th width="150">작성일</th>
 				</tr>    
 			</thead>    
 		
 			<c:forEach var="dto" items="${boardList}" varStatus="c" >
-			<tr style="cursor: pointer;" onClick="location.href='boardInfo?no=${dto.no}'">
-				<td>${dto.no}</td>
-				<td>
-					<c:if test="${dto.relevel>0}">
-						<img src="/imgs/ui/blank.gif" border=0 height="1" width="${dto.relevel*10}" />
-						<img src="/imgs/ui/icon/re.gif" border="0" />
-					</c:if>                         
-					${dto.title}
-				</td>
-				<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.memberno}</td>
-				<td> 
-					<fmt:parseDate var="dateTempParse" value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-					<fmt:formatDate value="${dateTempParse}" pattern="yyyy-MM-dd"/>
-				</td>
-<%-- 				<td width="100"><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd" /></td> --%>
-			</tr>
+			<tbody>
+				<tr>
+					<td rowspan="2" style="cursor: pointer; vertical-align: middle;" 
+					onClick="location.href='boardInfo?no=${dto.no}'"
+					align="center">${dto.no}
+					</td>
+					<td>
+						<c:if test="${dto.relevel>0}">
+							<img src="/imgs/ui/blank.gif" border=0 height="1" width="${dto.relevel*10}" />
+							<img src="/imgs/ui/icon/re.gif" border="0" />
+						</c:if>                         
+						${dto.title}
+					</td>
+					<td>${dto.memberno}</td>
+					<td>${dto.regdate} </td>
+	<%-- 				<td width="100"><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd" /></td> --%>
+				</tr>
+				<tr>
+					<td colspan="4" height="50">${dto.content }</td>
+				</tr>
+			</tbody>
 			</c:forEach>
-			<tr height=22><td colspan="7" align="center" >${pageLink}</td></tr>
+<%-- 			<tr height=22><td colspan="7" align="center" >${pageLink}</td></tr> --%>
 		</table>
      
 		<table class="table">

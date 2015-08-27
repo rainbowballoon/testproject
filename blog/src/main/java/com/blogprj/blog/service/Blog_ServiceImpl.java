@@ -397,9 +397,9 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public Board_DTO boardInfo(Board_DTO dto) {
+	public Board_DTO boardInfo(int no) {
 		try{
-			return blogmapper.boardInfo(dto);
+			return blogmapper.boardInfo(no);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;

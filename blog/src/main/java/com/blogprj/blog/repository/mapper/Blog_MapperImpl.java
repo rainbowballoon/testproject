@@ -444,10 +444,10 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
-	public Board_DTO boardInfo(Board_DTO dto) {
+	public Board_DTO boardInfo(int no) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardInfo";
-			return sqlSession.selectOne(statement, dto);
+			return sqlSession.selectOne(statement, no);
 		}finally{
 			
 		}

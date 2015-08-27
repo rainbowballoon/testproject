@@ -375,6 +375,26 @@
 	<select id="boardList" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
 	    SELECT *
 	  	FROM board 
-	    ORDER BY regdate DESC
+	    ORDER BY regdate DESC, groupid DESC, relevel ASC
+    </select>
+    
+    <insert id="boardWrite" parameterType="com.blogprj.blog.model.Board_DTO">
+   		<selectKey keyProperty="no" resultType="int" order="BEFORE">			   
+	    	SELECT board_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		
+    	INSERT INTO BOARD(
+    		no, memberno, groupid, relevel, redepth, title, 
+    		content, useyn, regdate, editdate, blogno
+    	)VALUES(
+    		#{no}, #{memberno}, #{no}, #{relevel}, #{redepth}, #{title}, 
+    		#{content}, #{useyn}, sysdate, sysdate, #{blogno}
+    	)
+    </insert>
+    
+    <select id="boardInfo" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
+    	SELECT *
+	  	FROM board 
+	    WHERE no = #{no}
     </select>
 </mapper>

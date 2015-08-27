@@ -24,6 +24,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blogprj.blog.model.Board_DTO;
+import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
@@ -50,16 +51,20 @@ public class BlogBoard_Controller {
 	
 	
 	@RequestMapping(value="/{blogno}/boardWriteForm")
-	public ModelAndView boardWriteForm(
+	public String boardWriteForm(
 			@PathVariable("blogno") int blogno,
 			Model model, HttpServletRequest request, HttpSession session){
 		System.out.println("boardWriteForm blogno:"+blogno);
-
-		ModelAndView mv = new ModelAndView();
 		
-		model.addAttribute("board_DTO", new Board_DTO());
-		mv.setViewName("blog/index.jsp?content=boardWriteForm");
-		return mv;
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
+		
+		if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+			model.addAttribute("board_DTO", new Board_DTO());
+			model.addAttribute("memberno", memberno);
+			return "blog/index.jsp?content=boardWriteForm";
+		}else{ //본인 블로그가 아니면
+			return "redirect:/"+blogno+"/boardList";
+		}
 	}
 	
 	@RequestMapping(value="/{blogno}/boardWrite", method=RequestMethod.POST)
@@ -70,16 +75,10 @@ public class BlogBoard_Controller {
 			HttpServletRequest request, HttpSession session){
 		System.out.println("boardWrite blogno:"+blogno);
 		
-		@SuppressWarnings("resource")
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
-		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
-		
 		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()){
 			//여길 어떻게 해줘야 에러가 화면에 나타날까..
-			System.out.println("에러있어요");
-			
 			List<ObjectError> list = result.getAllErrors();
             for (ObjectError e : list) {
             	System.out.println(" ObjectError : " + e);
@@ -92,13 +91,49 @@ public class BlogBoard_Controller {
 			 * http://springmvc.egloos.com/509029
 			 * http://wiki.gurubee.net/pages/viewpage.action?pageId=12189867
 			 */
+            
 			//mv.setViewName("redirect:/"+blogno+"/boardWriteForm");
 			mv.setViewName("blog/index.jsp?content=boardWriteForm");
 			return mv;
 		}else{
-			System.out.println("에러없다");
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			board_DTO.setUseyn('Y');
+			//board_DTO.setGroupid(0);  -->selectKey 이용
+			board_DTO.setRedepth(0);
+			board_DTO.setRelevel(0);
+			
+			blog_Service.boardWrite(board_DTO);
+			System.out.println("게시글 글쓴이:"+board_DTO.getMemberno());
+			System.out.println("게시글 내용:"+board_DTO.getContent());
+			System.out.println("게시글 글번호:"+board_DTO.getNo());
+            
 			mv.setViewName("redirect:/"+blogno+"/boardList");
 			return mv;
 		}
+	}
+	
+	@RequestMapping(value="/{blogno}/boardInfo", method=RequestMethod.GET)
+	public ModelAndView boardInfo(
+			@PathVariable("blogno") int blogno,
+			@RequestParam("no") int no,
+			Model model, HttpServletRequest request, HttpSession session){
+		System.out.println("boardInfo blogno:"+blogno);
+		
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+		Board_DTO bdto = new Board_DTO();
+		
+		bdto = blog_Service.boardInfo(no);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("blog/index.jsp?content=boardInfo");
+		mv.addObject("bdto", bdto);
+		return mv;
 	}
 }

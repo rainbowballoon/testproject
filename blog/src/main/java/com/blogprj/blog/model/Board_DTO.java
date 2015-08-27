@@ -21,7 +21,7 @@ public class Board_DTO {
 	@NotEmpty(message="내용을 입력하세요!")
 	private String content;
 	
-	private String useyn;
+	private char useyn;
 
 	private String regdate;
 	
@@ -71,10 +71,10 @@ public class Board_DTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getUseyn() {
+	public char getUseyn() {
 		return useyn;
 	}
-	public void setUseyn(String useyn) {
+	public void setUseyn(char useyn) {
 		this.useyn = useyn;
 	}
 	public String getRegdate() {

@@ -4,10 +4,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 		<div class="col-md-8">
-           <h1 class="page-header">방명록 등록하기</h1>
-
+           <h3 class="page-header"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> 방명록 등록하기</h3>
 			<form:form commandName="board_DTO" modelAttribute="board_DTO" action="boardWrite" method="post">
 			<input type="hidden" name="blogno" value="${blogno }">
+			<input type="hidden" name="memberno" value="${memberno }">
 				
 			<div class="row">	
 				<div class="form-group">
