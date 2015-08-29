@@ -136,4 +136,75 @@ public class BlogBoard_Controller {
 		mv.addObject("bdto", bdto);
 		return mv;
 	}
+	
+	@RequestMapping(value="/{blogno}/boardEditForm", method=RequestMethod.GET)
+	public ModelAndView boardEditForm(
+			@PathVariable("blogno") int blogno,
+			@RequestParam("no") int no,
+			Model model, HttpServletRequest request, HttpSession session){
+		System.out.println("boardEditForm blogno:"+blogno);
+		
+		ModelAndView mv = new ModelAndView();
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
+		
+		if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			Board_DTO bdto = new Board_DTO();
+			
+			bdto = blog_Service.boardInfo(no);
+			
+			mv.setViewName("blog/index.jsp?content=boardEditForm");
+			mv.addObject("board_DTO", new Board_DTO());
+			mv.addObject("memberno", memberno);
+			mv.addObject("bdto", bdto);
+			
+			return mv;
+		}else{ //본인 블로그가 아니면
+			mv.setViewName("redirect:/"+blogno+"/boardList");
+			return mv;
+		}
+	} 
+	
+	
+	@RequestMapping(value="/{blogno}/boardEdit", method=RequestMethod.POST)
+	public ModelAndView boardEdit(
+			@PathVariable("blogno") int blogno,
+			@ModelAttribute @Valid Board_DTO board_DTO,
+			BindingResult result, Model model,
+			HttpServletRequest request, HttpSession session){
+		System.out.println("boardEdit blogno:"+blogno);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		if(result.hasErrors()){
+			List<ObjectError> list = result.getAllErrors();
+            for (ObjectError e : list) {
+            	System.out.println(" ObjectError : " + e);
+            }
+
+			mv.setViewName("blog/index.jsp?content=boardEditForm");
+			return mv;
+		}else{
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			//board_DTO.setUseyn('Y');
+			//board_DTO.setGroupid(0);  -->selectKey 이용
+			//board_DTO.setRedepth(0);
+			//board_DTO.setRelevel(0);
+			
+			//blog_Service.boardEdit(board_DTO);
+			System.out.println("게시글 글쓴이:"+board_DTO.getMemberno());
+			System.out.println("게시글 내용:"+board_DTO.getContent());
+			System.out.println("게시글 글번호:"+board_DTO.getNo());
+            
+			mv.setViewName("redirect:/"+blogno+"/boardList");
+			return mv;
+		}
+	}
 }
