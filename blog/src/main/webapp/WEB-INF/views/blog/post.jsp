@@ -56,7 +56,7 @@
 				</c:forEach>
 			</c:forEach>
 			</ul>
-	         <form action="commentsWrite" method="post">
+	         <form action="commentsPSWrite" method="post">
                <input type="hidden" name="postno" value="${dto.no }">
 	              	<table style="width: 100%">
 	              	<tr>

@@ -21,13 +21,13 @@
 			   }
 		   },
 		   runboardReplyWrite : function(){
-			   var f = document.getElementById("form");
-			   f.action = "/blog/${bdto.blogno}/boardReplyWrite?no=${bdto.no}";
+			   var f = document.getElementById("replyform");
+			   f.action = "/blog/${bdto.blogno}/commentsBDWrite?no=${bdto.no}";
 			   f.submit();
 		   },
 		   runboardReplyDelete : function(){
-			   var f = document.getElementById("form");
-			   f.action = "/blog/${bdto.blogno}/boardReplyDelete?no=${bdto.no}";
+			   var f = document.getElementById("replyform");
+			   f.action = "/blog/${bdto.blogno}/commentsBDDelete?no=${bdto.no}";
 			   f.submit();
 		   }
    }
@@ -48,7 +48,8 @@
 						<th class="active">작성시간</th><td width="150">${bdto.regdate }</td>
 					</tr>
 					<tr>	
-						<th class="active">글제목</th><td colspan="5">${bdto.title }</td>
+						<th class="active">글제목</th><td colspan="3">${bdto.title }</td>
+						<th class="active">수정시간</th><td colspan="2">${bdto.editdate }</td>
 					</tr>
 					<tr>
 						<td colspan="6" style="padding: 20px">${bdto.content }</td>
@@ -63,24 +64,52 @@
 						</td>
 					</tr>
 				</table>
-				
+				</form>
 				<hr>	 
-					   
-				<div class="input-group">
-					<input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
-					<span class="input-group-btn">
-					<a href="javascript:act.runboardReplyWrite()" class="btn btn-default">덧글남기기</a>
-					</span>
-				</div><!-- /input-group --> 
 				
-				<table class="table">
-					<tr>
-						<td width="200"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 아이디 [시간]</td>
-						<td width="300"> : 덧글내용</td>
-						<td colspan="2" align="right">
-							<a href="javascript:act.runboardReplyDelete()"class="btn btn-default btn-xs">삭제</a>
-						</td>
-					</tr>
-				</table>
-			</form>
+				<div class="panel panel-default">
+				<div class="panel-body">
+					<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
+					<form method="post" name="replyform" id="replyform">	
+					<input type="hidden" name="blogno" value="${bdto.blogno }">
+					<input type="hidden" name="memberno" value="${bdto.memberno }">
+					<input type="hidden" name="boardno" value="${bdto.no }">	
+					
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${bdto.memberno }
+							</span>
+							<input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
+							<span class="input-group-btn">
+								<a href="javascript:act.runboardReplyWrite()" class="btn btn-primary">덧글 입력</a>
+							</span>
+						</div><!-- /input-group --> 
+					</div> <!-- form group -->
+					
+					<ul class="list-group">
+					<c:forEach items="${commentsList}" var = "cdto">
+						<c:choose>
+							<c:when test="${cdto.boardno == bdto.no }">
+								<li class="list-group-item">
+									<span class="glyphicon glyphicon-user" aria-hidden="true">
+									</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
+									<a href="javascript:act.runboardReplyDelete()" class="btn btn-default btn-xs pull-right">삭제</a>
+								</li>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+					</ul>
+<!-- 					<table class="table"> -->
+<!-- 						<tr> -->
+<!-- 							<td width="200"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 아이디 [시간]</td> -->
+<!-- 							<td width="300"> : 덧글내용</td> -->
+<!-- 							<td colspan="2" align="right"> -->
+<!-- 								<a href="javascript:act.runboardReplyDelete()"class="btn btn-default btn-xs">삭제</a> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 					</table> -->
+					</form>
+				</div>
+				</div> <!-- pananel -->
         </div>

@@ -9,7 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_BD_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -266,11 +267,11 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			
 		}
 	}
-//comments
+//comments_ps
 	@Override
-	public void commentsWrite(Comments_DTO dto) {
+	public void commentsPSWrite(Comments_PS_DTO dto) {
 		try{
-			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsWrite";
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsPSWrite";
 			sqlSession.insert(statement, dto);
 		}finally{
 			
@@ -278,15 +279,36 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	} 
 	
 	@Override
-	public List<Comments_DTO> commentsList(int postno) {
+	public List<Comments_PS_DTO> commentsPSList(int postno) {
 		try{
-			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsList";
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsPSList";
 			return sqlSession.selectList(statement, postno);
 		}finally{
 			
 		}
 	}
+
+//comments_bd
+	@Override
+	public void commentsBDWrite(Comments_BD_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsBDWrite";
+			sqlSession.insert(statement, dto);
+		}finally{
+			
+		}
+	} 
 	
+	@Override
+	public List<Comments_BD_DTO> commentsBDList(int boardno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsBDList";
+			return sqlSession.selectList(statement, boardno);
+		}finally{
+			
+		}
+	}
+		
 //category
 	@Override
 	public List<Category_DTO> categoryList(int blogno) {

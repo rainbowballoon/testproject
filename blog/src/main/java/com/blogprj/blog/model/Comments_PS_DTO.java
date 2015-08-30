@@ -1,6 +1,6 @@
 package com.blogprj.blog.model;
 
-public class Comments_DTO {
+public class Comments_PS_DTO {
 	private int no;
 	private String content;
 	private int postno;

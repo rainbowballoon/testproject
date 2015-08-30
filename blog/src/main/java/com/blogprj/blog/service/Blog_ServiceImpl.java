@@ -5,7 +5,8 @@ import java.util.List;
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_BD_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -160,20 +161,40 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
-//comments
+//comments_ps
 	@Override
-	public void commentsWrite(Comments_DTO dto) {
+	public void commentsPSWrite(Comments_PS_DTO dto) {
 		try{
-			blogmapper.commentsWrite(dto);
+			blogmapper.commentsPSWrite(dto);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
-	public List<Comments_DTO> commentsList(int postno) {
+	public List<Comments_PS_DTO> commentsPSList(int postno) {
 		try{
-			return blogmapper.commentsList(postno);
+			return blogmapper.commentsPSList(postno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+//comments_bd
+	@Override
+	public void commentsBDWrite(Comments_BD_DTO dto) {
+		try{
+			blogmapper.commentsBDWrite(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public List<Comments_BD_DTO> commentsBDList(int boardno) {
+		try{
+			return blogmapper.commentsBDList(boardno);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -419,7 +440,7 @@ public class Blog_ServiceImpl implements Blog_Service {
 	@Override
 	public int boardEdit(Board_DTO dto) {
 		try{
-			return blogmapper.boardWrite(dto);
+			return blogmapper.boardEdit(dto);
 		}catch(Exception e){
 			e.printStackTrace();
 			return -1;

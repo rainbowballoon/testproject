@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;

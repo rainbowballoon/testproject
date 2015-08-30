@@ -20,7 +20,15 @@
 						</label>
 	                </div>
 				</div>
-				
+				<div class="form-group">
+					<label for="useyn" class="control-lable">공개여부</label><br>
+					<label class="radio-inline">
+						<input type="radio" name="useyn" id="useyn" value="Y" checked>공개
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="useyn" id="useyn" value="N">비공개
+					</label>
+				</div>
 				<div class="form-group">
 					<form:textarea path="content" class="form-control" rows="10" name="content" placeholder="내용을 입력해주세요" />
 					<div class="has-error">

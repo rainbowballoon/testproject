@@ -24,6 +24,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blogprj.blog.model.Board_DTO;
+import com.blogprj.blog.model.Comments_BD_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
@@ -101,7 +103,6 @@ public class BlogBoard_Controller {
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 			
-			board_DTO.setUseyn('Y');
 			//board_DTO.setGroupid(0);  -->selectKey 이용
 			board_DTO.setRedepth(0);
 			board_DTO.setRelevel(0);
@@ -110,6 +111,7 @@ public class BlogBoard_Controller {
 			System.out.println("게시글 글쓴이:"+board_DTO.getMemberno());
 			System.out.println("게시글 내용:"+board_DTO.getContent());
 			System.out.println("게시글 글번호:"+board_DTO.getNo());
+			System.out.println("게시글 공개여부:"+board_DTO.getUseyn());
             
 			mv.setViewName("redirect:/"+blogno+"/boardList");
 			return mv;
@@ -117,7 +119,7 @@ public class BlogBoard_Controller {
 	}
 	
 	@RequestMapping(value="/{blogno}/boardInfo", method=RequestMethod.GET)
-	public ModelAndView boardInfo(
+	public String boardInfo(
 			@PathVariable("blogno") int blogno,
 			@RequestParam("no") int no,
 			Model model, HttpServletRequest request, HttpSession session){
@@ -127,24 +129,26 @@ public class BlogBoard_Controller {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
+		List<Comments_BD_DTO> commentsList = new ArrayList<Comments_BD_DTO>();
+		commentsList = blog_Service.commentsBDList(no);
+			
+		
 		Board_DTO bdto = new Board_DTO();
 		
 		bdto = blog_Service.boardInfo(no);
 		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("blog/index.jsp?content=boardInfo");
-		mv.addObject("bdto", bdto);
-		return mv;
+		model.addAttribute("bdto", bdto);
+		model.addAttribute("commentsList", commentsList);
+		return "blog/index.jsp?content=boardInfo";
 	}
 	
 	@RequestMapping(value="/{blogno}/boardEditForm", method=RequestMethod.GET)
-	public ModelAndView boardEditForm(
+	public String boardEditForm(
 			@PathVariable("blogno") int blogno,
 			@RequestParam("no") int no,
 			Model model, HttpServletRequest request, HttpSession session){
 		System.out.println("boardEditForm blogno:"+blogno);
 		
-		ModelAndView mv = new ModelAndView();
 		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
 		
 		if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
@@ -156,28 +160,23 @@ public class BlogBoard_Controller {
 			
 			bdto = blog_Service.boardInfo(no);
 			
-			mv.setViewName("blog/index.jsp?content=boardEditForm");
-			mv.addObject("board_DTO", new Board_DTO());
-			mv.addObject("memberno", memberno);
-			mv.addObject("bdto", bdto);
-			
-			return mv;
+			model.addAttribute("board_DTO", new Board_DTO());
+			model.addAttribute("memberno", memberno);
+			model.addAttribute("bdto", bdto);
+			return "blog/index.jsp?content=boardEditForm";
 		}else{ //본인 블로그가 아니면
-			mv.setViewName("redirect:/"+blogno+"/boardList");
-			return mv;
+			return "redirect:/"+blogno+"/boardList";
 		}
 	} 
 	
 	
 	@RequestMapping(value="/{blogno}/boardEdit", method=RequestMethod.POST)
-	public ModelAndView boardEdit(
+	public String boardEdit(
 			@PathVariable("blogno") int blogno,
 			@ModelAttribute @Valid Board_DTO board_DTO,
 			BindingResult result, Model model,
 			HttpServletRequest request, HttpSession session){
 		System.out.println("boardEdit blogno:"+blogno);
-		
-		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()){
 			List<ObjectError> list = result.getAllErrors();
@@ -185,26 +184,21 @@ public class BlogBoard_Controller {
             	System.out.println(" ObjectError : " + e);
             }
 
-			mv.setViewName("blog/index.jsp?content=boardEditForm");
-			return mv;
+			return "blog/index.jsp?content=boardEditForm";
 		}else{
 			
 			@SuppressWarnings("resource")
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
 			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 			
-			//board_DTO.setUseyn('Y');
-			//board_DTO.setGroupid(0);  -->selectKey 이용
-			//board_DTO.setRedepth(0);
-			//board_DTO.setRelevel(0);
+			blog_Service.boardEdit(board_DTO);
 			
-			//blog_Service.boardEdit(board_DTO);
-			System.out.println("게시글 글쓴이:"+board_DTO.getMemberno());
-			System.out.println("게시글 내용:"+board_DTO.getContent());
-			System.out.println("게시글 글번호:"+board_DTO.getNo());
+			System.out.println("수정게시글 글쓴이:"+board_DTO.getMemberno());
+			System.out.println("수정게시글 내용:"+board_DTO.getContent());
+			System.out.println("수정게시글 글번호:"+board_DTO.getNo());
+			System.out.println("수정게시글 공개여부:"+board_DTO.getUseyn());
             
-			mv.setViewName("redirect:/"+blogno+"/boardList");
-			return mv;
+			return "redirect:/"+blogno+"/boardList";
 		}
 	}
 }

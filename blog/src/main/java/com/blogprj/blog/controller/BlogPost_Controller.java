@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -313,12 +313,12 @@ public class BlogPost_Controller {
 			System.out.println("그냥 postList 개수 : "+postList.size());
 		}
 		
-		List<Comments_DTO> commentsList = new ArrayList<Comments_DTO>();
+		List<Comments_PS_DTO> commentsList = new ArrayList<Comments_PS_DTO>();
 		List<List> commentsListAll = new ArrayList<List>();
 		
 		//덧글 리스트
 		for(int i = 0 ; i < postList.size(); i++ ){
-			commentsList = blog_Service.commentsList(postList.get(i).getNo());
+			commentsList = blog_Service.commentsPSList(postList.get(i).getNo());
 			commentsListAll.add(commentsList);
 		}
 		

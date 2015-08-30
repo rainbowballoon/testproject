@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.File_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
@@ -35,15 +35,15 @@ import com.blogprj.blog.model.Test_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
-public class BlogComments_Controller {
+public class BlogCommentsPS_Controller {
 
-	@RequestMapping(value = "/{blogno}/commentsWrite", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/commentsPSWrite", method = RequestMethod.POST)
 	public String postReplyWrite(
 			@PathVariable("blogno") int blogno, 
 			@RequestParam("postno") int postno,
 			@RequestParam("content") String content,
 			Model model, HttpServletRequest request, HttpSession session){
-		System.out.println("commentsWrite blogno:"+blogno);
+		System.out.println("commentsPSWrite blogno:"+blogno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -57,7 +57,7 @@ public class BlogComments_Controller {
 			pdto.setBlogno(blogno);
 			pdto = blog_Service.postDetail(pdto);
 			
-			Comments_DTO cdto = new Comments_DTO();
+			Comments_PS_DTO cdto = new Comments_PS_DTO();
 			cdto.setNo(pdto.getNo());
 			cdto.setPostno(postno);
 			cdto.setContent(content);
@@ -66,7 +66,7 @@ public class BlogComments_Controller {
 			
 			System.out.println("memberno:"+memberno);
 			
-			blog_Service.commentsWrite(cdto);
+			blog_Service.commentsPSWrite(cdto);
 		}
 		
 		return "redirect:/"+blogno+"/postList";

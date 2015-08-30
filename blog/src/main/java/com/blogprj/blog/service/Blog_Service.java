@@ -5,7 +5,8 @@ import java.util.List;
 import com.blogprj.blog.model.Blog_DTO;
 import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Category_DTO;
-import com.blogprj.blog.model.Comments_DTO;
+import com.blogprj.blog.model.Comments_BD_DTO;
+import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
@@ -56,10 +57,14 @@ public interface Blog_Service{
 	public void postEdit(Post_DTO dto);
 	public void postDelete(Post_DTO dto);
 	
-//comments
-	public void commentsWrite(Comments_DTO dto);
-	public List<Comments_DTO> commentsList(int postno);
+//comments_ps
+	public void commentsPSWrite(Comments_PS_DTO dto);
+	public List<Comments_PS_DTO> commentsPSList(int postno);
 	
+//comments_bd	
+	public void commentsBDWrite(Comments_BD_DTO dto);
+	public List<Comments_BD_DTO> commentsBDList(int boardno);
+		
 	public List<Test_DTO> test();
 	public void serviceMethod();
 
