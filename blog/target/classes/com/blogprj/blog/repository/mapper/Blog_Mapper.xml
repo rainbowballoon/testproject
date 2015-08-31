@@ -228,25 +228,44 @@
 		WHERE no = #{no} AND blogno = #{blogno}
     </delete>
  
-<!-- commnets -->
-	<insert id="commentsWrite" parameterType="com.blogprj.blog.model.Comments_DTO">
-		INSERT INTO COMMENTS
+<!-- commnets_ps-->
+	<insert id="commentsPSWrite" parameterType="com.blogprj.blog.model.Comments_PS_DTO">
+		INSERT INTO COMMENTS_PS
 		(
 			no, postno, memberno, regdate, content
 		)
 		VALUES 
 		(
-			 comments_seq.nextval, #{postno}, #{memberno}, sysdate, #{content}
+			 comments_ps_seq.nextval, #{postno}, #{memberno}, sysdate, #{content}
 		)
 	</insert>
     
-    <select id="commentsList" parameterType="int" resultType="com.blogprj.blog.model.Comments_DTO">
+    <select id="commentsPSList" parameterType="int" resultType="com.blogprj.blog.model.Comments_PS_DTO">
  		SELECT *
-    	FROM COMMENTS
+    	FROM COMMENTS_PS
     	WHERE postno = #{postno}
     	ORDER BY regdate DESC
  	</select>
-	    
+
+<!-- commnets_bd-->
+	<insert id="commentsBDWrite" parameterType="com.blogprj.blog.model.Comments_BD_DTO">
+		INSERT INTO COMMENTS_BD
+		(
+			no, boardno, memberno, regdate, content
+		)
+		VALUES 
+		(
+			 comments_bd_seq.nextval, #{boardno}, #{memberno}, sysdate, #{content}
+		)
+	</insert>
+    
+    <select id="commentsBDList" parameterType="int" resultType="com.blogprj.blog.model.Comments_BD_DTO">
+ 		SELECT *
+    	FROM COMMENTS_BD
+    	WHERE boardno = #{boardno}
+    	ORDER BY regdate DESC
+ 	</select>
+ 		    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
     	SELECT * 
@@ -397,4 +416,11 @@
 	  	FROM board 
 	    WHERE no = #{no}
     </select>
+    
+    <update id="boardEdit" parameterType="com.blogprj.blog.model.Board_DTO">
+		UPDATE BOARD 
+		SET 
+		title = #{title}, content = #{content}, useyn = #{useyn}, editdate = sysdate
+		WHERE no = #{no}
+	</update>
 </mapper>

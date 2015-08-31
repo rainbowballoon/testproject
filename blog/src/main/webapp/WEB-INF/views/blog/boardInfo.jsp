@@ -52,7 +52,7 @@
 						<th class="active">수정시간</th><td colspan="2">${bdto.editdate }</td>
 					</tr>
 					<tr>
-						<td colspan="6" style="padding: 20px">${bdto.content }</td>
+						<td colspan="6" style="padding: 20px; height: 200px">${bdto.content }</td>
 					</tr>
 					<tr>
 						<td colspan="1" align="left">
