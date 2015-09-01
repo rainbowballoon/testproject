@@ -1,6 +1,7 @@
 package com.blogprj.blog.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import com.blogprj.blog.model.Board_DTO;
 import com.blogprj.blog.model.Comments_BD_DTO;
 import com.blogprj.blog.model.Comments_PS_DTO;
 import com.blogprj.blog.model.Member_DTO;
+import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
@@ -45,9 +47,19 @@ public class BlogBoard_Controller {
 		List<Board_DTO> boardList = new ArrayList<Board_DTO>();
 		boardList = blog_Service.boardList(blogno);
 		
+		List<Integer> commentCounts = new ArrayList<Integer>();
+		
+		for(int i = 0 ; i < boardList.size(); i++){
+			int count = 0;
+			count = blog_Service.commentsBDCount(boardList.get(i).getNo());
+			commentCounts.add(count);
+		}
+		
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("blog/index.jsp?content=boardList");
 		mv.addObject("boardList", boardList);
+		mv.addObject("commentCounts", commentCounts);
 		return mv;
 	}
 	
@@ -201,4 +213,5 @@ public class BlogBoard_Controller {
 			return "redirect:/"+blogno+"/boardList";
 		}
 	}
+	
 }

@@ -64,6 +64,8 @@ public interface Blog_Mapper {
 //comments_bd	
 	public void commentsBDWrite(Comments_BD_DTO dto);
 	public List<Comments_BD_DTO> commentsBDList(int boardno);
+	public void commentsBDDelete(int no);
+	public int commentsBDCount(int boardno);
 	
 // board
 	public List<Board_DTO> boardList(int blogno); //방명록 리스트 불러오기

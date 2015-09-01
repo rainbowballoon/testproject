@@ -201,6 +201,25 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public void commentsBDDelete(int no) {
+		try{
+			blogmapper.commentsBDDelete(no);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int commentsBDCount(int boardno) {
+		try{
+			return blogmapper.commentsBDCount(boardno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
 //blog
 	
 	@Override

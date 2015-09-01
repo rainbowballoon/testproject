@@ -64,7 +64,9 @@ public interface Blog_Service{
 //comments_bd	
 	public void commentsBDWrite(Comments_BD_DTO dto);
 	public List<Comments_BD_DTO> commentsBDList(int boardno);
-		
+	public void commentsBDDelete(int no);
+	public int commentsBDCount(int boardno);
+	
 	public List<Test_DTO> test();
 	public void serviceMethod();
 

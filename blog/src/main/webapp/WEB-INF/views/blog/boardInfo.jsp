@@ -25,9 +25,10 @@
 			   f.action = "/blog/${bdto.blogno}/commentsBDWrite?no=${bdto.no}";
 			   f.submit();
 		   },
-		   runboardReplyDelete : function(){
+		   runboardReplyDelete : function(no){
+			   //location.href="/blog/${bdto.blogno}/commentsBDDelete?no=${bdto.no}";
 			   var f = document.getElementById("replyform");
-			   f.action = "/blog/${bdto.blogno}/commentsBDDelete?no=${bdto.no}";
+			   f.action = "/blog/${bdto.blogno}/commentsBDDelete?no="+no;
 			   f.submit();
 		   }
    }
@@ -80,7 +81,7 @@
 							<span class="input-group-addon" id="basic-addon1">
 								<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${bdto.memberno }
 							</span>
-							<input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
+							<input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요" required>
 							<span class="input-group-btn">
 								<a href="javascript:act.runboardReplyWrite()" class="btn btn-primary">덧글 입력</a>
 							</span>
@@ -94,7 +95,7 @@
 								<li class="list-group-item">
 									<span class="glyphicon glyphicon-user" aria-hidden="true">
 									</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
-									<a href="javascript:act.runboardReplyDelete()" class="btn btn-default btn-xs pull-right">삭제</a>
+									<a href="javascript:act.runboardReplyDelete(${cdto.no })" class="btn btn-default btn-xs pull-right">삭제</a>
 								</li>
 							</c:when>
 						</c:choose>

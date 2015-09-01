@@ -265,6 +265,16 @@
     	WHERE boardno = #{boardno}
     	ORDER BY regdate DESC
  	</select>
+ 	
+ 	<delete id="commentsBDDelete" parameterType="int">
+   		DELETE FROM COMMENTS_BD 
+		WHERE no = #{no}
+    </delete>	   
+
+	<select id="commentsBDCount" parameterType="int" resultType="com.blogprj.blog.model.Comments_BD_DTO">
+ 		SELECT count(*) FROM COMMENTS_BD
+    	WHERE boardno = #{boardno}
+ 	</select> 	
  		    
 <!-- category     -->
 	<select id="categoryList" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">

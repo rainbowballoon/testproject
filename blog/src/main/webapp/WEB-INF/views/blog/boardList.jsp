@@ -1,3 +1,4 @@
+<%@ page import="java.sql.*,java.text.SimpleDateFormat,java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,7 +18,6 @@
         }
     }
 </script>       
- 
 <body onload="showMessage('${msg}');">
 	<!-- Blog Entries Column -->
 	<div class="col-md-8">
@@ -36,7 +36,6 @@
 					<th width="100">작성일</th>
 				</tr>    
 			</thead>    
-		
 			<c:forEach var="dto" items="${boardList}" varStatus="c" >
 			<tr style="cursor: pointer;" onClick="location.href='boardInfo?no=${dto.no}'">
 				<td>${dto.no}</td>
@@ -45,14 +44,27 @@
 						<img src="/imgs/ui/blank.gif" border=0 height="1" width="${dto.relevel*10}" />
 						<img src="/imgs/ui/icon/re.gif" border="0" />
 					</c:if>                         
-					${dto.title}
+					${dto.title} 
+	<%
+		// 최신 게시글 new 표시 날짜 계산
+		Date dt = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String today = sdf.format(dt);
+	%>
+	<c:set var="today" value="<%=today%>"/>
+	<fmt:parseDate var="dateTempParse" value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+	<fmt:formatDate value="${dateTempParse}" pattern="yyyyMMdd" var="regdate"/>
+	
+       				<c:if test="${today eq regdate }">
+       					<span class="label label-info">New</span>
+       				</c:if>
+					<span class="badge">1</span>	
 				</td>
 				<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.memberno}</td>
 				<td> 
 					<fmt:parseDate var="dateTempParse" value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					<fmt:formatDate value="${dateTempParse}" pattern="yyyy-MM-dd"/>
 				</td>
-<%-- 				<td width="100"><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd" /></td> --%>
 			</tr>
 			</c:forEach>
 			<tr height=22><td colspan="7" align="center" >${pageLink}</td></tr>

@@ -309,6 +309,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 		
+	@Override
+	public void commentsBDDelete(int no) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsBDDelete";
+			sqlSession.delete(statement, no);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int commentsBDCount(int boardno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsBDCount";
+			return sqlSession.selectOne(statement, boardno);
+		}finally{
+			
+		}
+	}
+	
 //category
 	@Override
 	public List<Category_DTO> categoryList(int blogno) {
