@@ -271,7 +271,7 @@
 		WHERE no = #{no}
     </delete>	   
 
-	<select id="commentsBDCount" parameterType="int" resultType="com.blogprj.blog.model.Comments_BD_DTO">
+	<select id="commentsBDCount" parameterType="int" resultType="int">
  		SELECT count(*) FROM COMMENTS_BD
     	WHERE boardno = #{boardno}
  	</select> 	
@@ -402,10 +402,28 @@
 
 <!-- board -->    
 	<select id="boardList" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
-	    SELECT *
+	    SELECT no, memberno, groupid, relevel, redepth, title, content, useyn, regdate, editdate, blogno, 
+	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = board.no ) AS commentsBDCount 
 	  	FROM board 
 	    ORDER BY regdate DESC, groupid DESC, relevel ASC
     </select>
+    
+<!--     <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap"> -->
+<!--     	<id property="no" column="no" /> -->
+<!--     	<result column="memberno" property="memberno"/> -->
+<!--     	<result column="groupid" property="groupid"/> -->
+<!--     	<result column="relevel" property="relevel"/> -->
+<!--     	<result column="redepth" property="redepth"/> -->
+<!--     	<result column="title" property="title"/> -->
+<!--     	<result column="content" property="content"/> -->
+<!--     	<result column="useyn" property="useyn"/> -->
+<!--     	<result column="regdate" property="regdate"/> -->
+<!--     	<result column="editdate" property="editdate"/> -->
+<!--     	<result column="blogno" property="blogno"/> -->
+<!--     	<association property="cbdDTO" column="no" javaType="com.blogprj.blog.model.Comments_BD_DTO"> -->
+<!--     		<id column="cno" property="no"/> -->
+<!--     	</association> -->
+<!--     </resultMap> -->
     
     <insert id="boardWrite" parameterType="com.blogprj.blog.model.Board_DTO">
    		<selectKey keyProperty="no" resultType="int" order="BEFORE">			   

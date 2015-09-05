@@ -47,19 +47,19 @@ public class BlogBoard_Controller {
 		List<Board_DTO> boardList = new ArrayList<Board_DTO>();
 		boardList = blog_Service.boardList(blogno);
 		
-		List<Integer> commentCounts = new ArrayList<Integer>();
-		
-		for(int i = 0 ; i < boardList.size(); i++){
-			int count = 0;
-			count = blog_Service.commentsBDCount(boardList.get(i).getNo());
-			commentCounts.add(count);
-		}
+//		List<Integer> commentCounts = new ArrayList<Integer>();
+//		
+//		for(int i = 0 ; i < boardList.size(); i++){
+//			int count = 0;
+//			count = blog_Service.commentsBDCount(boardList.get(i).getNo());
+//			commentCounts.add(count);
+//		}
 		
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("blog/index.jsp?content=boardList");
 		mv.addObject("boardList", boardList);
-		mv.addObject("commentCounts", commentCounts);
+//		mv.addObject("commentCounts", commentCounts);
 		return mv;
 	}
 	

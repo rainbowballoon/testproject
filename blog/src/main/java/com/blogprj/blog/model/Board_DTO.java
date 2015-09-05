@@ -14,6 +14,7 @@ public class Board_DTO {
 	private int groupid;
 	private int relevel;
 	private int redepth;
+	private Comments_BD_DTO cbdDTO;
 	
 	@NotEmpty(message="제목을 입력하세요!")
 	private String title;
@@ -94,5 +95,11 @@ public class Board_DTO {
 	}
 	public void setBlogno(int blogno) {
 		this.blogno = blogno;
+	}
+	public Comments_BD_DTO getCbdDTO() {
+		return cbdDTO;
+	}
+	public void setCbdDTO(Comments_BD_DTO cbdDTO) {
+		this.cbdDTO = cbdDTO;
 	}
 }
