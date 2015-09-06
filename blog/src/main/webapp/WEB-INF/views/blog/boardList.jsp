@@ -58,7 +58,9 @@
        				<c:if test="${today eq regdate }">
        					<span class="label label-info">New</span>
        				</c:if>
-					<span class="badge">${commentsBDCount }</span>	
+       				<c:if test="${dto.cbdDTO.cbdcount != 0 }">
+						<span class="badge">${dto.cbdDTO.cbdcount }</span>	
+					</c:if>
 				</td>
 				<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.memberno}</td>
 				<td> 

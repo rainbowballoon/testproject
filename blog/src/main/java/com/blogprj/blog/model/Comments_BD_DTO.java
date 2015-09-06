@@ -6,6 +6,7 @@ public class Comments_BD_DTO {
 	private int memberno;
 	private String regdate;
 	private int boardno;
+	private int cbdcount;
 	
 	public int getNo() {
 		return no;
@@ -37,7 +38,11 @@ public class Comments_BD_DTO {
 	public void setBoardno(int boardno) {
 		this.boardno = boardno;
 	}
-	
-	
+	public int getCbdcount() {
+		return cbdcount;
+	}
+	public void setCbdcount(int cbdcount) {
+		this.cbdcount = cbdcount;
+	}
 	
 }

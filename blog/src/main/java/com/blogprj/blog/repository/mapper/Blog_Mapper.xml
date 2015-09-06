@@ -401,29 +401,59 @@
  	</resultMap>
 
 <!-- board -->    
-	<select id="boardList" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
-	    SELECT no, memberno, groupid, relevel, redepth, title, content, useyn, regdate, editdate, blogno, 
-	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = board.no ) AS commentsBDCount 
-	  	FROM board 
-	    ORDER BY regdate DESC, groupid DESC, relevel ASC
+	<select id="boardList" parameterType="int" resultMap="boardlistMap">
+	    SELECT 
+	    	b.no, 
+	    	b.memberno, 
+	    	b.groupid, 
+	    	b.relevel, 
+	    	b.redepth, 
+	    	b.title, 
+	    	b.content, 
+	    	b.useyn, 
+	    	b.regdate, 
+	    	b.editdate, 
+	    	b.blogno, 
+      	  	cbd.boardno AS cbdboardno,
+	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS cbdcount 
+	  	FROM board b
+	  	LEFT OUTER JOIN COMMENTS_BD cbd ON cbd.boardno = b.no
+	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC
+<!--       	SELECT  -->
+<!-- 	    	b.no,  -->
+<!-- 	    	b.memberno,  -->
+<!-- 	    	b.groupid,  -->
+<!-- 	    	b.relevel,  -->
+<!-- 	    	b.redepth,  -->
+<!-- 	    	b.title,  -->
+<!-- 	    	b.content,  -->
+<!-- 	    	b.useyn,  -->
+<!-- 	    	b.regdate,  -->
+<!-- 	    	b.editdate,  -->
+<!-- 	    	b.blogno,      	  	 -->
+<!-- 	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS commentsBDCount  -->
+<!-- 	  	FROM board b -->
+<!-- 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC -->
     </select>
     
-<!--     <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap"> -->
-<!--     	<id property="no" column="no" /> -->
-<!--     	<result column="memberno" property="memberno"/> -->
-<!--     	<result column="groupid" property="groupid"/> -->
-<!--     	<result column="relevel" property="relevel"/> -->
-<!--     	<result column="redepth" property="redepth"/> -->
-<!--     	<result column="title" property="title"/> -->
-<!--     	<result column="content" property="content"/> -->
-<!--     	<result column="useyn" property="useyn"/> -->
-<!--     	<result column="regdate" property="regdate"/> -->
-<!--     	<result column="editdate" property="editdate"/> -->
-<!--     	<result column="blogno" property="blogno"/> -->
-<!--     	<association property="cbdDTO" column="no" javaType="com.blogprj.blog.model.Comments_BD_DTO"> -->
-<!--     		<id column="cno" property="no"/> -->
-<!--     	</association> -->
-<!--     </resultMap> -->
+    <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap">
+    	<id property="no" column="no" />
+    	<result column="memberno" property="memberno"/>
+    	<result column="groupid" property="groupid"/>
+    	<result column="relevel" property="relevel"/>
+    	<result column="redepth" property="redepth"/>
+    	<result column="title" property="title"/>
+    	<result column="content" property="content"/>
+    	<result column="useyn" property="useyn"/>
+    	<result column="regdate" property="regdate"/>
+    	<result column="editdate" property="editdate"/>
+    	<result column="blogno" property="blogno"/>
+    	<association property="cbdDTO" column="no" javaType="com.blogprj.blog.model.Comments_BD_DTO">
+    		<id column="cno" property="no"/>
+    		<result column="cbdboardno" property="boardno"/>
+    		<result column="cbdcount" property="cbdcount"/>
+    	</association>
+    </resultMap>
     
     <insert id="boardWrite" parameterType="com.blogprj.blog.model.Board_DTO">
    		<selectKey keyProperty="no" resultType="int" order="BEFORE">			   
