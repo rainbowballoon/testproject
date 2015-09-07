@@ -9,15 +9,15 @@
 		   <li><a href="index">Home</a></li>
 		   <c:choose>
 			   <c:when test="${categoryno != 0 && subcategoryno == 0 }">
-			   		<li class="active"><a href="postList?categoryno=${categoryno }">${categoryno }</a></li>
+			   		<li class="active"><a href="postList?categoryno=${categoryno }">${categoryname.name }</a></li>
 			   </c:when>
 			   <c:otherwise>
-			   		<li><a href="postList?categoryno=${categoryno }">${categoryno }</a></li>
+			   		<li><a href="postList?categoryno=${categoryno }">${subcategoryname.cname }</a></li>
 			   </c:otherwise>
 		   </c:choose>
 		   <c:choose>
 			   <c:when test="${categoryno == 0 && subcategoryno != 0 }">
-			   		<li class="active"><a href="postList?subcategoryno=${subcategoryno }">${subcategoryno }</a></li>
+			   		<li class="active"><a href="postList?subcategoryno=${subcategoryno }">${subcategoryname.name }</a></li>
 			   </c:when>
 		   </c:choose>
 		</ol>
@@ -107,8 +107,12 @@
 				<c:set var="sRecNum" value="${(pageNum-1) * perPage }" />
 				<c:choose>
 					<c:when test="${pageNum != curPage }">
-							<li><a
-								href="${requestScope['javax.servlet.forward.request_uri']}?sPage=${sRecNum }&ePage=${perPage }&categoryno=${categoryno }&subcategoryno=${subcategoryno }">${pageNum}</a>
+							<li><a href="${requestScope['javax.servlet.forward.request_uri']}
+									?sPage=${sRecNum }
+									&ePage=${perPage }
+									&categoryno=${categoryno }
+									&subcategoryno=${subcategoryno }" >${pageNum}
+								</a>
 							</li>
 						</c:when>
 					<c:otherwise>

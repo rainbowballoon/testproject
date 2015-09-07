@@ -23,5 +23,4 @@ public class Category_DTO {
 	public void setBlogno(int blogno) {
 		this.blogno = blogno;
 	}
-	
 }

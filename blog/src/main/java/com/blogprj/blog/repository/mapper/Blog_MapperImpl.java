@@ -267,6 +267,27 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			
 		}
 	}
+	
+	@Override
+	public Object breadCrumb(int categoryno, int subcategoryno) {
+		try{
+			String statement = null;
+			if(categoryno != 0){
+				statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.breadCrumbC";
+				return sqlSession.selectOne(statement, categoryno);
+			}
+			
+			if(subcategoryno != 0){ 
+				statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.breadCrumbSC";
+				return sqlSession.selectOne(statement, subcategoryno);
+			}
+			
+			return null;
+		}finally{
+			
+		}
+	}
+	
 //comments_ps
 	@Override
 	public void commentsPSWrite(Comments_PS_DTO dto) {

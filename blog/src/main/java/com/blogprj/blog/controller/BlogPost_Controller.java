@@ -274,6 +274,8 @@ public class BlogPost_Controller {
 		List<Category_DTO> categoryList = new ArrayList<Category_DTO>();
 		List<SubCategory_DTO> subCategoryList = new ArrayList<SubCategory_DTO>();
 		List<List> subCategoryListAll = new ArrayList<List>();
+		Object categoryname = "";
+		Object subcategoryname = "";
 		
 		categoryList = blog_Service.categoryList(blogno); //카테고리, 서브카테고리
 		
@@ -300,14 +302,18 @@ public class BlogPost_Controller {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map = pagenationProcess(request, postCount);
 		
-		//포스트 리스트
+		//postList 및 breadcrumb 경로 관리
 		List<Post_DTO> postList = new ArrayList<Post_DTO>();
 		if(categoryno != 0 && subcategoryno == 0){
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno);
+			categoryname = blog_Service.breadCrumb(categoryno, subcategoryno);
 			System.out.println("카테고리 메뉴 적용된 postList 개수 : "+postList.size());
+			System.out.println("categoryname : "+categoryname);
 		}else if(categoryno == 0 && subcategoryno != 0){
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno, subcategoryno);
+			subcategoryname = blog_Service.breadCrumb(categoryno, subcategoryno);
 			System.out.println("카테고리 서브 메뉴 적용된 postList 개수 : "+postList.size());
+			System.out.println("subcategoryname : "+subcategoryname);
 		}else{
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
 			System.out.println("그냥 postList 개수 : "+postList.size());
@@ -330,6 +336,8 @@ public class BlogPost_Controller {
 			model.addAttribute("totalCount", map.get("totalCount"));
 			model.addAttribute("categoryno", categoryno);
 			model.addAttribute("subcategoryno", subcategoryno);
+			model.addAttribute("categoryname", categoryname);
+			model.addAttribute("subcategoryname", subcategoryname);
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("subCategoryListAll", subCategoryListAll);
 			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));

@@ -56,6 +56,7 @@ public interface Blog_Service{
 	public Post_DTO postDetail(Post_DTO dto);
 	public void postEdit(Post_DTO dto);
 	public void postDelete(Post_DTO dto);
+	public Object breadCrumb(int categoryno, int subcategoryno); // 현재 경로 이름 반환
 	
 //comments_ps
 	public void commentsPSWrite(Comments_PS_DTO dto);

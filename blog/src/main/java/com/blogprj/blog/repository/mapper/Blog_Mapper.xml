@@ -227,7 +227,30 @@
    		DELETE FROM POST 
 		WHERE no = #{no} AND blogno = #{blogno}
     </delete>
- 
+
+ 	<select id="breadCrumbC" parameterType="int" resultType="com.blogprj.blog.model.Category_DTO">
+		SELECT DISTINCT c.name
+		FROM category c
+		JOIN subcategory sc ON c.NO = sc.CATEGORYNO
+		WHERE c.NO = #{categoryno}
+    </select>
+    
+    <select id="breadCrumbSC" parameterType="int" resultMap="breadCrumbSCMap">
+		SELECT DISTINCT sc.name, c.name AS cname
+		FROM subcategory sc
+		JOIN category c ON c.NO = sc.CATEGORYNO
+		WHERE sc.NO = #{subcategoryno}
+    </select>
+    
+    <resultMap type="com.blogprj.blog.model.SubCategory_DTO" id="breadCrumbSCMap">
+    	<id property="no" column="no"/>
+    	<result property="name" column="name"/>
+    	<association property="cDTO" column="categoryno" javaType="com.blogprj.blog.model.Category_DTO">
+    		<id property="no" column="cno"/>
+	    	<result property="name" column="cname"/>
+    	</association>
+    </resultMap>
+
 <!-- commnets_ps-->
 	<insert id="commentsPSWrite" parameterType="com.blogprj.blog.model.Comments_PS_DTO">
 		INSERT INTO COMMENTS_PS
@@ -419,21 +442,6 @@
 	  	FROM board b
 	  	LEFT OUTER JOIN COMMENTS_BD cbd ON cbd.boardno = b.no
 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC
-<!--       	SELECT  -->
-<!-- 	    	b.no,  -->
-<!-- 	    	b.memberno,  -->
-<!-- 	    	b.groupid,  -->
-<!-- 	    	b.relevel,  -->
-<!-- 	    	b.redepth,  -->
-<!-- 	    	b.title,  -->
-<!-- 	    	b.content,  -->
-<!-- 	    	b.useyn,  -->
-<!-- 	    	b.regdate,  -->
-<!-- 	    	b.editdate,  -->
-<!-- 	    	b.blogno,      	  	 -->
-<!-- 	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS commentsBDCount  -->
-<!-- 	  	FROM board b -->
-<!-- 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC -->
     </select>
     
     <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap">

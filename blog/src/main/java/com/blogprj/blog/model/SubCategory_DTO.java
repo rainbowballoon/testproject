@@ -5,6 +5,7 @@ public class SubCategory_DTO {
 	private String name;
 	private int categoryno;
 	private int blogno;
+	private Category_DTO cDTO;
 	
 	public int getNo() {
 		return no;
@@ -29,6 +30,12 @@ public class SubCategory_DTO {
 	}
 	public void setBlogno(int blogno) {
 		this.blogno = blogno;
+	}
+	public Category_DTO getcDTO() {
+		return cDTO;
+	}
+	public void setcDTO(Category_DTO cDTO) {
+		this.cDTO = cDTO;
 	}
 	
 }

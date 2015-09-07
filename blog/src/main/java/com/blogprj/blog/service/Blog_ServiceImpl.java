@@ -161,6 +161,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public Object breadCrumb(int categoryno, int subcategoryno) {
+		try{
+			return blogmapper.breadCrumb(categoryno, subcategoryno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 //comments_ps
 	@Override
 	public void commentsPSWrite(Comments_PS_DTO dto) {
