@@ -61,6 +61,8 @@ public interface Blog_Service{
 //comments_ps
 	public void commentsPSWrite(Comments_PS_DTO dto);
 	public List<Comments_PS_DTO> commentsPSList(int postno);
+	public void commentsPSDelete(int no);
+	public int commentsPSCount(int postno);
 	
 //comments_bd	
 	public void commentsBDWrite(Comments_BD_DTO dto);

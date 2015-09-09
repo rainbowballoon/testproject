@@ -269,7 +269,17 @@
     	WHERE postno = #{postno}
     	ORDER BY regdate DESC
  	</select>
+ 	
+ 	<delete id="commentsPSDelete" parameterType="int">
+   		DELETE FROM COMMENTS_PS 
+		WHERE no = #{no}
+    </delete>
 
+	<select id="commentsPSCount" parameterType="int" resultType="int">
+ 		SELECT count(*) FROM COMMENTS_PS
+    	WHERE postno = #{postno}
+ 	</select> 
+ 	
 <!-- commnets_bd-->
 	<insert id="commentsBDWrite" parameterType="com.blogprj.blog.model.Comments_BD_DTO">
 		INSERT INTO COMMENTS_BD

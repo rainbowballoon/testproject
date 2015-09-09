@@ -1,6 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<script type="text/javascript">
+	var act = {
+		runReplyDelete : function(no){
+			var f = document.getElementById("replyform");
+			f.action = "/blog/${logined.no}/commentsPSDelete?no="+no;
+			f.submit();
+		},
+		runReplyWrite : function(){
+			var f = document.getElementById("replyform");
+			f.action = "/blog/${logined.no}/commentsPSWrite";
+			f.submit();
+		}
+	}
+</script>
+
+
 <body>
 	<!-- Blog Entries Column -->
 	<div class="col-md-8">
@@ -12,7 +30,14 @@
 			   		<li class="active"><a href="postList?categoryno=${categoryno }">${categoryname.name }</a></li>
 			   </c:when>
 			   <c:otherwise>
-			   		<li><a href="postList?categoryno=${categoryno }">${subcategoryname.cname }</a></li>
+			   		<c:choose>
+			  	 		<c:when test="${subcategoryname eq null || subcategoryname eq '' }">
+
+			  	 		</c:when>
+			  	 		<c:otherwise>
+			  	 			<li><a href="postList?categoryno=${categoryno }">${subcategoryname.cDTO.name }</a></li>
+			  	 		</c:otherwise>
+			  	 	</c:choose>
 			   </c:otherwise>
 		   </c:choose>
 		   <c:choose>
@@ -42,6 +67,11 @@
 		
 		<!-- 덧글 -->
 			<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
+			<form method="post" name="replyform" id="replyform">	
+				<input type="hidden" name="blogno" value="${dto.blogno }">
+				<input type="hidden" name="memberno" value="${dto.memberno }">
+				<input type="hidden" name="postno" value="${dto.no }">	
+					
 			<ul class="list-group">
 			<c:forEach items="${commentsListAll }" var="clist">
 				<c:forEach items="${clist}" var = "cdto">
@@ -50,29 +80,30 @@
 							<li class="list-group-item">
 								<span class="glyphicon glyphicon-user" aria-hidden="true">
 								</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
+								<a href="javascript:act.runReplyDelete(${cdto.no })" class="btn btn-default btn-xs pull-right">삭제</a>
 							</li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 			</c:forEach>
 			</ul>
-	         <form action="commentsPSWrite" method="post">
-               <input type="hidden" name="postno" value="${dto.no }">
-	              	<table style="width: 100%">
-	              	<tr>
-	              		<td style="width: 20%">
+	        <table style="width: 100%">
+		        <tr>
+	              	<td style="width: 20%">
 						<span class="glyphicon glyphicon-user"></span> ${logined.nickname }
 		            </td>
 		            <td style="width: 80%">
 		                <div class="input-group">
 					      <input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
 					      <span class="input-group-btn">
-					        <button class="btn btn-default" type="submit">덧글남기기</button>
+					      	<a href="javascript:act.runReplyWrite(${dto.no })" class="btn btn-default">덧글남기기</a>
+	<!-- 					        <button class="btn btn-default" type="submit">덧글남기기</button> -->
 					      </span>
 					    </div><!-- /input-group -->
 					</td>
 				</tr>
-				</table>
+			</table>
+			<c:out value="블로그번호 :'${dto.blogno }', 포스트번호: '${dto.no }'"></c:out>
 			</form>
 	              <hr>
 	              <div align="right">

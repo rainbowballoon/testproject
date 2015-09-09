@@ -290,13 +290,10 @@ public class BlogPost_Controller {
 		int postCount = 0;
 		if(categoryno != 0 && subcategoryno == 0){
 			postCount = blog_Service.selectPostCount(blogno, categoryno);
-			System.out.println("카테고리 메뉴 적용된 postCount:"+postCount+", categoryno:"+categoryno);
 		}else if(categoryno == 0 && subcategoryno != 0){
 			postCount = blog_Service.selectPostCount(blogno, categoryno, subcategoryno);
-			System.out.println("서브 카테고리 메뉴 적용된 postCount:"+postCount+", subcategoryno:"+subcategoryno);
 		}else{
 			postCount = blog_Service.selectPostCount(blogno);
-			System.out.println("그냥 postCount:"+postCount);
 		}
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -308,12 +305,10 @@ public class BlogPost_Controller {
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno);
 			categoryname = blog_Service.breadCrumb(categoryno, subcategoryno);
 			System.out.println("카테고리 메뉴 적용된 postList 개수 : "+postList.size());
-			System.out.println("categoryname : "+categoryname);
 		}else if(categoryno == 0 && subcategoryno != 0){
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno, categoryno, subcategoryno);
 			subcategoryname = blog_Service.breadCrumb(categoryno, subcategoryno);
 			System.out.println("카테고리 서브 메뉴 적용된 postList 개수 : "+postList.size());
-			System.out.println("subcategoryname : "+subcategoryname);
 		}else{
 			postList = blog_Service.postList(map.get("sPage"), map.get("ePage"), blogno);
 			System.out.println("그냥 postList 개수 : "+postList.size());

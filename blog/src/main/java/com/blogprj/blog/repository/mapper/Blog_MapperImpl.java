@@ -308,6 +308,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 			
 		}
 	}
+	
+	@Override
+	public void commentsPSDelete(int no) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsPSDelete";
+			sqlSession.delete(statement, no);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public int commentsPSCount(int postno) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.commentsPSCount";
+			return sqlSession.selectOne(statement, postno);
+		}finally{
+			
+		}
+	}
 
 //comments_bd
 	@Override

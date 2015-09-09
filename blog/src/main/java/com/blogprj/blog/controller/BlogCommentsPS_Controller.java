@@ -44,6 +44,7 @@ public class BlogCommentsPS_Controller {
 			@RequestParam("content") String content,
 			Model model, HttpServletRequest request, HttpSession session){
 		System.out.println("commentsPSWrite blogno:"+blogno);
+		System.out.println("포스트 번호:"+postno);
 		
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
@@ -63,12 +64,35 @@ public class BlogCommentsPS_Controller {
 			cdto.setContent(content);
 			cdto.setMemberno(memberno);
 			
-			
-			System.out.println("memberno:"+memberno);
-			
 			blog_Service.commentsPSWrite(cdto);
 		}
 		
 		return "redirect:/"+blogno+"/postList";
+	}
+	
+	@RequestMapping(value = "/{blogno}/commentsPSDelete", method = RequestMethod.POST)
+	public String boardDelete(
+			@PathVariable("blogno") int blogno, 
+			@RequestParam("postno") int postno,
+			@RequestParam("no") int no, 
+			Model model, HttpSession session) {
+		System.out.println("commentsPSDelete blogno:"+blogno);
+			
+		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
+		
+		if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+		
+			blog_Service.commentsPSDelete(no);
+			System.out.println("postno:"+postno);
+			System.out.println("no"+no);
+			
+			model.addAttribute("no", postno);
+			return "redirect:/"+blogno+"/postList";
+		}else{ //본인 블로그가 아니면
+			return "redirect:/"+blogno+"/postList";
+		}
 	}
 }
