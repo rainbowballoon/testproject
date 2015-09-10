@@ -70,7 +70,7 @@ public class BlogCommentsPS_Controller {
 		return "redirect:/"+blogno+"/postList";
 	}
 	
-	@RequestMapping(value = "/{blogno}/commentsPSDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "/{blogno}/commentsPSDelete", method = RequestMethod.GET)
 	public String boardDelete(
 			@PathVariable("blogno") int blogno, 
 			@RequestParam("postno") int postno,

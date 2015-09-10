@@ -263,12 +263,26 @@
 		)
 	</insert>
     
-    <select id="commentsPSList" parameterType="int" resultType="com.blogprj.blog.model.Comments_PS_DTO">
- 		SELECT *
-    	FROM COMMENTS_PS
-    	WHERE postno = #{postno}
-    	ORDER BY regdate DESC
+    <select id="commentsPSList" parameterType="int" resultMap="commentsPSListMap">
+ 		SELECT c.no, c.content, c.postno, c.memberno, c.regdate, m.nickname AS mnickname
+    	FROM COMMENTS_PS c
+    	JOIN MEMBER m ON m.no = c.memberno 
+    	WHERE c.postno = #{postno}
+    	ORDER BY c.regdate DESC
  	</select>
+ 	<resultMap type="com.blogprj.blog.model.Comments_PS_DTO" id="commentsPSListMap">
+    	<id property="no" column="no"/>
+    	<result property="name" column="name"/>
+    	<result property="content" column="content"/>
+    	<result property="postno" column="postno"/>
+    	<result property="regdate" column="regdate"/>
+    	<result property="memberno" column="memberno"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id property="no" column="mno"/>
+	    	<result property="nickname" column="mnickname"/>
+    	</association>
+    </resultMap>
+ 	
  	
  	<delete id="commentsPSDelete" parameterType="int">
    		DELETE FROM COMMENTS_PS 

@@ -1,23 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<script type="text/javascript">
-	var act = {
-		runReplyDelete : function(no){
-			var f = document.getElementById("replyform");
-			f.action = "/blog/${logined.no}/commentsPSDelete?no="+no;
-			f.submit();
-		},
-		runReplyWrite : function(){
-			var f = document.getElementById("replyform");
-			f.action = "/blog/${logined.no}/commentsPSWrite";
-			f.submit();
-		}
-	}
-</script>
-
 
 <body>
 	<!-- Blog Entries Column -->
@@ -54,7 +39,10 @@
                 <a href="#">${dto.title }</a>
             </h2>
             <br>
-            <p align="right"><span class="glyphicon glyphicon-time"></span> 등록시간 [ ${dto.regdate } ]</p>
+            <p align="right"><span class="glyphicon glyphicon-time"></span> 등록시간 [ 
+            	<fmt:parseDate var="dateTempParse" value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				<fmt:formatDate value="${dateTempParse}" pattern="yyyy-MM-dd HH:mm"/>
+            	]</p>
             <hr>
             <div class="container-fluid">
               <div class="row">
@@ -67,7 +55,7 @@
 		
 		<!-- 덧글 -->
 			<p>태그 : 테스트 / 공감(0) 및 덧글(0)</p>
-			<form method="post" name="replyform" id="replyform">	
+			<form method="post" name="replyform" id="replyform" action="commentsPSWrite">	
 				<input type="hidden" name="blogno" value="${dto.blogno }">
 				<input type="hidden" name="memberno" value="${dto.memberno }">
 				<input type="hidden" name="postno" value="${dto.no }">	
@@ -79,8 +67,12 @@
 						<c:when test="${cdto.postno == dto.no }">
 							<li class="list-group-item">
 								<span class="glyphicon glyphicon-user" aria-hidden="true">
-								</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
-								<a href="javascript:act.runReplyDelete(${cdto.no })" class="btn btn-default btn-xs pull-right">삭제</a>
+								</span> ${cdto.mDTO.nickname } <small>[
+											<fmt:parseDate var="dateTempParse" value="${cdto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+											<fmt:formatDate value="${dateTempParse}" pattern="yyyy-MM-dd HH:mm"/>
+															]</small> : ${cdto.content }
+<%-- 								<a href="javascript:act.runReplyDelete(${cdto.no })" class="btn btn-default btn-xs pull-right">삭제</a> --%>
+								<a href="commentsPSDelete?no=${cdto.no }&postno=${dto.no }" class="btn btn-default btn-xs pull-right">삭제</a>
 							</li>
 						</c:when>
 					</c:choose>
@@ -96,14 +88,14 @@
 		                <div class="input-group">
 					      <input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요">
 					      <span class="input-group-btn">
-					      	<a href="javascript:act.runReplyWrite(${dto.no })" class="btn btn-default">덧글남기기</a>
+					      	<button type="submit" class="btn btn-default">덧글남기기</button>
+					      	
 	<!-- 					        <button class="btn btn-default" type="submit">덧글남기기</button> -->
 					      </span>
 					    </div><!-- /input-group -->
 					</td>
 				</tr>
 			</table>
-			<c:out value="블로그번호 :'${dto.blogno }', 포스트번호: '${dto.no }'"></c:out>
 			</form>
 	              <hr>
 	              <div align="right">

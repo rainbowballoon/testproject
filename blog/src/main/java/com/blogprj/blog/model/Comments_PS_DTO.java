@@ -6,6 +6,7 @@ public class Comments_PS_DTO {
 	private int postno;
 	private int memberno;
 	private String regdate;
+	private Member_DTO mDTO;
 	
 	public int getNo() {
 		return no;
@@ -36,6 +37,12 @@ public class Comments_PS_DTO {
 	}
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+	public Member_DTO getmDTO() {
+		return mDTO;
+	}
+	public void setmDTO(Member_DTO mDTO) {
+		this.mDTO = mDTO;
 	}
 
 	
