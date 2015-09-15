@@ -20,39 +20,39 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                  	<li>
-                        <a href="index">홈</a>
+                        <a href="index">Home</a>
                     </li>
                 <c:choose>
                 <c:when test="${logined == null }">
                 	<li>
-                        <a href="joinForm">회원가입</a>
+                        <a href="joinForm">Join</a>
                     </li>
                     <li>
-                        <a href="loginForm">로그인</a>
+                        <a href="loginForm">Login</a>
                     </li>
                 </c:when>
                 <c:otherwise>
                 	<c:choose>
                 	<c:when test="${logined.no ==  blogpoint.no}">
 	                 	<li>
-	                        <a href="postWriteForm">포스트 작성</a>
+	                        <a href="postWriteForm">Post Write</a>
 	                    </li>
 	                    <li>
-	                        <a href="blogManageForm">블로그 관리</a>
+	                        <a href="blogManageForm">Blog management</a>
 	                    </li>
 	                    <li>
-	                        <a href="blogLogout">로그아웃</a>
+	                        <a href="blogLogout">Logout</a>
 	                    </li>
 	                     <li>
-	                        <a href="boardList">방명록</a>
+	                        <a href="boardList">Guest Book</a>
 	                    </li>
                     </c:when>
                     <c:otherwise>
 	                    <li>
-	                        <a href="blogLogout">로그아웃</a>
+	                        <a href="blogLogout">Logout</a>
 	                    </li>
 	                     <li>
-	                        <a href="boardList">방명록</a>
+	                        <a href="boardList">Guest Book</a>
 	                    </li>
                     </c:otherwise>
                     </c:choose>

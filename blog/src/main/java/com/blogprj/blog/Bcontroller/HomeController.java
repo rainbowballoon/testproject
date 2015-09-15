@@ -1,4 +1,4 @@
-package com.blogprj.blog.controller;
+package com.blogprj.blog.Bcontroller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

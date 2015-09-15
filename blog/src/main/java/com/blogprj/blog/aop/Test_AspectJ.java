@@ -25,7 +25,7 @@ import com.blogprj.blog.service.Blog_Service;
 public class Test_AspectJ {
 	
 	//Pointcut : 어드바이스할 조인포인트 영역을 좁혀주는 역할
-	@Pointcut("execution(* com.blogprj.blog.controller.*.*Form(..))")
+	@Pointcut("execution(* com.blogprj.blog.Bcontroller.*.*Form(..))")
 	public void authOperation(){}
 	
 	//Around(충고) : Advice가 Advice 대상 메소드를 감싸서 대상메소드 호출 전과 후의 기능을 제공함

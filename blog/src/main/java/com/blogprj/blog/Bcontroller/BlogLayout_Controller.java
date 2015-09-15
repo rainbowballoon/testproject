@@ -1,4 +1,4 @@
-package com.blogprj.blog.controller;
+package com.blogprj.blog.Bcontroller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

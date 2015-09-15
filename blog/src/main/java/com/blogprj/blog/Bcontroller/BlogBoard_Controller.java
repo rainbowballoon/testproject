@@ -1,4 +1,4 @@
-package com.blogprj.blog.controller;
+package com.blogprj.blog.Bcontroller;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.blogprj.blog.controller;
+package com.blogprj.blog.Bcontroller;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -314,13 +314,17 @@ public class BlogPost_Controller {
 			System.out.println("그냥 postList 개수 : "+postList.size());
 		}
 		
-		List<Comments_PS_DTO> commentsList = new ArrayList<Comments_PS_DTO>();
+		List<Comments_PS_DTO> commentsList = new ArrayList<Comments_PS_DTO>(); 
 		List<List> commentsListAll = new ArrayList<List>();
-		
+		List<Integer> commentsCount = new ArrayList<Integer>();
+		int ccount = 0;
+
 		//덧글 리스트
 		for(int i = 0 ; i < postList.size(); i++ ){
 			commentsList = blog_Service.commentsPSList(postList.get(i).getNo());
+			ccount = blog_Service.commentsPSCount(postList.get(i).getNo());
 			commentsListAll.add(commentsList);
+			commentsCount.add(ccount);
 		}
 		
 		if(postList != null){
@@ -335,6 +339,7 @@ public class BlogPost_Controller {
 			model.addAttribute("subcategoryname", subcategoryname);
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("subCategoryListAll", subCategoryListAll);
+			model.addAttribute("commentsCount", commentsCount);
 			System.out.println("curPage:"+((map.get("sPage") / map.get("ePage"))+1)+", perPage:"+map.get("ePage"));
 		}
 		
