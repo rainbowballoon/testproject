@@ -30,6 +30,39 @@ drop SEQUENCE COMMENTS_PS;
 --  파일이 생성됨 - 화요일-9월-15-2015   
 --------------------------------------------------------
 --------------------------------------------------------
+--  DDL for Table THUMBNAIL
+--------------------------------------------------------
+
+  CREATE TABLE "BLOG"."THUMBNAIL" 
+   (	"NO" NUMBER(*,0), 
+	"IMAGE" VARCHAR2(255 BYTE), 
+	"POSTNO" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index THUMBNAIL_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "BLOG"."THUMBNAIL_PK" ON "BLOG"."THUMBNAIL" ("NO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table THUMBNAIL
+--------------------------------------------------------
+
+  ALTER TABLE "BLOG"."THUMBNAIL" ADD CONSTRAINT "THUMBNAIL_PK" PRIMARY KEY ("NO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "BLOG"."THUMBNAIL" MODIFY ("NO" NOT NULL ENABLE);
+
+--------------------------------------------------------
 --  DDL for Table BLOG
 --------------------------------------------------------
 
@@ -509,4 +542,8 @@ drop SEQUENCE COMMENTS_PS;
 --------------------------------------------------------
 
    CREATE SEQUENCE  "BLOG"."TOPIC_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence THUMBNAIL_SEQ
+--------------------------------------------------------
 
+   CREATE SEQUENCE  "BLOG"."THUMBNAIL_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;

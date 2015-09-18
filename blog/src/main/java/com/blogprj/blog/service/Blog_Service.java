@@ -11,6 +11,7 @@ import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
 import com.blogprj.blog.model.Test_DTO;
+import com.blogprj.blog.model.Thumbnail_DTO;
 
 public interface Blog_Service{
 //member
@@ -46,7 +47,7 @@ public interface Blog_Service{
 	public int subCategoryCount(SubCategory_DTO dto);
 	
 //post	
-	public void postWrite(Post_DTO dto); //포스트 작성하기
+	public int postWrite(Post_DTO dto); //포스트 작성하기
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno); // 카테고리 분류 없음
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno); //카테고리 분류
 	public List<Post_DTO> postList(int sPage, int ePage, int blogno, int categoryno, int subcategoryno); //서브 카테고리 분류
@@ -79,4 +80,7 @@ public interface Blog_Service{
 	public int boardWrite(Board_DTO dto); // 방명록 작성
 	public int boardEdit(Board_DTO dto); //방명록 선택 글 수정
 	public void boardDelete(Board_DTO dto); // 방명록 글 삭제
+
+//thumbnail
+	public void thumbnailWrite(Thumbnail_DTO dto);
 }

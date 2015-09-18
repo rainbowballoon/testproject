@@ -72,6 +72,11 @@
 					</div>
 				</div>
 				<div class="form-group">
+				  	<label for="thumbnail">대표이미지 선택 (이미지 사이즈 : 360 * 230 크기로 조절)</label>
+				    <input type="file" id="thumbnail">
+				    <p class="help-block">블로그 섹션에서 보여질 이미지를 설정합니다.</p>
+			  	</div>
+				<div class="form-group">
 				  	<label for="opt1">포스트 공개여부</label>
 					<div class="radio">
 					  	<label class="radio-inline">

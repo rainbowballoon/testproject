@@ -129,16 +129,21 @@
 	</select>
 	
 <!-- post  -->
-     <insert id="postWrite" parameterType="com.blogprj.blog.model.Post_DTO">
+     <insert id="postWrite" parameterType="com.blogprj.blog.model.Post_DTO" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
+    	<selectKey resultType="int" keyProperty="no" order="BEFORE">
+        	SELECT post_seq.nextval FROM dual
+   		</selectKey>
 		INSERT INTO POST 
 		(
 			no, regdate, title, content, blogno, memberno, postaccess, topicno, subcategoryno
 		)
 		VALUES 
 		(
-			post_seq.nextval, sysdate, #{title}, #{content}, #{blogno}, #{memberno}, #{postaccess}, #{topicno}, #{subcategoryno}
+			#{no}, sysdate, #{title}, #{content}, #{blogno}, #{memberno}, #{postaccess}, #{topicno}, #{subcategoryno}
 		)
 	</insert>
+	
+	
 	
 	<select id="selectPostCount" parameterType="int" resultType="int">
     	SELECT count(*) FROM POST
@@ -513,4 +518,29 @@
 		title = #{title}, content = #{content}, useyn = #{useyn}, editdate = sysdate
 		WHERE no = #{no}
 	</update>
+	
+<!-- thumbnail	 -->
+	<insert id="thumbnailWrite" parameterType="com.blogprj.blog.model.Thumbnail_DTO">
+    	INSERT INTO Thumbnail_DTO 
+		(
+			no, image, postno
+		)
+		VALUES 
+		(
+			subcategory_seq.nextval, #{image}, #{postno}
+		)
+    </insert>
+<!-- 	<insert id="boardWrite" parameterType="com.blogprj.blog.model.Board_DTO"> -->
+<!--    		<selectKey keyProperty="no" resultType="int" order="BEFORE">			    -->
+<!-- 	    	SELECT board_seq.NEXTVAL FROM DUAL -->
+<!-- 		</selectKey> -->
+		
+<!--     	INSERT INTO BOARD( -->
+<!--     		no, memberno, groupid, relevel, redepth, title,  -->
+<!--     		content, useyn, regdate, editdate, blogno -->
+<!--     	)VALUES( -->
+<!--     		#{no}, #{memberno}, #{no}, #{relevel}, #{redepth}, #{title},  -->
+<!--     		#{content}, #{useyn}, sysdate, sysdate, #{blogno} -->
+<!--     	) -->
+<!--     </insert> -->
 </mapper>

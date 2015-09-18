@@ -18,10 +18,10 @@
 	<link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.3.5/dist/css/bootstrap.min.css"/>">
 	
     <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath }/resources/css/blog-home.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath }/resources/css/modern-business.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-<!--     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="${pageContext.request.contextPath }/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,8 +41,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:choose>
 	<c:when test="${param.content == null}">
-		<jsp:include page="intro.jsp" />
-		<jsp:include page="portfolio.jsp" />
+<%-- 		<jsp:include page="intro.jsp" /> --%>
+		<jsp:include page="postSection.jsp" />
 		<jsp:include page="features.jsp" />
 		<jsp:include page="calltoaction.jsp" />
 	</c:when>
@@ -160,6 +160,8 @@
 <!--         </div> -->
 <!--         /.row -->
 
+<hr>
+
 <%-- <%@ include file="calltoaction.jsp" %> --%>
 <!--         Call to Action Section -->
 <!--         <div class="well"> -->
@@ -173,17 +175,15 @@
 <!--             </div> -->
 <!--         </div> -->
 
-        <hr>
-        
 <%@ include file="footer.jsp" %>
 
     <!-- jQuery -->
-<!--     <script src="js/jquery.js"></script> -->
-    <script src="<c:url value="/webjars/jquery/2.1.4/dist/jquery.min.js"/>"></script>
+    <script src="${pageContext.request.contextPath }/resources/js/jquery.js"></script>
+<%--     <script src="<c:url value="/webjars/jquery/2.1.4/dist/jquery.min.js"/>"></script> --%>
 
     <!-- Bootstrap Core JavaScript -->
-<!--     <script src="js/bootstrap.min.js"></script> -->
-	<script src="<c:url value="/webjars/bootstrap/3.3.5/dist/js/bootstrap.min.js"/>"></script>
+    <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
+<%-- 	<script src="<c:url value="/webjars/bootstrap/3.3.5/dist/js/bootstrap.min.js"/>"></script> --%>
 
     <!-- Script to Activate the Carousel -->
     <script>

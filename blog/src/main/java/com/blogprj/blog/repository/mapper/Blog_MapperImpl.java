@@ -15,6 +15,7 @@ import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
 import com.blogprj.blog.model.Test_DTO;
+import com.blogprj.blog.model.Thumbnail_DTO;
 
 public class Blog_MapperImpl implements Blog_Mapper {
 
@@ -145,10 +146,10 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	
 //post	
 	@Override
-	public void postWrite(Post_DTO dto) {
+	public int postWrite(Post_DTO dto) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postWrite";
-			sqlSession.insert(statement, dto);
+			return sqlSession.insert(statement, dto);
 		}finally{
 			
 		}
@@ -561,6 +562,17 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.boardDelete";
 			sqlSession.delete(statement, dto);
+		}finally{
+			
+		}
+	}
+
+//thumbnail
+	@Override
+	public void thumbnailWrite(Thumbnail_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.thumbnailWrite";
+			sqlSession.insert(statement, dto);
 		}finally{
 			
 		}

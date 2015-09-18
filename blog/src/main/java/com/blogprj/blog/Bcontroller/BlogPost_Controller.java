@@ -32,6 +32,7 @@ import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
 import com.blogprj.blog.model.Test_DTO;
+import com.blogprj.blog.model.Thumbnail_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
@@ -85,19 +86,25 @@ public class BlogPost_Controller {
 		if(session.getAttribute("logined") != null){
 			int memberno = ((Member_DTO) session.getAttribute("logined")).getNo();
 			
-			Post_DTO dto = new Post_DTO();
+			Post_DTO pdto = new Post_DTO();
 			
-			dto.setTitle(title);
-			dto.setContent(content);
-			dto.setBlogno(blogno);
-			dto.setPostaccess(postacess);
-			dto.setTopicno(topicno);
-			dto.setMemberno(memberno);
-			dto.setSubcategoryno(subcategoryno);
+			pdto.setTitle(title);
+			pdto.setContent(content);
+			pdto.setBlogno(blogno);
+			pdto.setPostaccess(postacess);
+			pdto.setTopicno(topicno);
+			pdto.setMemberno(memberno);
+			pdto.setSubcategoryno(subcategoryno);
 			
-			System.out.println("memberno:"+memberno);
+			blog_Service.postWrite(pdto); 
+			/*
+			 * selectkey로 받은 no값은 pdto에 저장됨. return값은 row값.
+			 */
 			
-			blog_Service.postWrite(dto);
+			Thumbnail_DTO tdto = new Thumbnail_DTO();
+            tdto.setPostno(pdto.getNo());
+            
+			
 		}
 		
 		return "redirect:/"+blogno+"/postList";
@@ -218,7 +225,6 @@ public class BlogPost_Controller {
 		
 		model.addAttribute("file_path", file_path);
 		model.addAttribute("CKEditorFuncNum", CKEditorFuncNum);
-	   
 		return "blog/uploadView";
 	}
 

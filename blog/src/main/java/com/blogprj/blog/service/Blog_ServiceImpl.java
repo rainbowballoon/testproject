@@ -11,6 +11,7 @@ import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.model.SubCategory_DTO;
 import com.blogprj.blog.model.Test_DTO;
+import com.blogprj.blog.model.Thumbnail_DTO;
 import com.blogprj.blog.repository.mapper.Blog_MapperImpl;
 
 public class Blog_ServiceImpl implements Blog_Service {
@@ -125,11 +126,12 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public void postWrite(Post_DTO dto) {
+	public int postWrite(Post_DTO dto) {
 		try{
-			blogmapper.postWrite(dto);
+			return blogmapper.postWrite(dto);
 		}catch(Exception e){
 			e.printStackTrace();
+			return -1;
 		}
 	}
 
@@ -499,6 +501,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 	public void boardDelete(Board_DTO dto) {
 		try{
 			blogmapper.boardDelete(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+//thumbnail
+	@Override
+	public void thumbnailWrite(Thumbnail_DTO dto) {
+		try{
+			blogmapper.thumbnailWrite(dto);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -73,6 +73,5 @@ public class Post_DTO {
 	public void setScDTO(SubCategory_DTO scDTO) {
 		this.scDTO = scDTO;
 	}
-
 	
 }

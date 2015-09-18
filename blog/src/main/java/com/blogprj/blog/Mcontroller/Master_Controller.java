@@ -25,10 +25,23 @@ import com.blogprj.blog.service.Blog_Service;
 @Controller
 public class Master_Controller {
 	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home() {
+		
+		return "index";
+	
+	}
+	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index() {
+		
+		return "index";
+	}
+	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String main(Model model) {
 		System.out.println("main");
-		return "index";
+		return "redirect:/index";
 	}
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)

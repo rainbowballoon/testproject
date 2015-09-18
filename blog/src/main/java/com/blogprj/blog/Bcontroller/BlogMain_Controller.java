@@ -37,18 +37,18 @@ import com.blogprj.blog.service.Blog_Service;
 @Controller
 public class BlogMain_Controller {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
-		
-		return "blog/index";
-	
-	}
-	
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(Model model, HttpSession session) {
-		
-		return "blog/index";
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String home(Model model) {
+//		
+//		return "blog/index";
+//	
+//	}
+//	
+//	@RequestMapping(value = "/index", method = RequestMethod.GET)
+//	public String index(Model model, HttpSession session) {
+//		
+//		return "blog/index";
+//	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(HttpServletRequest request)
