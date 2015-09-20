@@ -24,31 +24,31 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="about">About</a>
+                        <a href="about">블로그에 대해서</a>
                     </li>
             <c:choose>
 			<c:when test="${logined == null}">
                     <li>
-                        <a href="joinForm">Join</a>
+                        <a href="joinForm">블로그 가입하기</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">로그인<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="loginForm">Member Login</a>
+                                <a href="loginForm">사용자 로그인</a>
                             </li>
                             <li>
-                                <a href="adminLoginForm">Admin Login</a>
+                                <a href="adminLoginForm">관리자 로그인</a>
                             </li>
                         </ul>
                     </li>
              </c:when>
              <c:otherwise>
              		 <li>
-                        <a href="memberLogout">Logout</a>
+                        <a href="memberLogout">로그아웃</a>
                     </li>
                      <li>
-                        <a href="myBlog">MyBlog</a>
+                        <a href="${logined.no }/index">내블로그 가기</a>
                     </li>
              </c:otherwise>
              </c:choose>

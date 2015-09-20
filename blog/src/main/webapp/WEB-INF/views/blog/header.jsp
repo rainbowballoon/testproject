@@ -20,44 +20,35 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                  	<li>
-                        <a href="index">Home</a>
+                        <a href="index">내블로그</a>
                     </li>
                 <c:choose>
                 <c:when test="${logined == null }">
                 	<li>
-                        <a href="joinForm">Join</a>
+                        <a href="joinForm">회원가입</a>
                     </li>
                     <li>
-                        <a href="loginForm">Login</a>
+                        <a href="loginForm">로그인</a>
                     </li>
                 </c:when>
                 <c:otherwise>
-                	<c:choose>
-                	<c:when test="${logined.no ==  blogpoint.no}">
 	                 	<li>
-	                        <a href="postWriteForm">Post Write</a>
+	                        <a href="postWriteForm">포스트 작성</a>
 	                    </li>
 	                    <li>
-	                        <a href="blogManageForm">Blog management</a>
+	                        <a href="blogManageForm">블로그 관리</a>
 	                    </li>
 	                    <li>
-	                        <a href="blogLogout">Logout</a>
+	                        <a href="blogLogout">로그아웃</a>
 	                    </li>
 	                     <li>
-	                        <a href="boardList">Guest Book</a>
+	                        <a href="boardList">방명록</a>
 	                    </li>
-                    </c:when>
-                    <c:otherwise>
-	                    <li>
-	                        <a href="blogLogout">Logout</a>
-	                    </li>
-	                     <li>
-	                        <a href="boardList">Guest Book</a>
-	                    </li>
-                    </c:otherwise>
-                    </c:choose>
                 </c:otherwise>
                 </c:choose>
+                	<li>
+                        <a href="${pageContext.request.contextPath}/index">블로그홈페이지</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

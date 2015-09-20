@@ -173,6 +173,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public List<String> postThumbnail(int no) {
+		try{
+			return blogmapper.postThumbnail(no);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 //comments_ps
 	@Override
 	public void commentsPSWrite(Comments_PS_DTO dto) {

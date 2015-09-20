@@ -1,6 +1,15 @@
 select * from MEMBER;
 select * from BLOG;
-
+select * from post;
+SELECT content
+		FROM 
+		(
+			SELECT content
+		    FROM POST
+	        ORDER BY DBMS_RANDOM.RANDOM()
+	    )
+		WHERE ROWNUM <=10
+		
 drop table POST;
 drop table MEMBER;
 drop table CATEGORY;

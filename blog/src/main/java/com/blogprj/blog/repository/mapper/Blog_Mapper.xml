@@ -256,6 +256,19 @@
     	</association>
     </resultMap>
 
+	<select id="postThumbnail" parameterType="int" resultType="String">
+    	SELECT content
+		FROM 
+		<![CDATA[
+		(
+			SELECT content
+		    FROM POST
+	        ORDER BY DBMS_RANDOM.RANDOM()
+	    )
+		 WHERE ROWNUM <=6 
+		 ]]>
+    </select>
+	
 <!-- commnets_ps-->
 	<insert id="commentsPSWrite" parameterType="com.blogprj.blog.model.Comments_PS_DTO">
 		INSERT INTO COMMENTS_PS

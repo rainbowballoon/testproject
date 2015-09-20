@@ -42,8 +42,8 @@
 <c:choose>
 	<c:when test="${param.content == null}">
 <%-- 		<jsp:include page="intro.jsp" /> --%>
-		<jsp:include page="postSection.jsp" />
-		<jsp:include page="features.jsp" />
+		<jsp:include page="postNewSection.jsp" />
+		<jsp:include page="postHotSection.jsp" />
 		<jsp:include page="calltoaction.jsp" />
 	</c:when>
 	<c:otherwise>
