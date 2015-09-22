@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 
@@ -24,7 +25,7 @@ public class Master_Controller {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		
-		return "index";
+		return "redirect:/index";
 	
 	}
 	
@@ -36,26 +37,29 @@ public class Master_Controller {
 		Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
 		
 		List<String> imgsrc = new ArrayList<String>();
+		List<Post_DTO> newpost = new ArrayList<Post_DTO>(); 
 		
-		List<String> thumbnailsList = new ArrayList<String>(); // 6개의 content가 저장될 List [],[],[] ....
-		thumbnailsList = blog_Service.postThumbnail(143);
+		List<Post_DTO> thumbnailsList = new ArrayList<Post_DTO>(); // 6개의 content가 저장될 List [],[],[] ....
+		thumbnailsList = blog_Service.postThumbnail();
 		System.out.println("thumbnailsList : "+thumbnailsList);
 		
-		for(String str : thumbnailsList){ // 6개의 content를 하나씩 꺼내어 이미지 정규식으로 src 분리
+		for(Post_DTO str : thumbnailsList){ // 6개의 content를 하나씩 꺼내어 이미지 정규식으로 src 분리
 			List<String> list = new ArrayList<String>();
-			list = getImgSrc(str); //하나의 []가 분리됨. list : [/blog/upload/Tulips.jpg]
+			list = getImgSrc(str.getContent()); //하나의 []가 분리됨. list : [/blog/upload/Tulips.jpg]
 			System.out.println("list : "+list);
 			
 			for (String imgUrl : list) { // 하나의 List인 list부터 내용물인 /blog/upload/Tulips.jpg를 뽑아냄, imgUrl : /blog/upload/Tulips.jpg
 				System.out.println(imgUrl);
 				if(!list.isEmpty()){	
 					imgsrc.add(imgUrl);
+					newpost.add(str);
 				}
 			}
 			
 		}
 		
 		model.addAttribute("imgsrc", imgsrc);
+		model.addAttribute("newpost", newpost);
 		
 		System.out.println("최종 imgsrc : "+imgsrc);
 		return "index";

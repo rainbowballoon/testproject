@@ -290,11 +290,11 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
-	public List<String> postThumbnail(int no) {
+	public List<Post_DTO> postThumbnail() {
 		try{
 			String statement = null;
 			statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.postThumbnail";
-			return sqlSession.selectList(statement, no);
+			return sqlSession.selectList(statement);
 		}finally{
 			
 		}

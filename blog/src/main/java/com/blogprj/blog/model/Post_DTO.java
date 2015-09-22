@@ -11,6 +11,7 @@ public class Post_DTO {
 	private int topicno;
 	private int subcategoryno;
 	private SubCategory_DTO scDTO;
+	private Member_DTO mDTO;
 	
 	public int getNo() {
 		return no;
@@ -72,6 +73,12 @@ public class Post_DTO {
 	}
 	public void setScDTO(SubCategory_DTO scDTO) {
 		this.scDTO = scDTO;
+	}
+	public Member_DTO getmDTO() {
+		return mDTO;
+	}
+	public void setmDTO(Member_DTO mDTO) {
+		this.mDTO = mDTO;
 	}
 	
 }

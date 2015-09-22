@@ -174,9 +174,9 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public List<String> postThumbnail(int no) {
+	public List<Post_DTO> postThumbnail() {
 		try{
-			return blogmapper.postThumbnail(no);
+			return blogmapper.postThumbnail();
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
