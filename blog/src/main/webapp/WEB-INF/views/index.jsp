@@ -48,6 +48,11 @@
 	</c:when>
 	<c:otherwise>
 		<jsp:include page="${param.content }" />
+		<c:choose>
+			<c:when test="${param.content eq 'postDetail.jsp' }">
+				<jsp:include page="postNewSection.jsp" />
+			</c:when>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 <!--     Page Content -->

@@ -182,6 +182,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 			return null;
 		}
 	}
+
+	@Override
+	public List<Post_DTO> slideThumbnail() {
+		try{
+			return blogmapper.slideThumbnail();
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 //comments_ps
 	@Override

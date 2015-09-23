@@ -12,11 +12,11 @@
             
         
             <div class="row"> <!-- thumbnail용 row 한줄 3개까지-->
-            	<c:forEach items="${imgsrc }" var="imgsrc" begin="0" end="2" varStatus="status">
+            	<c:forEach items="${nimgsrc }" var="nimgsrc" begin="0" end="2" varStatus="status">
 	            <div class="col-md-4 col-sm-6">
 		            <div class="thumbnail">
-		                <a href="${pageContext.request.contextPath}/${newpost[status.index].mDTO.no }/postList">
-		                    <img src="${imgsrc }" class="img-responsive img-portfolio img-hover"/>
+		                <a href="${pageContext.request.contextPath}/postDetail?no=${newpost[status.index].no}&blogno=${newpost[status.index].mDTO.no }">
+		                    <img src="${nimgsrc }" class="img-responsive img-portfolio img-hover"/>
 		                </a>
 		                <div class="caption">
 		                	<h4>[${newpost[status.index].topicno }] ${newpost[status.index].title }</h4>
@@ -31,11 +31,12 @@
 	            </c:forEach>
 	        </div> <!--thumbnail 마지막  -->
 	        <div class="row"> <!-- thumbnail용 row 한줄 3개까지-->
-            	<c:forEach items="${imgsrc }" var="imgsrc" begin="3" end="5" varStatus="status">
+            	<c:forEach items="${nimgsrc }" var="nimgsrc" begin="3" end="5" varStatus="status">
 	            <div class="col-md-4 col-sm-6">
 		            <div class="thumbnail">
-		                <a href="${pageContext.request.contextPath}/${newpost[status.index].mDTO.no }/postList">
-		                    <img src="${imgsrc }" class="img-responsive img-portfolio img-hover"/>
+<%-- 		                <a href="${pageContext.request.contextPath}/${newpost[status.index].mDTO.no }/postList"> --%>
+		                <a href="${pageContext.request.contextPath}/postDetail?no=${newpost[status.index].no}&blogno=${newpost[status.index].mDTO.no }">
+		                    <img src="${nimgsrc }" class="img-responsive img-portfolio img-hover"/>
 		                </a>
 		                <div class="caption">
 		                	<h4>[${newpost[status.index].topicno }] ${newpost[status.index].title }</h4>

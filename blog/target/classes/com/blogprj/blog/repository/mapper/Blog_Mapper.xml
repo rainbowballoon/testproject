@@ -265,12 +265,11 @@
 				m.no AS mno, m.nickname AS mnickname
 		    FROM POST p
 		    JOIN MEMBER m ON m.no = p.memberno
-	        ORDER BY DBMS_RANDOM.RANDOM()
+	        ORDER BY regdate desc
 	    )
 		WHERE ROWNUM <=6 
 		]]>
     </select>
-    
     <resultMap type="com.blogprj.blog.model.Post_DTO" id="postThumbnailMap">
     	<id property="no" column="no"/>
     	<result property="regdate" column="regdate"/>
@@ -287,6 +286,35 @@
     	</association>
     </resultMap>
     
+    <select id="slideThumbnail" resultMap="slideThumbnailMap">
+    	SELECT *
+		FROM 
+		<![CDATA[
+		(
+			SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
+				m.no AS mno, m.nickname AS mnickname
+		    FROM POST p
+		    JOIN MEMBER m ON m.no = p.memberno
+	        ORDER BY DBMS_RANDOM.RANDOM()
+	    )
+		WHERE ROWNUM <=5 
+		]]>
+    </select>
+    <resultMap type="com.blogprj.blog.model.Post_DTO" id="slideThumbnailMap">
+    	<id property="no" column="no"/>
+    	<result property="regdate" column="regdate"/>
+    	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="blogno" column="blogno"/>
+    	<result property="memberno" column="memberno"/>
+    	<result property="postaccess" column="postaccess"/>
+    	<result property="topicno" column="topicno"/>
+    	<result property="subcategoryno" column="subcategoryno"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id property="no" column="mno"/>
+	    	<result property="nickname" column="mnickname"/>
+    	</association>
+    </resultMap>
 <!--     <select id="postThumbnail" resultType="String"> -->
 <!--     	SELECT content -->
 <!-- 		FROM  -->

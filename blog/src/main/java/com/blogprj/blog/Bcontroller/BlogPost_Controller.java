@@ -235,7 +235,7 @@ public class BlogPost_Controller {
 		
 		// sPage-ePage = perPage : 페이지에 보일 아이템 개수( (ePage-sPage)개마다 다음장으로 넘기겠다는 의미 )
 		int sPage=0; 
-		int ePage=1; 
+		int ePage=3; 
 		
 		//sPage, ePage가 존재하면 request 객체가 갖고 있는 값들로 채우기
 		if(request.getParameter("sPage") != null && request.getParameter("ePage") != null) {

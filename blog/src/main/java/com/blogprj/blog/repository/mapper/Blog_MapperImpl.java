@@ -300,6 +300,16 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public List<Post_DTO> slideThumbnail() {
+		try{
+			String statement = null;
+			statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.slideThumbnail";
+			return sqlSession.selectList(statement);
+		}finally{
+			
+		}
+	}
 	
 //comments_ps
 	@Override
@@ -457,8 +467,6 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	
 	@Override
 	public List<SubCategory_DTO> subCategoryList(int blogno, int categoryno) {
-//		System.out.println("blogno:"+blogno);
-//		System.out.println("categoryno:"+categoryno);
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.subCategoryList";
 			Map<String, Object> map = new HashMap<String, Object>();
