@@ -49,10 +49,10 @@ public class Master_Controller {
 		for(Post_DTO str : nthumbnailsList){ // 6개의 content를 하나씩 꺼내어 이미지 정규식으로 src 분리
 			List<String> list = new ArrayList<String>();
 			list = getImgSrc(str.getContent()); //하나의 []가 분리됨. list : [/blog/upload/Tulips.jpg]
-			System.out.println("list : "+list);
+			//System.out.println("list : "+list);
 			
 			for (String imgUrl : list) { // 하나의 List인 list부터 내용물인 /blog/upload/Tulips.jpg를 뽑아냄, imgUrl : /blog/upload/Tulips.jpg
-				System.out.println(imgUrl);
+				//System.out.println(imgUrl);
 				if(!list.isEmpty()){	
 					nimgsrc.add(imgUrl);
 					newpost.add(str);
@@ -66,15 +66,15 @@ public class Master_Controller {
 		
 		List<Post_DTO> hthumbnailsList = new ArrayList<Post_DTO>(); // 6개의 content가 저장될 List [],[],[] ....
 		hthumbnailsList = blog_Service.slideThumbnail();
-		System.out.println("thumbnailsList : "+hthumbnailsList);
+		System.out.println("thumbnailsList : "+hthumbnailsList.size());
 		
 		for(Post_DTO str : hthumbnailsList){ // 6개의 content를 하나씩 꺼내어 이미지 정규식으로 src 분리
 			List<String> list = new ArrayList<String>();
 			list = getImgSrc(str.getContent()); //하나의 []가 분리됨. list : [/blog/upload/Tulips.jpg]
-			System.out.println("list : "+list);
+			//System.out.println("list : "+list);
 			
 			for (String imgUrl : list) { // 하나의 List인 list부터 내용물인 /blog/upload/Tulips.jpg를 뽑아냄, imgUrl : /blog/upload/Tulips.jpg
-				System.out.println(imgUrl);
+				//System.out.println(imgUrl);
 				if(!list.isEmpty()){	
 					himgsrc.add(imgUrl);
 					hotpost.add(str);
