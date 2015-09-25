@@ -45,7 +45,7 @@
              </c:when>
              <c:otherwise>
              		 <li>
-                        <a href="memberLogout">로그아웃</a>
+                        <a href="blogLogout">로그아웃</a>
                     </li>
                      <li>
                         <a href="${logined.no }/index">내블로그 가기</a>

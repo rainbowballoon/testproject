@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class authGenerateState {
+public class SignInNaverServlet {
 	
 	private static String CLIEND_ID = "iZi6fX1jFdbNuDtCwDYj";
 	private static String CLIENT_SECRET = "iZi6fX1jFdbNuDtCwDYj";

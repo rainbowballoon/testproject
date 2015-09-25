@@ -38,7 +38,7 @@ import com.blogprj.blog.model.Test_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
 @Controller
-public class BlogNaverAuth_Controller {
+public class AuthNaver_Controller {
 
 	private static final String AUTHORIZE_URL = "https://nid.naver.com/oauth2.0/authorize";
 	private static final String CREATE_SCHEDULE_API_URL = "https://openapi.naver.com/calendar/createSchedule.json";
