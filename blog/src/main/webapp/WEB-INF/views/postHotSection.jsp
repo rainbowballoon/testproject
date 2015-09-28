@@ -5,7 +5,7 @@
         <!-- Features Section -->
         <div class="row">
        		 <div class="col-lg-12">
-                <h2 class="page-header">인기 포스트 <small>[★HOT POST]</small></h2>
+                <h2 class="page-header">인기 포스트 <small></small></h2>
             </div>
        	</div>
        	

@@ -2,57 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
-$(function(){
-    $("#popbutton").click(function(){
-    	var no = "";
-    	var blogno = "";
-
-    	$.ajax({
-     	   type:'get',
-     	   url:'postDetailModal',
-     	  	data: ({no:no}),
-     	   success:function(data){
-   			 $('div.modal').modal({remote : 'postDetailModal'}); 
-     	   }
-     	});
-    })
-    
-})
-</script>
-
 <!-- Page Content -->
     <div class="container">
     
 		<!-- Portfolio Section -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">새로운 포스트 <small><br/></small> </h2>
+                <h3 class="page-header">${topicpost[0].tDTO.name } <small>테스트</small> </h3>
             </div>
             
-<!--             <button class="btn btn-default" id="popbutton">모달출력버튼</button> -->
-            
-<!--             <div class="modal fade"> -->
-<!-- 			  <div class="modal-dialog"> -->
-<!-- 			    <div class="modal-content"> -->
-<!-- 			        remote ajax call이 되는영역 -->
-<!-- 			    </div> -->
-<!-- 			  </div> -->
-<!-- 			</div> -->
-			
+        
             <div class="row"> <!-- thumbnail용 row 한줄 3개까지-->
-            	<c:forEach items="${nimgsrc }" var="nimgsrc" begin="0" end="2" varStatus="status">
+            	<c:forEach items="${timgsrc }" var="timgsrc" begin="0" end="2" varStatus="status">
 	            <div class="col-md-4 col-sm-6">
 		            <div class="thumbnail">
-		                <a href="${pageContext.request.contextPath}/postDetail?no=${newpost[status.index].no}&blogno=${newpost[status.index].mDTO.no }">
-		                    <img src="${nimgsrc }" class="img-responsive img-portfolio img-hover"/>
+		                <a href="${pageContext.request.contextPath}/postDetail?no=${topicpost[status.index].no}&blogno=${topicpost[status.index].mDTO.no }">
+		                    <img src="${timgsrc }" class="img-responsive img-portfolio img-hover"/>
 		                </a>
-		                <div class="caption" id="popbutton" >
-		                	<h4>${newpost[status.index].title }</h4>
-		                	<p>[${newpost[status.index].tDTO.name }] </p>
+		                <div class="caption">
+		                	<h4>[${topicpost[status.index].topicno }] ${topicpost[status.index].title }</h4>
+<%-- 		                	<p>${newpost[status.index].content }</p> --%>
 		                	<hr>
         					<p>
-        						By <a href="${pageContext.request.contextPath}/${newpost[status.index].mDTO.no }/index">${newpost[status.index].mDTO.nickname }</a>
+        						By <a href="${pageContext.request.contextPath}/${topicpost[status.index].mDTO.no }/index">${topicpost[status.index].mDTO.nickname }</a>
         					</p>
 		                </div>
 		            </div>
@@ -67,7 +39,7 @@ $(function(){
 		                <a href="${pageContext.request.contextPath}/postDetail?no=${newpost[status.index].no}&blogno=${newpost[status.index].mDTO.no }">
 		                    <img src="${nimgsrc }" class="img-responsive img-portfolio img-hover"/>
 		                </a>
-		                <div class="caption" id="popbutton">
+		                <div class="caption">
 		                	<h4>[${newpost[status.index].topicno }] ${newpost[status.index].title }</h4>
 <%-- 		                	<p>${newpost[status.index].content }</p> --%>
 		                	<hr>

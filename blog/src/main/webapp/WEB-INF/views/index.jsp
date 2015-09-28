@@ -23,6 +23,11 @@
     <!-- Custom Fonts -->
     <link href="${pageContext.request.contextPath }/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<!-- CSS Menubar -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/cssmenu/styles.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,7 +41,17 @@
 
 <%@ include file="header.jsp" %>
 
-<%@ include file="slide.jsp" %>
+<%@ include file="menubar.jsp" %>
+
+<c:choose>
+	<c:when test="${param.content eq 'postSection.jsp' }">
+		
+	</c:when>
+	<c:otherwise>
+		<%@ include file="slide.jsp" %>
+	</c:otherwise>
+</c:choose>
+
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:choose>

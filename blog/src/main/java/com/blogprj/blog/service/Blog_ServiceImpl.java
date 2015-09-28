@@ -193,6 +193,16 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 	
+	@Override
+	public List<Post_DTO> topicThumbnail(int topicno) {
+		try{
+			return blogmapper.topicThumbnail(topicno);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 //comments_ps
 	@Override
 	public void commentsPSWrite(Comments_PS_DTO dto) {
@@ -231,6 +241,7 @@ public class Blog_ServiceImpl implements Blog_Service {
 			return -1;
 		}
 	}
+	
 	
 //comments_bd
 	@Override

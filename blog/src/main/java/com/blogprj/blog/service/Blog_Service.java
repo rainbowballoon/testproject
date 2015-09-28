@@ -60,6 +60,7 @@ public interface Blog_Service{
 	public Object breadCrumb(int categoryno, int subcategoryno); // 현재 경로 이름 반환
 	public List<Post_DTO> postThumbnail(); //해당 포스트 번호로 이미지src 반환
 	public List<Post_DTO> slideThumbnail();
+	public List<Post_DTO> topicThumbnail(int topicno);
 	
 //comments_ps
 	public void commentsPSWrite(Comments_PS_DTO dto);

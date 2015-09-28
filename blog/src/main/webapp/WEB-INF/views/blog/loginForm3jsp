@@ -11,6 +11,18 @@
 	<div class="row">
 
 		<form class="col-md-8" action="blogLogin" method="POST">
+		    <div class="row text-center">
+		        <div class="col-md-4 col-sm-12">
+		            <button type="button" class="btn btn-primary btn-block">Facebook</button>
+		        </div>
+		        <div class="col-md-4 col-sm-12">
+		            <button type="button" class="btn btn-info btn-block">Twitter</button>
+		        </div>
+		        <div class="col-md-4 col-sm-12">
+		            <button type="button" class="btn btn-danger btn-block">Google+</button>
+		        </div>
+		    </div>
+		    <hr />
 		    <div class="form-group">
 		        <input type="text" class="form-control input-lg" id="member_id" name="member_id" placeholder="아이디">
 		    </div>
@@ -19,18 +31,6 @@
 		    </div>
 		    <div class="form-group">
 		        <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-		    </div>
-		    <hr/>
-		    <div class="row text-center">
-		        <div class="col-md-4 col-sm-12">
-		            <button type="button" onclick="FB.login();" class="btn btn-primary btn-lg btn-block">Facebook</button>
-		        </div>
-		        <div class="col-md-4 col-sm-12">
-		            <button type="button" class="btn btn-info btn-lg btn-block">Twitter</button>
-		        </div>
-		        <div class="col-md-4 col-sm-12">
-		            <button type="button" class="btn btn-danger btn-lg btn-block">Google+</button>
-		        </div>
 		    </div>
 		</form>	
 		
@@ -42,13 +42,6 @@
 					data-auto-logout-link="true" onlogin="checkLoginState();"></div>
 				<div id="status"></div>
 				<div id="user-info"></div> 
-				
-				<p>사용자정보 출력</p>
-				<div align="left">
-				    <img id="image"/>
-				    <div id="name"></div>
-				    <div id="id"></div>
-				</div>
 	</div>
 	</div>
 	

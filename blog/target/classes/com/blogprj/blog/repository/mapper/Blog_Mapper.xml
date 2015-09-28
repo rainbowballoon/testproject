@@ -262,9 +262,10 @@
 		<![CDATA[
 		(
 			SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
-				m.no AS mno, m.nickname AS mnickname
+				m.no AS mno, m.nickname AS mnickname, t.no AS tno, t.name AS tname
 		    FROM POST p
 		    JOIN MEMBER m ON m.no = p.memberno
+		    JOIN TOPIC t ON t.no = p.topicno
 	        ORDER BY regdate desc
 	    )
 		WHERE ROWNUM <=6 
@@ -284,6 +285,10 @@
     		<id property="no" column="mno"/>
 	    	<result property="nickname" column="mnickname"/>
     	</association>
+    	<association property="tDTO" column="topicno" javaType="com.blogprj.blog.model.Topic_DTO">
+    		<id property="no" column="tno"/>
+	    	<result property="name" column="tname"/>
+    	</association>
     </resultMap>
     
     <select id="slideThumbnail" resultMap="slideThumbnailMap">
@@ -292,9 +297,10 @@
 		<![CDATA[
 		(
 			SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
-				m.no AS mno, m.nickname AS mnickname
+				m.no AS mno, m.nickname AS mnickname, t.no AS tno, t.name AS tname
 		    FROM POST p
 		    JOIN MEMBER m ON m.no = p.memberno
+		    JOIN TOPIC t ON t.no = p.topicno
 	        ORDER BY DBMS_RANDOM.RANDOM()
 	    )
 		WHERE ROWNUM <=5 
@@ -314,7 +320,49 @@
     		<id property="no" column="mno"/>
 	    	<result property="nickname" column="mnickname"/>
     	</association>
+    	<association property="tDTO" column="topicno" javaType="com.blogprj.blog.model.Topic_DTO">
+    		<id property="no" column="tno"/>
+	    	<result property="name" column="tname"/>
+    	</association>
     </resultMap>
+    
+    <select id="topicThumbnail" resultMap="topicThumbnailMap">
+    	SELECT *
+		FROM 
+		<![CDATA[
+		(
+			SELECT rownum as rnum, p.no, p.regdate, p.title, p.content, p.blogno, p.memberno, p.postaccess, p.topicno, p.subcategoryno,
+				m.no AS mno, m.nickname AS mnickname, t.no AS tno, t.name AS tname
+		    FROM POST p
+		    JOIN MEMBER m ON m.no = p.memberno
+		    JOIN TOPIC t ON t.no = p.topicno
+			WHERE p.topicno = #{topicno}
+	        ORDER BY DBMS_RANDOM.RANDOM()
+	    )
+		WHERE ROWNUM <=5 
+		]]>
+    </select>
+    <resultMap type="com.blogprj.blog.model.Post_DTO" id="topicThumbnailMap">
+    	<id property="no" column="no"/>
+    	<result property="regdate" column="regdate"/>
+    	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="blogno" column="blogno"/>
+    	<result property="memberno" column="memberno"/>
+    	<result property="postaccess" column="postaccess"/>
+    	<result property="topicno" column="topicno"/>
+    	<result property="subcategoryno" column="subcategoryno"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id property="no" column="mno"/>
+	    	<result property="nickname" column="mnickname"/>
+    	</association>
+    	<association property="tDTO" column="topicno" javaType="com.blogprj.blog.model.Topic_DTO">
+    		<id property="no" column="tno"/>
+	    	<result property="name" column="tname"/>
+    	</association>
+    </resultMap>
+    
+    
 <!--     <select id="postThumbnail" resultType="String"> -->
 <!--     	SELECT content -->
 <!-- 		FROM  -->

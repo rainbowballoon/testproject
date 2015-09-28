@@ -311,6 +311,18 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public List<Post_DTO> topicThumbnail(int topicno) {
+		try{
+			String statement = null;
+			statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.topicThumbnail";
+			System.out.println(sqlSession.selectList(statement, topicno));
+			return sqlSession.selectList(statement, topicno);
+		}finally{
+			
+		}
+	}
+	
 //comments_ps
 	@Override
 	public void commentsPSWrite(Comments_PS_DTO dto) {

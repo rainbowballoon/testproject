@@ -1,20 +1,21 @@
 package com.blogprj.blog.model;
 
 public class Topic_DTO {
-	private int topic_no;
-	private String topic_name;
+	private int no;
+	private String name;
 	
-	public int getTopic_no() {
-		return topic_no;
+	public int getNo() {
+		return no;
 	}
-	public void setTopic_no(int topic_no) {
-		this.topic_no = topic_no;
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public String getTopic_name() {
-		return topic_name;
+	public String getName() {
+		return name;
 	}
-	public void setTopic_name(String topic_name) {
-		this.topic_name = topic_name;
+	public void setName(String name) {
+		this.name = name;
 	}
+	
 	
 }

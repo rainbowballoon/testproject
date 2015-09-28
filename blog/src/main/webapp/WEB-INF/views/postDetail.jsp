@@ -36,7 +36,7 @@
 	<hr>
 
 <!-- 덧글 -->
-	<form method="post" name="replyform" id="replyform" action="commentsPSWrite">	
+	<form method="post" name="replyform" id="replyform" action="${dto.memberno }/commentsPSWrite">	
 		<input type="hidden" name="blogno" value="${dto.blogno }">
 		<input type="hidden" name="memberno" value="${dto.memberno }">
 		<input type="hidden" name="postno" value="${dto.no }">	
@@ -75,16 +75,12 @@
 			</div> <!-- pananel -->
 			
 			</form>
-	              <hr>
-	              <div align="right">
-	               <c:choose>
-	               	<c:when test="${logined.no ==  blogpoint.no}">
-	               		<a class="btn btn-primary" href="${pageContext.request.contextPath}/${dto.memberno}/postList">해당 블로그 놀러가기 <span class="glyphicon glyphicon-chevron-right"></span></a>
-	               		<a class="btn btn-default" href="${pageContext.request.contextPath}/index">돌아가기 <span class="glyphicon glyphicon-chevron-right"></span></a>
-	               	</c:when>
-	               </c:choose>
-	              </div>
-	              <hr>
+            <hr>
+            <div align="right">
+             		<a class="btn btn-primary" href="${pageContext.request.contextPath}/${dto.memberno}/postList">해당 블로그 놀러가기 <span class="glyphicon glyphicon-chevron-right"></span></a>
+             		<a class="btn btn-default" href="${pageContext.request.contextPath}/index">돌아가기 <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+            <hr>
 	</div>
 	</div>
 </div>

@@ -89,23 +89,11 @@
    {
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
-        '1. Thanks for logging in, ' + response.name + ', email : '+ response.email + ', id :' + response.id +', birthday :' + response.birthday + '!';
-     
-      //정보 가져오기
-      var image = document.getElementById('image');
-      image.src = 'http://graph.facebook.com/' + response.id + '/picture';
-      var name = document.getElementById('name');
-      name.innerHTML = response.name
-      var id = document.getElementById('id');
-      id.innerHTML = response.id
-      
-//      $.post("/blog/FBLoginInfo", { "userid": response.id, "username": response.name, "accesstoken":response.authResponse.accessToken},  
-//      function (response) {  
-//          //댓글을 처리한 다음 해당 웹페이지를 갱신 시키기 위해 호출.  
-//          location.replace('/blog/FBLoginInfo');  
-//      });
-      
-      //location.href="/blog/FBLoginInfo?id="+response.id+"&name="+response.name;
+        'Thanks for logging in, ' + response.name + ', email : '+ response.email + ', id :' + response.id +', birthday :' + response.birthday + '!';
+      name = response.name;
+      email = response.email;
+      id = response.id;
+      birthday = response.birthday;
      
     });
     
