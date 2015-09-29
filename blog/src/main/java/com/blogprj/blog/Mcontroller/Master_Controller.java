@@ -1,23 +1,35 @@
 package com.blogprj.blog.Mcontroller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blogprj.blog.model.Comments_PS_DTO;
+import com.blogprj.blog.model.Member_DTO;
 import com.blogprj.blog.model.Post_DTO;
 import com.blogprj.blog.service.Blog_Service;
 
@@ -288,18 +300,63 @@ public class Master_Controller {
 		return "index.jsp?content=postSection";
 	}
 	
+	public static HashMap<String, Object> convertJsonToObject(String json)
+			throws JsonParseException, JsonMappingException, IOException{
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		TypeReference<HashMap<String, Object>> typeReference = new TypeReference<HashMap<String, Object>>() { };
+        HashMap<String, Object> object = objectMapper.readValue(json, typeReference); 
+        // ObjectMapper 객체를 생성 후 readValue() 메서드를 사용하여 자바 객체로 변환
+        return object;
+	}
 	
-	@RequestMapping(value = "/FBLoginInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/FBLoginInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
 	public String FBLoginInfo(Model model,
-			@RequestParam("id") int id,
-			@RequestParam("name") String name
-			) {
+			@RequestBody String filterJSON,HttpSession session) {
 		System.out.println("FBLoginInfo");
 		
-		System.out.println("id="+id);
-		System.out.println("name="+name);
-		
-		
-		return "redirect:/index";
+        try {
+			Map<String, Object> filter = convertJsonToObject(filterJSON);
+			
+			Member_DTO mdto = new Member_DTO();
+			
+			mdto.setId((String)filter.get("id"));
+			mdto.setNickname((String)filter.get("nickname"));
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			int check = blog_Service.fbCheck(mdto);
+			//기존에 가입했던 회원인지 검사
+			
+			if(check == 0){
+				Date from = new Date();
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String currentTime = transFormat.format(from);
+				mdto.setPw((String)filter.get("id"));
+				mdto.setDomain((String)filter.get("id"));
+				mdto.setBirthday(currentTime);
+				
+				blog_Service.blogJoin(mdto); //블로그 가입
+				blog_Service.blogCreate(mdto.getNo()); //블로그 생성
+				
+				session.setAttribute("logined", blog_Service.fbLogin(mdto));
+			}else{
+				session.setAttribute("logined", blog_Service.fbLogin(mdto));
+			}
+			
+			System.out.println(check);
+			System.out.println(mdto.getId()+","+mdto.getNickname());
+			
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        System.out.println("왜 리다이렉트가 안되지");
+        return "redirect:/index";
 	}
 }

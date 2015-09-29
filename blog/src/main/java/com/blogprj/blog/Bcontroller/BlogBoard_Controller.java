@@ -46,6 +46,7 @@ public class BlogBoard_Controller {
 		
 		List<Board_DTO> boardList = new ArrayList<Board_DTO>();
 		boardList = blog_Service.boardList(blogno);
+		System.out.println("blogno:"+blogno);
 		
 //		List<Integer> commentCounts = new ArrayList<Integer>();
 //		

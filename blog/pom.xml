@@ -234,6 +234,13 @@
 			<version>2.3.0</version>
 		</dependency>
 		
+		<!-- Jackson 라이브러리 -->
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-asl</artifactId>
+		    <version>1.8.5</version>
+		</dependency>
+		
 	</dependencies>
 	<repositories>
     <repository>

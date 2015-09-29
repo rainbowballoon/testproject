@@ -63,6 +63,26 @@ public class Blog_ServiceImpl implements Blog_Service {
 		}
 	}
 
+	@Override
+	public int fbCheck(Member_DTO dto) {
+		try{
+			return blogmapper.fbCheck(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	@Override
+	public Member_DTO fbLogin(Member_DTO dto) {
+		try{
+			return blogmapper.fbLogin(dto);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 //post
 	
 	@Override

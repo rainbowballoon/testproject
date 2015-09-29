@@ -73,6 +73,26 @@ public class Blog_MapperImpl implements Blog_Mapper {
 		}
 	}
 	
+	@Override
+	public int fbCheck(Member_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.fbCheck";
+			return sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
+	@Override
+	public Member_DTO fbLogin(Member_DTO dto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.fbLogin";
+			return sqlSession.selectOne(statement, dto);
+		}finally{
+			
+		}
+	}
+	
 //blog	
 	@Override
 	public void blogCreate(int memberno) {

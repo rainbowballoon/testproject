@@ -73,7 +73,68 @@
 	 		</association>
  		</association>
  	</resultMap>
-    
+ 	
+    <select id="fbCheck" parameterType="com.blogprj.blog.model.Member_DTO" resultType="int">
+ 		SELECT count(*)
+    	FROM MEMBER 
+    	WHERE id = #{id} AND nickname = #{nickname}
+ 	</select>
+	
+	<select id="fbLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="fbLoginMap">
+ 		SELECT 
+ 			m.no, m.id, m.pw, m.nickname, m.birthday, m.domain, m.regdate,
+ 			b.no AS bno, 
+ 			b.title AS btitle, 
+ 			b.proimg AS bproimg, 
+ 			b.profile AS bprofile, 
+ 			b.memberno AS bmemberno, 
+ 			b.layoutno AS blayoutno, 
+ 			b.themeno AS bthemeno,
+ 			c.no AS cno,
+ 			c.name AS cname,
+ 			c.blogno AS cblogno,
+ 			sc.no AS scno,
+ 			sc.name AS scname,
+ 			sc.categoryno AS sccategoryno,
+ 			sc.blogno AS scblogno
+    	FROM MEMBER m
+    		LEFT JOIN BLOG b ON b.memberno = m.no
+    		LEFT JOIN CATEGORY c ON c.blogno = b.no
+    		LEFT JOIN SUBCATEGORY sc ON sc.blogno = b.no
+    	WHERE m.id = #{id} AND m.nickname = #{nickname}
+ 	</select>
+ 	
+ 	<resultMap type="com.blogprj.blog.model.Member_DTO" id="fbLoginMap">
+ 		<id property="no" column="no" />
+ 		<result column="id" property="id"/>
+ 		<result column="pw" property="pw"/>
+ 		<result column="nickname" property="nickname"/>
+ 		<result column="birthday" property="birthday"/>
+ 		<result column="domain" property="domain"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
+ 			<id column="bno" property="no"/>
+	 		<result column="btitle" property="title"/>
+	 		<result column="bproimg" property="proimg"/>
+	 		<result column="bprofile" property="profile"/>
+	 		<result column="blayoutno" property="layoutno"/>
+	 		<result column="bmemberno" property="memberno"/>
+	 		<result column="bthemeno" property="themeno"/>
+	 		<association property="cDTO" column="bno" javaType="com.blogprj.blog.model.Category_DTO">
+	 			<id column="cno" property="no"/>
+		 		<result column="cname" property="name"/>
+		 		<result column="cblogno" property="blogno"/>
+	 		</association>
+	 		<association property="scDTO" column="bno" javaType="com.blogprj.blog.model.SubCategory_DTO">
+	 			<id column="scno" property="no"/>
+		 		<result column="scname" property="name"/>
+		 		<result column="sccategoryno" property="categoryno"/>
+		 		<result column="scblogno" property="blogno"/>
+	 		</association>
+ 		</association>
+ 	</resultMap> 
+ 	
+ 	
 <!-- blog	 -->
 	<insert id="blogCreate" parameterType="com.blogprj.blog.model.Member_DTO">
 		INSERT INTO BLOG
@@ -573,6 +634,57 @@
  	</resultMap>
 
 <!-- board -->    
+
+<!-- <select id="boardList" parameterType="int" resultMap="boardlistMap"> -->
+<!-- 	    SELECT  -->
+<!-- 	    	b.no,  -->
+<!-- 	    	b.memberno,  -->
+<!-- 	    	b.groupid,  -->
+<!-- 	    	b.relevel,  -->
+<!-- 	    	b.redepth,  -->
+<!-- 	    	b.title,  -->
+<!-- 	    	b.content,  -->
+<!-- 	    	b.useyn,  -->
+<!-- 	    	b.regdate,  -->
+<!-- 	    	b.editdate,  -->
+<!-- 	    	b.blogno,  -->
+<!-- 	    	m.nickname AS mnickname, -->
+<!-- 	    	m.id AS mid, -->
+<!-- 	    	m.memberno AS mmemberno, -->
+<!--       	  	cbd.boardno AS cbdboardno, -->
+<!-- 	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS cbdcount  -->
+<!-- 	  	FROM board b -->
+<!-- 	  	LEFT OUTER JOIN COMMENTS_BD cbd ON cbd.boardno = b.no -->
+<!-- 	  	LEFT OUTER JOIN MEMBER m ON m.memberno = b.blogno -->
+<!-- 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC -->
+<!-- 	    WHERE b.blogno = ${blogno} -->
+<!--     </select> -->
+    
+<!--     <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap"> -->
+<!--     	<id property="no" column="no" /> -->
+<!--     	<result column="memberno" property="memberno"/> -->
+<!--     	<result column="groupid" property="groupid"/> -->
+<!--     	<result column="relevel" property="relevel"/> -->
+<!--     	<result column="redepth" property="redepth"/> -->
+<!--     	<result column="title" property="title"/> -->
+<!--     	<result column="content" property="content"/> -->
+<!--     	<result column="useyn" property="useyn"/> -->
+<!--     	<result column="regdate" property="regdate"/> -->
+<!--     	<result column="editdate" property="editdate"/> -->
+<!--     	<result column="blogno" property="blogno"/> -->
+<!--     	<association property="cbdDTO" column="no" javaType="com.blogprj.blog.model.Comments_BD_DTO"> -->
+<!--     		<id column="cno" property="no"/> -->
+<!--     		<result column="cbdboardno" property="boardno"/> -->
+<!--     		<result column="cbdcount" property="cbdcount"/> -->
+<!--     	</association> -->
+<!--     	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO"> -->
+<!--     		<id column="mno" property="no"/> -->
+<!--     		<result column="mnickname" property="nickname"/> -->
+<!--     		<result column="mmemberno" property="mmemberno"/> -->
+<!--     	</association> -->
+<!--     </resultMap> -->
+
+
 	<select id="boardList" parameterType="int" resultMap="boardlistMap">
 	    SELECT 
 	    	b.no, 

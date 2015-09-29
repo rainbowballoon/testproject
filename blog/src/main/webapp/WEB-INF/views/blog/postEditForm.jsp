@@ -66,12 +66,12 @@
 						<c:choose>
 						<c:when test="${pdto.topicno==1 }">
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="1" checked> 주제1
+						      <input type="radio" name="topicno" value="1" checked> 엔터테인먼트 · 예술
 						    </label>
 						</c:when>
 						<c:otherwise>
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="1"> 주제1
+						      <input type="radio" name="topicno" value="1"> 엔터테인먼트 · 예술
 						    </label>
 						</c:otherwise>
 						</c:choose>
@@ -79,12 +79,12 @@
 						<c:choose>
 						<c:when test="${pdto.topicno==2 }">
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="2" checked> 주제2
+						      <input type="radio" name="topicno" value="2" checked> 지식 · 동향
 						    </label>
 						</c:when>
 						<c:otherwise>
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="2"> 주제2
+						      <input type="radio" name="topicno" value="2"> 지식 · 동향
 						    </label>
 						</c:otherwise>
 						</c:choose>
@@ -92,15 +92,29 @@
 						<c:choose>
 						<c:when test="${pdto.topicno==3 }">
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="3" checked> 주제3
+						      <input type="radio" name="topicno" value="3" checked> 취미 · 여가 · 여행
 						    </label>
 						</c:when>
 						<c:otherwise>
 							<label class="radio-inline">
-						      <input type="radio" name="topicno" value="3"> 주제3
+						      <input type="radio" name="topicno" value="3"> 취미 · 여가 · 여행
 						    </label>
 						</c:otherwise>
 						</c:choose>
+						
+						<c:choose>
+						<c:when test="${pdto.topicno==4 }">
+							<label class="radio-inline">
+						      <input type="radio" name="topicno" value="4" checked> 생활 · 노하우 · 쇼핑
+						    </label>
+						</c:when>
+						<c:otherwise>
+							<label class="radio-inline">
+						      <input type="radio" name="topicno" value="4"> 생활 · 노하우 · 쇼핑
+						    </label>
+						</c:otherwise>
+						</c:choose>
+						
 					</div>
 					<c:choose>
 						<c:when test="${pdto.topicno==0 }">

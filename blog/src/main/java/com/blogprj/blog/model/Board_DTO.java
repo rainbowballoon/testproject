@@ -15,6 +15,7 @@ public class Board_DTO {
 	private int relevel;
 	private int redepth;
 	private Comments_BD_DTO cbdDTO;
+	private Member_DTO mDTO;
 	private int cbdcount;
 	
 	@NotEmpty(message="제목을 입력하세요!")
@@ -108,5 +109,11 @@ public class Board_DTO {
 	}
 	public void setCbdcount(int cbdcount) {
 		this.cbdcount = cbdcount;
+	}
+	public Member_DTO getmDTO() {
+		return mDTO;
+	}
+	public void setmDTO(Member_DTO mDTO) {
+		this.mDTO = mDTO;
 	}
 }

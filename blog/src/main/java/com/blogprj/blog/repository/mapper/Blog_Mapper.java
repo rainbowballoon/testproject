@@ -19,7 +19,9 @@ public interface Blog_Mapper {
 	public int blogJoin(Member_DTO dto); //회원가입
 	public int getBlogno(int memberno); //회원의 blogno 가져오기
 	public Member_DTO blogInfo(int memberno); //회원의 memberno를 이용해 블로그 정보 가져오기
-
+	public int fbCheck(Member_DTO dto); //페이스북 로그인 이력 체크
+	public Member_DTO fbLogin(Member_DTO dto); //페이스북 로그인
+	
 //blog
 	public void blogCreate(int memberno); //블로그 생성
 	public Blog_DTO blogProfileRead(int memberno); 

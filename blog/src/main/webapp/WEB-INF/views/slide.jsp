@@ -24,7 +24,7 @@
         	<c:forEach items="${himgsrc }" var="himgsrc" begin="0" end="0" varStatus="status">
         	<div class="item active">
                 <div class="fill" style="background-image:url('${himgsrc }');"></div>
-                <div class="carousel-caption">
+                <div class="carousel-caption" style="background-color: rgba(234, 234, 234, 0.15);">
                     <h2><a id="slide" href="${pageContext.request.contextPath}/${hotpost[status.index].mDTO.no }/index">
                     	${hotpost[status.index].title }
                     	</a>
@@ -39,7 +39,7 @@
             <c:forEach items="${himgsrc }" var="himgsrc" begin="1" end="4" varStatus="status">
             <div class="item">
                 <div class="fill" style="background-image:url('${himgsrc }');"></div>
-                <div class="carousel-caption">
+                <div class="carousel-caption" style="background-color: rgba(234, 234, 234, 0.15);">
                     <h2>${hotpost[status.index].title }</h2>
                     <p><a id="slide" href="${pageContext.request.contextPath}/${hotpost[status.index].mDTO.no }/index">
                     	By ${hotpost[status.index].mDTO.nickname }

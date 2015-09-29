@@ -45,6 +45,13 @@
 //     }
     
   }
+  
+  function facebooklogin() {  
+    //페이스북 로그인 버튼을 눌렀을 때의 루틴.  
+        FB.login(function(response) {  
+        	checkLoginState();
+        }, {scope: 'public_profile,email,user_friends'});  
+	}  
  
   window.fbAsyncInit = function() {
   FB.init({
@@ -80,13 +87,14 @@
     js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&appId=501743573321338&version=v2.4";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
- 
+  
   // 로그인이 성공한 다음에는 간단한 그래프API를 호출한다.
   // 이 호출은 statusChangeCallback()에서 이루어진다.
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) 
    {
+      console.log(JSON.stringify(response));
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         '1. Thanks for logging in, ' + response.name + ', email : '+ response.email + ', id :' + response.id +', birthday :' + response.birthday + '!';
@@ -99,14 +107,26 @@
       var id = document.getElementById('id');
       id.innerHTML = response.id
       
-//      $.post("/blog/FBLoginInfo", { "userid": response.id, "username": response.name, "accesstoken":response.authResponse.accessToken},  
-//      function (response) {  
-//          //댓글을 처리한 다음 해당 웹페이지를 갱신 시키기 위해 호출.  
-//          location.replace('/blog/FBLoginInfo');  
-//      });
+      console.log("id : " + response.id);
+      console.log("name : " + response.name);
+      console.log("email : " + response.email);
+      console.log("birthday : " + response.birthday);
+
+      	var request = {
+      			"id": response.id, 
+      			"nickname": response.name,
+    		};
       
-      //location.href="/blog/FBLoginInfo?id="+response.id+"&name="+response.name;
-     
+	  	$.ajax({
+		  type : 'POST', // Http Request Method로 POST로 지정
+		  url : '/blog/FBLoginInfo', // 서버 요청 주소
+		  contentType : 'application/json;charset=UTF-8', // 서버 요청시 전송할 데이터가 UTF-8 형식의 JSON 객체임을 명시
+		  data : JSON.stringify(request), // JavaScript 객체를 JSON 객체로 변환하여 서버 요청시 전송
+		  dataType : 'json', // 서버로부터 응답받을 데이터가 JSON 객체임을 명시하여 수작업 없이 응답 데이터를 JavaScript 객체로 획득
+		  //success : function(response) { alert("성공적으로 보냈습니다"); }, // 서버로부터 응답 데이터 도착시 로직 처리, 응답 데이터는 JavaScript 객체로 바로 사용 가능
+		    error : function() {  } // 서버로부터 응답 데이터 실패시 로직 처리
+		});
+
     });
     
     function FBBtnLogout(){
