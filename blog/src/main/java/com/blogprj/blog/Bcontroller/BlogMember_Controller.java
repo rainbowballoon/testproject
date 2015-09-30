@@ -60,7 +60,6 @@ public class BlogMember_Controller {
 	public String join(Model model, HttpServletRequest request,
 		@RequestParam("member_id") String member_id,
 		@RequestParam("member_pw") String member_pw,
-		@RequestParam("member_domain") String member_domain,
 		@RequestParam("member_nickname") String member_nickname,
 		@RequestParam("member_birthday") String member_birthday) {
 		
@@ -73,7 +72,6 @@ public class BlogMember_Controller {
 		Member_DTO dto = new Member_DTO();
 		dto.setId(member_id);
 		dto.setPw(member_pw);
-		dto.setDomain(member_domain);
 		dto.setNickname(member_nickname);
 		dto.setBirthday(member_birthday);
 		

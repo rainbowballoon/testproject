@@ -22,7 +22,7 @@
                         <div class="controls">
                             <label>별명:</label>
                             <input type="text" class="form-control" name="nickname" required placeholder="닉네임" maxlength="20"
-                            value="${profiledto }">
+                            value="${profiledto.mDTO.nickname }">
                             <p class="help-block">닉네임으로 사용할 별명입니다. 한글, 영문, 숫자 혼용가능 (한글기준 10자 이내)</p>
                         </div>
                     </div>

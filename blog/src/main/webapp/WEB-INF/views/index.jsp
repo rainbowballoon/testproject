@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>2015 블로그 프로젝트</title>
+    <title>STORY & PICTURE - 2015 블로그 프로젝트</title>
 
     <!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="<c:url value="/webjars/bootstrap/3.3.5/dist/css/bootstrap.min.css"/>">

@@ -125,6 +125,17 @@ public class Blog_MapperImpl implements Blog_Mapper {
 	}
 	
 	@Override
+	public void blogProfileNicknameUpdate(Member_DTO mdto) {
+		try{
+			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogProfileNicknameUpdate";
+			sqlSession.update(statement, mdto);
+		}finally{
+			
+		}
+		
+	}
+	
+	@Override
 	public void blogThemeUpdate(Blog_DTO dto) {
 		try{
 			String statement = "com.blogprj.blog.repository.mapper.Blog_Mapper.blogThemeUpdate";

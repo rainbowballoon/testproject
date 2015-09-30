@@ -94,7 +94,7 @@
 							<c:when test="${cdto.boardno == bdto.no }">
 								<li class="list-group-item">
 									<span class="glyphicon glyphicon-user" aria-hidden="true">
-									</span> ${cdto.memberno } <small>[${cdto.regdate}]</small> : ${cdto.content }
+									</span> ${cdto.mDTO.nickname } <small>[${cdto.regdate}]</small> : ${cdto.content }
 									<a href="javascript:act.runboardReplyDelete(${cdto.no })" class="btn btn-default btn-xs pull-right">삭제</a>
 								</li>
 							</c:when>

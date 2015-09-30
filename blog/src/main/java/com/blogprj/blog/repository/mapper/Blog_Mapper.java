@@ -25,7 +25,8 @@ public interface Blog_Mapper {
 //blog
 	public void blogCreate(int memberno); //블로그 생성
 	public Blog_DTO blogProfileRead(int memberno); 
-	public void blogProfileUpdate(Blog_DTO dto);
+	public void blogProfileUpdate(Blog_DTO bdto);
+	public void blogProfileNicknameUpdate(Member_DTO mdto);
 	public void blogThemeUpdate(Blog_DTO dto); //테마바꾸기
 	public int blogThemeView(int memberno); //해당 테마 보이기
 	public void blogLayoutUpdate(Blog_DTO dto); //레이아웃 바꾸기

@@ -67,7 +67,6 @@ public class BlogProfile_Controller {
 
 			model.addAttribute("profiledto", dto);
 			return "blog/index.jsp?content=profileForm";
-			//return "blog/index2.jsp?content=profileForm";
 		}else{
 			session.invalidate();
 			return "redirect:/index";
@@ -93,10 +92,15 @@ public class BlogProfile_Controller {
 		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 memberno
 
 		if(memberno == blogno){ //로그인한 사용자의 blogno == 접속한 블로그의 blogno
-			Blog_DTO dto = new Blog_DTO();
-			dto.setTitle(title);
-			dto.setProfile(profile);
-			dto.setMemberno(memberno);
+			
+			Member_DTO mdto = new Member_DTO();
+			mdto.setNo(blogno);
+			mdto.setNickname(nickname);
+			
+			Blog_DTO bdto = new Blog_DTO();
+			bdto.setTitle(title);
+			bdto.setProfile(profile);
+			bdto.setMemberno(memberno);
 			
 			//이미지 업로드
 			String proimg = mproimg.getOriginalFilename(); //이미지 파일이름
@@ -116,30 +120,31 @@ public class BlogProfile_Controller {
 	                
 	                System.out.println("서버파일위치=" + serverFile.getAbsolutePath());
 	                System.out.println("파일 업로드에 성공하셨습니다=" + proimg);
-	                dto.setProimg(proimg);
+	                bdto.setProimg(proimg);
 				}catch(Exception e){
 					System.out.println("파일업로드에 실패했습니다 " + proimg + " => " + e.getMessage());
-					dto.setProimg("temp.png");
+					bdto.setProimg("temp.png");
 				}
 			}else {
 	            System.out.println("파일업로드에 실패했습니다." + proimg + " 파일이 없습니다");
 	            Blog_DTO dtoimg = blog_Service.blogProfileRead(memberno);
 	            if(dtoimg.getProimg()==null || dtoimg.getProimg().equals(null)){
 	            	System.out.println("dtoimg.getProimg()가 널입니다");
-	            	dto.setProimg(dtoimg.getProimg());
+	            	bdto.setProimg(dtoimg.getProimg());
 	            }else{
 	            	System.out.println("dtoimg.getProimg():"+dtoimg.getProimg());
-	            	dto.setProimg(dtoimg.getProimg());
+	            	bdto.setProimg(dtoimg.getProimg());
 	            }
 	        }
 
-			blog_Service.blogProfileUpdate(dto);
+			blog_Service.blogProfileUpdate(bdto);
+			blog_Service.blogProfileNicknameUpdate(mdto);
 			
-			Member_DTO mdto = new Member_DTO();
+			Member_DTO newmdto = new Member_DTO();
 			String member_id= ((Member_DTO)session.getAttribute("logined")).getId();
 			String member_pw= ((Member_DTO)session.getAttribute("logined")).getPw();
-			mdto = blog_Service.blogLogin(member_id, member_pw);
-			session.setAttribute("logined", mdto);
+			newmdto = blog_Service.blogLogin(member_id, member_pw);
+			session.setAttribute("logined", newmdto);
 			
 			return "redirect:/"+blogno+"/profileForm";
 		}else{

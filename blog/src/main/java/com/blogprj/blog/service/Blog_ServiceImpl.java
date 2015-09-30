@@ -324,9 +324,18 @@ public class Blog_ServiceImpl implements Blog_Service {
 	}
 	
 	@Override
-	public void blogProfileUpdate(Blog_DTO dto) {
+	public void blogProfileUpdate(Blog_DTO bdto) {
 		try{
-			blogmapper.blogProfileUpdate(dto);
+			blogmapper.blogProfileUpdate(bdto);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void blogProfileNicknameUpdate(Member_DTO mdto) {
+		try{
+			blogmapper.blogProfileNicknameUpdate(mdto);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

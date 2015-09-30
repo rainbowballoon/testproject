@@ -335,7 +335,7 @@ public class Master_Controller {
 				SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String currentTime = transFormat.format(from);
 				mdto.setPw((String)filter.get("id"));
-				mdto.setDomain((String)filter.get("id"));
+				//mdto.setDomain((String)filter.get("id"));
 				mdto.setBirthday(currentTime);
 				
 				blog_Service.blogJoin(mdto); //블로그 가입

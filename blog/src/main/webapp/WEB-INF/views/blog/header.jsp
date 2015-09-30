@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                  	<li>
-                        <a href="index">내블로그</a>
+                        <a href="${pageContext.request.contextPath}/index">STORY & PICTURE</a>
                     </li>
                 <c:choose>
                 <c:when test="${logined == null }">
@@ -46,9 +46,6 @@
 	                    </li>
                 </c:otherwise>
                 </c:choose>
-                	<li>
-                        <a href="${pageContext.request.contextPath}/index">블로그홈페이지</a>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

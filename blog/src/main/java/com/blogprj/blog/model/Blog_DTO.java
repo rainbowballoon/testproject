@@ -10,6 +10,7 @@ public class Blog_DTO {
 	private int themeno;
 	private Category_DTO cDTO;
 	private SubCategory_DTO scDTO;
+	private Member_DTO mDTO;
 	
 	public int getNo() {
 		return no;
@@ -65,5 +66,11 @@ public class Blog_DTO {
 	}
 	public void setScDTO(SubCategory_DTO scDTO) {
 		this.scDTO = scDTO;
+	}
+	public Member_DTO getmDTO() {
+		return mDTO;
+	}
+	public void setmDTO(Member_DTO mDTO) {
+		this.mDTO = mDTO;
 	}
 }

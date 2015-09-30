@@ -211,4 +211,25 @@ public class BlogBoard_Controller {
 		}
 	}
 	
+	@RequestMapping(value="/{blogno}/boardDelete", method=RequestMethod.POST)
+	public String boardDelete(
+			@PathVariable("blogno") int blogno, Model model,
+			@RequestParam("no") int no,
+			HttpServletRequest request, HttpSession session){
+		System.out.println("boardEdit blogno:"+blogno);
+		
+		
+			
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("/di-context.xml");
+			Blog_Service blog_Service = ctx.getBean(Blog_Service.class);
+			
+			Board_DTO bdto = new Board_DTO();
+			bdto.setNo(no);
+			blog_Service.boardDelete(bdto);
+            
+			return "redirect:/"+blogno+"/boardList";
+		}
+
+	
 }

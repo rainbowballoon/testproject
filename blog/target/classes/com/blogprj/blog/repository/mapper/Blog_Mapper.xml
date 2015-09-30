@@ -12,17 +12,17 @@
 		</selectKey>
 		INSERT INTO MEMBER 
 		(
-			no, id, pw, domain, nickname, birthday, regdate
+			no, id, pw, nickname, birthday, regdate
 		)
 		VALUES 
 		(
-			#{no}, #{id}, #{pw}, #{domain}, #{nickname}, #{birthday}, sysdate
+			#{no}, #{id}, #{pw}, #{nickname}, #{birthday}, sysdate
 		)
 	</insert>
 
 	<select id="blogLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="blogLoginMap">
  		SELECT 
- 			m.no, m.id, m.pw, m.nickname, m.birthday, m.domain, m.regdate,
+ 			m.no, m.id, m.pw, m.nickname, m.birthday, m.regdate,
  			b.no AS bno, 
  			b.title AS btitle, 
  			b.proimg AS bproimg, 
@@ -50,7 +50,6 @@
  		<result column="pw" property="pw"/>
  		<result column="nickname" property="nickname"/>
  		<result column="birthday" property="birthday"/>
- 		<result column="domain" property="domain"/>
  		<result column="regdate" property="regdate"/>
  		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
  			<id column="bno" property="no"/>
@@ -82,7 +81,7 @@
 	
 	<select id="fbLogin" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="fbLoginMap">
  		SELECT 
- 			m.no, m.id, m.pw, m.nickname, m.birthday, m.domain, m.regdate,
+ 			m.no, m.id, m.pw, m.nickname, m.birthday, m.regdate,
  			b.no AS bno, 
  			b.title AS btitle, 
  			b.proimg AS bproimg, 
@@ -110,7 +109,6 @@
  		<result column="pw" property="pw"/>
  		<result column="nickname" property="nickname"/>
  		<result column="birthday" property="birthday"/>
- 		<result column="domain" property="domain"/>
  		<result column="regdate" property="regdate"/>
  		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
  			<id column="bno" property="no"/>
@@ -153,16 +151,37 @@
     	WHERE memberno = #{memberno}
     </select>
     
-    <select id="blogProfileRead" parameterType="int" resultType="com.blogprj.blog.model.Blog_DTO">
-    	SELECT * 
-    	FROM BLOG 
-    	WHERE memberno = #{memberno}
+    <select id="blogProfileRead" parameterType="int" resultMap="blogProfileReadMap">
+    	SELECT b.no, b.title, b.proimg, b.profile, b.memberno, b.layoutno, b.themeno,
+    		m.no AS mno, m.nickname AS mnickname, m.id AS mid
+    	FROM BLOG b 
+    	JOIN MEMBER m ON m.no = b.memberno 
+    	WHERE b.memberno = #{memberno}
     </select>
+    <resultMap type="com.blogprj.blog.model.Blog_DTO" id="blogProfileReadMap">
+    	<id property="no" column="no"/>
+    	<result property="title" column="title"/>
+    	<result property="proimg" column="proimg"/>
+    	<result property="profile" column="profile"/>
+    	<result property="memberno" column="memberno"/>
+    	<result property="layoutno" column="layoutno"/>
+    	<result property="themeno" column="themeno"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id property="no" column="mno"/>
+	    	<result property="nickname" column="mnickname"/>
+	    	<result property="id" column="mid"/>
+    	</association>
+    </resultMap>
     
 	<update id="blogProfileUpdate" parameterType="com.blogprj.blog.model.Blog_DTO">
 		UPDATE BLOG SET 
 		title = #{title}, proimg = #{proimg}, profile = #{profile}
 		WHERE memberno = #{memberno}
+	</update>
+	<update id="blogProfileNicknameUpdate" parameterType="com.blogprj.blog.model.Member_DTO">
+		UPDATE MEMBER SET
+		nickname = #{nickname}
+		WHERE no = #{no}
 	</update>
 	
 	<update id="blogThemeUpdate" parameterType="com.blogprj.blog.model.Blog_DTO">
@@ -492,13 +511,27 @@
 		)
 	</insert>
     
-    <select id="commentsBDList" parameterType="int" resultType="com.blogprj.blog.model.Comments_BD_DTO">
- 		SELECT *
-    	FROM COMMENTS_BD
-    	WHERE boardno = #{boardno}
-    	ORDER BY regdate DESC
+    <select id="commentsBDList" parameterType="int" resultMap="commentsBDListMap">
+ 		SELECT cb.no, cb.boardno, cb.memberno, cb.regdate, cb.content,
+			m.nickname AS mnickname, m.no AS mno, m.id AS mid
+    	FROM COMMENTS_BD cb
+    	JOIN MEMBER m ON cb.memberno = m.no
+    	WHERE cb.boardno = #{boardno}
+    	ORDER BY cb.regdate DESC
  	</select>
- 	
+ 	<resultMap type="com.blogprj.blog.model.Comments_BD_DTO" id="commentsBDListMap">
+    	<id property="no" column="no"/>
+    	<result property="boardno" column="boardno"/>
+    	<result property="memberno" column="memberno"/>
+    	<result property="regdate" column="regdate"/>
+    	<result property="content" column="content"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id property="no" column="mno"/>
+	    	<result property="nickname" column="mnickname"/>
+	    	<result property="id" column="mid"/>
+    	</association>
+    </resultMap>
+    
  	<delete id="commentsBDDelete" parameterType="int">
    		DELETE FROM COMMENTS_BD 
 		WHERE no = #{no}
@@ -602,7 +635,7 @@
 <!-- bloginfo  -->
  	<select id="blogInfo" parameterType="com.blogprj.blog.model.Member_DTO" resultMap="blogInfoMap">
  		SELECT 
- 			m.no, m.id, m.nickname, m.birthday, m.domain, m.regdate,
+ 			m.no, m.id, m.nickname, m.birthday, m.regdate,
  			b.no AS bno, 
  			b.title AS btitle, 
  			b.proimg AS bproimg, 
@@ -620,7 +653,6 @@
  		<result column="id" property="id"/>
  		<result column="nickname" property="nickname"/>
  		<result column="birthday" property="birthday"/>
- 		<result column="domain" property="domain"/>
  		<result column="regdate" property="regdate"/>
  		<association property="bDTO" column="no" javaType="com.blogprj.blog.model.Blog_DTO">
  			<id column="bno" property="no"/>
@@ -634,56 +666,6 @@
  	</resultMap>
 
 <!-- board -->    
-
-<!-- <select id="boardList" parameterType="int" resultMap="boardlistMap"> -->
-<!-- 	    SELECT  -->
-<!-- 	    	b.no,  -->
-<!-- 	    	b.memberno,  -->
-<!-- 	    	b.groupid,  -->
-<!-- 	    	b.relevel,  -->
-<!-- 	    	b.redepth,  -->
-<!-- 	    	b.title,  -->
-<!-- 	    	b.content,  -->
-<!-- 	    	b.useyn,  -->
-<!-- 	    	b.regdate,  -->
-<!-- 	    	b.editdate,  -->
-<!-- 	    	b.blogno,  -->
-<!-- 	    	m.nickname AS mnickname, -->
-<!-- 	    	m.id AS mid, -->
-<!-- 	    	m.memberno AS mmemberno, -->
-<!--       	  	cbd.boardno AS cbdboardno, -->
-<!-- 	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS cbdcount  -->
-<!-- 	  	FROM board b -->
-<!-- 	  	LEFT OUTER JOIN COMMENTS_BD cbd ON cbd.boardno = b.no -->
-<!-- 	  	LEFT OUTER JOIN MEMBER m ON m.memberno = b.blogno -->
-<!-- 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC -->
-<!-- 	    WHERE b.blogno = ${blogno} -->
-<!--     </select> -->
-    
-<!--     <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardlistMap"> -->
-<!--     	<id property="no" column="no" /> -->
-<!--     	<result column="memberno" property="memberno"/> -->
-<!--     	<result column="groupid" property="groupid"/> -->
-<!--     	<result column="relevel" property="relevel"/> -->
-<!--     	<result column="redepth" property="redepth"/> -->
-<!--     	<result column="title" property="title"/> -->
-<!--     	<result column="content" property="content"/> -->
-<!--     	<result column="useyn" property="useyn"/> -->
-<!--     	<result column="regdate" property="regdate"/> -->
-<!--     	<result column="editdate" property="editdate"/> -->
-<!--     	<result column="blogno" property="blogno"/> -->
-<!--     	<association property="cbdDTO" column="no" javaType="com.blogprj.blog.model.Comments_BD_DTO"> -->
-<!--     		<id column="cno" property="no"/> -->
-<!--     		<result column="cbdboardno" property="boardno"/> -->
-<!--     		<result column="cbdcount" property="cbdcount"/> -->
-<!--     	</association> -->
-<!--     	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO"> -->
-<!--     		<id column="mno" property="no"/> -->
-<!--     		<result column="mnickname" property="nickname"/> -->
-<!--     		<result column="mmemberno" property="mmemberno"/> -->
-<!--     	</association> -->
-<!--     </resultMap> -->
-
 
 	<select id="boardList" parameterType="int" resultMap="boardlistMap">
 	    SELECT 
@@ -797,15 +779,17 @@
     	</association>
     </resultMap>
     
-    
-    
-    
     <update id="boardEdit" parameterType="com.blogprj.blog.model.Board_DTO">
 		UPDATE BOARD 
 		SET 
 		title = #{title}, content = #{content}, useyn = #{useyn}, editdate = sysdate
 		WHERE no = #{no}
 	</update>
+	
+	<delete id="boardDelete" parameterType="com.blogprj.blog.model.Board_DTO">
+		DELETE FROM BOARD 
+		WHERE no = #{no}
+	</delete>
 	
 <!-- thumbnail	 -->
 	<insert id="thumbnailWrite" parameterType="com.blogprj.blog.model.Thumbnail_DTO">

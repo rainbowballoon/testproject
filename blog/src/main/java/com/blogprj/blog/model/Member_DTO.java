@@ -6,7 +6,7 @@ public class Member_DTO {
 	private String pw;
 	private String nickname;
 	private String birthday;
-	private String domain;
+//	private String domain;
 	private String regdate;
 	private Blog_DTO bDTO;
 	
@@ -40,12 +40,12 @@ public class Member_DTO {
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public String getDomain() {
-		return domain;
-	}
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+//	public String getDomain() {
+//		return domain;
+//	}
+//	public void setDomain(String domain) {
+//		this.domain = domain;
+//	}
 	public String getRegdate() {
 		return regdate;
 	}

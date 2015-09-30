@@ -53,13 +53,13 @@
                             <p class="help-block">생년월일을 입력해주세요</p>
                         </div>
                     </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>도메인이름:</label>
-                            <input type="text" class="form-control" name="member_domain" required placeholder="도메인이름" maxlength="20">
-                       		<p class="help-block">블로그에 사용할 도메인 이름을 입력해주세요</p>
-                        </div>
-                    </div>
+<!--                     <div class="control-group form-group"> -->
+<!--                         <div class="controls"> -->
+<!--                             <label>도메인이름:</label> -->
+<!--                             <input type="text" class="form-control" name="member_domain" required placeholder="도메인이름" maxlength="20"> -->
+<!--                        		<p class="help-block">블로그에 사용할 도메인 이름을 입력해주세요</p> -->
+<!--                         </div> -->
+<!--                     </div> -->
                     <div id="success"></div>
                     <!-- For success/fail messages -->
                     <button type="submit" class="btn btn-primary">가입하기</button>
