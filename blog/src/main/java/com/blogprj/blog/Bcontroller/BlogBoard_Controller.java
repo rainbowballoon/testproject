@@ -73,13 +73,9 @@ public class BlogBoard_Controller {
 		
 		int memberno = ((Member_DTO) session.getAttribute("logined")).getNo(); //로그인한 사용자의 no
 		
-		if(memberno == blogno){ //본인 블로그라면 (로그인한 사용자의 no == blogno)
 			model.addAttribute("board_DTO", new Board_DTO());
 			model.addAttribute("memberno", memberno);
 			return "blog/index.jsp?content=boardWriteForm";
-		}else{ //본인 블로그가 아니면
-			return "redirect:/"+blogno+"/boardList";
-		}
 	}
 	
 	@RequestMapping(value="/{blogno}/boardWrite", method=RequestMethod.POST)

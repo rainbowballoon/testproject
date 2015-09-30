@@ -697,11 +697,16 @@
 	    	b.useyn, 
 	    	b.regdate, 
 	    	b.editdate, 
-	    	b.blogno, 
+	    	b.blogno,
+	    	m.nickname AS mnickname,
+	    	m.no AS mno,
+	    	m.id AS mid,
       	  	cbd.boardno AS cbdboardno,
 	    	(SELECT count(*) FROM COMMENTS_BD WHERE COMMENTS_BD.boardno = b.no ) AS cbdcount 
 	  	FROM board b
 	  	LEFT OUTER JOIN COMMENTS_BD cbd ON cbd.boardno = b.no
+	  	LEFT OUTER JOIN MEMBER m ON m.no = b.memberno
+	  	WHERE b.blogno = #{blogno}
 	    ORDER BY b.regdate DESC, b.groupid DESC, b.relevel ASC
     </select>
     
@@ -722,6 +727,12 @@
     		<result column="cbdboardno" property="boardno"/>
     		<result column="cbdcount" property="cbdcount"/>
     	</association>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id column="mno" property="no"/>
+    		<result column="mnickname" property="nickname"/>
+    		<result column="mmemberno" property="memberno"/>
+    		<result column="mid" property="id"/>
+    	</association>
     </resultMap>
     
     <insert id="boardWrite" parameterType="com.blogprj.blog.model.Board_DTO">
@@ -738,11 +749,56 @@
     	)
     </insert>
     
-    <select id="boardInfo" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO">
-    	SELECT *
-	  	FROM board 
-	    WHERE no = #{no}
+<!--     <select id="boardInfo" parameterType="int" resultType="com.blogprj.blog.model.Board_DTO"> -->
+<!--     	SELECT * -->
+<!-- 	  	FROM board  -->
+<!-- 	    WHERE no = #{no} -->
+<!--     </select> -->
+    
+    
+    <select id="boardInfo" parameterType="int" resultMap="boardInfoMap">
+	    SELECT 
+	    	b.no, 
+	    	b.memberno, 
+	    	b.groupid, 
+	    	b.relevel, 
+	    	b.redepth, 
+	    	b.title, 
+	    	b.content, 
+	    	b.useyn, 
+	    	b.regdate, 
+	    	b.editdate, 
+	    	b.blogno,
+	    	m.nickname AS mnickname,
+	    	m.no AS mno,
+	    	m.id AS mid
+	  	FROM board b
+	  	LEFT OUTER JOIN MEMBER m ON m.no = b.memberno
+	  	WHERE b.no = #{no}
     </select>
+    
+    <resultMap type="com.blogprj.blog.model.Board_DTO" id="boardInfoMap">
+    	<id property="no" column="no" />
+    	<result column="memberno" property="memberno"/>
+    	<result column="groupid" property="groupid"/>
+    	<result column="relevel" property="relevel"/>
+    	<result column="redepth" property="redepth"/>
+    	<result column="title" property="title"/>
+    	<result column="content" property="content"/>
+    	<result column="useyn" property="useyn"/>
+    	<result column="regdate" property="regdate"/>
+    	<result column="editdate" property="editdate"/>
+    	<result column="blogno" property="blogno"/>
+    	<association property="mDTO" column="memberno" javaType="com.blogprj.blog.model.Member_DTO">
+    		<id column="mno" property="no"/>
+    		<result column="mnickname" property="nickname"/>
+    		<result column="mmemberno" property="memberno"/>
+    		<result column="mid" property="id"/>
+    	</association>
+    </resultMap>
+    
+    
+    
     
     <update id="boardEdit" parameterType="com.blogprj.blog.model.Board_DTO">
 		UPDATE BOARD 

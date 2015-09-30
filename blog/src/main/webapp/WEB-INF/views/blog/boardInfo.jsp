@@ -45,7 +45,7 @@
 				<table class="table table-condensed">
 					<tr>
 						<th class="active">번호</th><td width="100">${bdto.no }</td>
-						<th class="active">작성자</th><td width="150">${bdto.memberno }</td>
+						<th class="active">작성자</th><td width="150">${bdto.mDTO.nickname }</td>
 						<th class="active">작성시간</th><td width="150">${bdto.regdate }</td>
 					</tr>
 					<tr>	
@@ -79,7 +79,7 @@
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">
-								<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${bdto.memberno }
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${bdto.mDTO.nickname }
 							</span>
 							<input type="text" name="content" class="form-control" placeholder="덧글 내용을 입력해주세요" required>
 							<span class="input-group-btn">

@@ -62,7 +62,7 @@
 						<span class="badge">${dto.cbdDTO.cbdcount }</span>	
 					</c:if>
 				</td>
-				<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.memberno}</td>
+				<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ${dto.mDTO.nickname}</td>
 				<td> 
 					<fmt:parseDate var="dateTempParse" value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 					<fmt:formatDate value="${dateTempParse}" pattern="yyyy-MM-dd"/>
